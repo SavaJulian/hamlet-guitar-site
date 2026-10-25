@@ -1,0 +1,42 @@
+{
+  "source": "flamenco_final_v3_1080p.mp4",
+  "source_recovery": "User-mentioned render path missing; exact filename located in Downloads.",
+  "source_sha256": "d0caf177ec6d90d900d0a5a2da090129bfe5372b8521df4c8a95266cb43a946d",
+  "source_duration_seconds": 156.01,
+  "source_dimensions": [1920, 1080],
+  "source_size_bytes": 303406670,
+  "provenance": "User-provided performance footage. No generated imagery; originals unchanged.",
+  "stills": {
+    "hamlet-performance.webp": {
+      "timecode_seconds": 28,
+      "dimensions": [1920, 1080],
+      "purpose": "Wide performance poster; face upper left/center, guitar lower left, dark space to the right.",
+      "bytes": 87304
+    },
+    "hamlet-portrait.webp": {
+      "timecode_seconds": 8,
+      "crop": [210, 0, 1080, 1080],
+      "dimensions": [1000, 1000],
+      "purpose": "Square portrait with face and guitar, suitable for about section or mobile.",
+      "bytes": 59056
+    },
+    "hamlet-guitar.webp": {
+      "timecode_seconds": 24,
+      "dimensions": [1400, 788],
+      "purpose": "Close-up of right hand and flamenco guitar, suitable for detail/supporting image.",
+      "bytes": 54124
+    }
+  },
+  "video": {
+    "file": "hamlet-flamenco.mp4",
+    "dimensions": [1280, 720],
+    "codec": "H264",
+    "pixel_format": "yuv420p",
+    "frame_rate": 25,
+    "audio": "AAC 128kbps",
+    "web_delivery": "faststart",
+    "encoding": "libx264 slow crf23 maxrate1650k bufsize3300k",
+    "bytes": 34592230,
+    "faststart_verified": true
+  }
+}

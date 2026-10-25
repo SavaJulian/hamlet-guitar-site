@@ -1,0 +1,72 @@
+---
+import '@fontsource-variable/bodoni-moda';
+import '@fontsource-variable/manrope';
+import { withBase } from '../lib/site';
+---
+
+<!doctype html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex, follow" />
+    <title>Pagina niet gevonden — Hamlet</title>
+  </head>
+  <body>
+    <main>
+      <p>Hamlet · 404</p>
+      <h1>Even een<br />andere snaar.</h1>
+      <p>
+        Deze pagina bestaat niet. Je vindt de gitaarlessen, Hamlet’s muziek en zijn contactgegevens op de startpagina.
+      </p>
+      <a href={withBase('/')}>Terug naar de startpagina</a>
+    </main>
+  </body>
+</html>
+<style>
+  :global(html) {
+    background: #252025;
+    color: #f0eeea;
+    font-family: 'Manrope Variable', sans-serif;
+  }
+  :global(body) {
+    margin: 0;
+  }
+  :global(::selection) {
+    background: #ddc185;
+    color: #252025;
+  }
+  main {
+    max-width: 700px;
+    padding: max(8vh, 40px) 24px;
+    margin: 0 auto;
+  }
+  h1 {
+    font:
+      500 clamp(3.5rem, 9vw, 6rem)/1.05 'Bodoni Moda Variable',
+      serif;
+    margin: 64px 0 32px;
+    letter-spacing: -0.025em;
+  }
+  p {
+    max-width: 53ch;
+    line-height: 1.8;
+  }
+  a {
+    display: inline-block;
+    margin-top: 28px;
+    background: #ddc185;
+    color: #252025;
+    padding: 18px 24px;
+    border-radius: 2px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  a:hover {
+    background: #f0eeea;
+  }
+  a:focus-visible {
+    outline: 2px solid #ddc185;
+    outline-offset: 6px;
+  }
+</style>

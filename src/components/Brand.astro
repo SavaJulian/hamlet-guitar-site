@@ -1,0 +1,14 @@
+---
+const { light = false } = Astro.props;
+---
+
+<a
+  class:list={['brand', { light }]}
+  href={import.meta.env.BASE_URL}
+  aria-label="Hamlet Gitaarlessen — naar de homepage"
+>
+  <svg class="brand-mark" width="38" height="48" viewBox="0 0 38 48" fill="none" aria-hidden="true">
+    <path d="M5 5v38M10 5v38M15 5v38M23 5v38M28 5v38M33 5v38M5 24h28" stroke="currentColor" stroke-width="1.5"></path>
+  </svg>
+  <span class="brand-name">hamlet<span class="brand-descriptor">GITAARLESSEN</span></span>
+</a>

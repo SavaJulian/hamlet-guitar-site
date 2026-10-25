@@ -1,0 +1,114 @@
+---
+import '@fontsource-variable/bodoni-moda';
+import '@fontsource-variable/manrope';
+import { withBase } from '../lib/site';
+---
+
+<!doctype html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Hoe deze website omgaat met privacy en contactgegevens." />
+    <meta name="robots" content="noindex, follow" />
+    <title>Privacy — Hamlet</title>
+  </head>
+  <body>
+    <main>
+      <a class="back" href={withBase('/')}>Terug naar Hamlet</a>
+      <h1>Privacy.</h1>
+      <p class="intro">Je kunt deze website bekijken zonder account en zonder trackingcookies.</p>
+      <section>
+        <h2>Wat de website doet</h2>
+        <p>
+          Deze website gebruikt geen analytics, advertentiepixels of contactformulier dat je gegevens op een server
+          bewaart. De video en lettertypes worden samen met de website aangeboden.
+        </p>
+      </section>
+      <section>
+        <h2>Wanneer je contact opneemt</h2>
+        <p>
+          Een telefoonlink opent je telefoonapp. Een sms-link opent je berichtenapp. Een link naar Google Maps of een
+          lesplatform brengt je naar die dienst. Vanaf dat moment geldt ook het privacybeleid van die dienst. Gegevens
+          die je aan Hamlet stuurt, gebruikt hij om je vraag over gitaarles te beantwoorden en eventuele lessen af te
+          spreken.
+        </p>
+      </section>
+      <section>
+        <h2>Technische gegevens</h2>
+        <p>
+          De hostingdienst kan technische gegevens verwerken om de website te bezorgen en te beveiligen, zoals een
+          IP-adres en het tijdstip van een verzoek. Deze website voegt daar geen eigen bezoekersprofiel aan toe.
+        </p>
+      </section>
+      <section>
+        <h2>Een vraag over je gegevens?</h2>
+        <p>
+          Neem rechtstreeks contact op met Hamlet via <a href="tel:+32483502220">0483 50 22 20</a>. Je kunt vragen welke
+          gegevens hij van je heeft, ze laten verbeteren of verzoeken om ze te verwijderen.
+        </p>
+      </section>
+      <footer>Hamlet · Gitaarles in Merksem, Antwerpen</footer>
+    </main>
+  </body>
+</html>
+<style>
+  :global(html) {
+    background: #252025;
+    color: #f0eeea;
+    font-family: 'Manrope Variable', sans-serif;
+  }
+  :global(body) {
+    margin: 0;
+  }
+  :global(::selection) {
+    background: #ddc185;
+    color: #252025;
+  }
+  main {
+    width: min(740px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 48px 0 40px;
+  }
+  .back,
+  a {
+    color: #ddc185;
+    text-underline-offset: 5px;
+  }
+  .back {
+    display: inline-block;
+    padding: 12px 0;
+  }
+  a:focus-visible {
+    outline: 2px solid #ddc185;
+    outline-offset: 6px;
+  }
+  h1 {
+    font-family: 'Bodoni Moda Variable', serif;
+    font-weight: 500;
+    font-size: clamp(3.5rem, 10vw, 6rem);
+    line-height: 1.05;
+    margin: 64px 0 28px;
+  }
+  .intro {
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+  section {
+    margin-top: 48px;
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin: 0 0 14px;
+  }
+  p {
+    line-height: 1.8;
+    margin: 0;
+  }
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid #4b414a;
+    font-size: 0.8rem;
+  }
+</style>

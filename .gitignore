@@ -1,0 +1,20 @@
+# Generated output and dependencies
+dist/
+.output/
+node_modules/
+.astro/
+playwright-report/
+test-results/
+
+# Local configuration, credentials, logs
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+package-lock.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+.impeccable/config.local.json
+.impeccable/questions/
+.impeccable/review/

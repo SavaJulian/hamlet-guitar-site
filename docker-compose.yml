@@ -1,0 +1,6 @@
+services:
+  hamlet-guitar-site:
+    build: .
+    container_name: hamlet-guitar-site
+    ports:
+      - 8080:8080

@@ -1,0 +1,379 @@
+---
+import '@fontsource-variable/bodoni-moda';
+import '@fontsource-variable/bodoni-moda/wght-italic.css';
+import '@fontsource-variable/manrope';
+import '../styles/hamlet.css';
+import Brand from '../components/Brand.astro';
+import { withBase } from '../lib/site';
+import Icon from '../components/Icon.astro';
+const base = withBase('/');
+const asset = (path: string) => `${base}${path}`;
+const phone = '+32483502220';
+const maps = 'https://www.google.com/maps?cid=4943289985205439662';
+const sms = `sms:${phone}?body=${encodeURIComponent('Dag Hamlet, ik heb interesse in gitaarles. Kunnen we een eerste les bespreken?')}`;
+const canonical = Astro.site ? new URL(base, Astro.site).href : undefined;
+const faqs = [
+  [
+    'Kan ik beginnen zonder ervaring?',
+    'Zeker. Hamlet geeft les aan beginners én gevorderden. Je begint bij wat je al kunt, ook als dat nog helemaal niets is. Je hoeft dus niet eerst zelf akkoorden te leren.',
+  ],
+  [
+    'Moet ik al een gitaar hebben?',
+    'Een eigen gitaar is handig om thuis te oefenen. Heb je er nog geen? Bespreek dat bij je eerste contact met Hamlet. Hij kan met je meedenken over een instrument dat past bij wat je wilt spelen.',
+  ],
+  [
+    'Gaat het alleen over flamenco?',
+    'Spaanse gitaar en flamenco zijn Hamlet’s specialiteit. Wil je vooral de basis leren, je techniek verbeteren of een andere muzikale richting verkennen? Vertel het hem, zodat jullie kunnen bespreken wat bij je past.',
+  ],
+  [
+    'Hoe lang duurt een les?',
+    'Een les duurt 60 minuten. Het lesmoment spreek je af met Hamlet. Je krijgt oefeningen mee, zodat je thuis verder kunt spelen.',
+  ],
+  [
+    'Wat kost de gitaarles?',
+    'Vraag Hamlet naar het actuele tarief en de mogelijkheden. Zo weet je vóór je een les afspreekt precies waar je aan toe bent.',
+  ],
+  [
+    'Waar vinden de lessen plaats?',
+    'Je vindt Gitaarlessen Hamlet aan de Bredabaan 479, 2170 Merksem (Antwerpen). Neem vooraf contact op om een lesmoment af te spreken.',
+  ],
+];
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Gitaarlessen Hamlet',
+  description:
+    'Persoonlijke gitaarlessen in Merksem, Antwerpen. Spaanse gitaar en flamenco voor beginners en gevorderden.',
+  telephone: phone,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Bredabaan 479',
+    postalCode: '2170',
+    addressLocality: 'Antwerpen',
+    addressCountry: 'BE',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: 51.2448788, longitude: 4.4467246 },
+  hasMap: maps,
+  areaServed: ['Merksem', 'Antwerpen'],
+  ...(canonical ? { url: canonical, image: new URL(asset('media/hamlet-performance.webp'), Astro.site).href } : {}),
+};
+---
+
+<!doctype html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gitaarles in Merksem, Antwerpen | Hamlet</title>
+    <meta
+      name="description"
+      content="Van je eerste akkoord tot flamenco. Ontdek persoonlijke gitaarlessen bij Hamlet in Merksem, Antwerpen. Bekijk zijn optreden en bespreek je eerste les."
+    />
+    <meta name="theme-color" content="#252025" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href={asset('brand/hamlet-monogram.svg')} type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="nl_BE" />
+    <meta property="og:title" content="Hamlet — raak een snaar." />
+    <meta
+      property="og:description"
+      content="Persoonlijke gitaarlessen in Merksem. Van je eerste akkoord tot de wereld van flamenco."
+    />
+    <meta
+      property="og:image"
+      content={Astro.site
+        ? new URL(asset('media/hamlet-performance.webp'), Astro.site).href
+        : asset('media/hamlet-performance.webp')}
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Ga naar de inhoud</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <Brand />
+        <nav class="desktop-nav" aria-label="Hoofdnavigatie">
+          <a href="#lessen">De lessen</a><a href="#hamlet">Over Hamlet</a><a href="#vragen">Veelgestelde vragen</a>
+        </nav>
+        <a class="header-cta" href={`tel:${phone}`}>Bespreek je eerste les <Icon name="arrow" size={18} /></a>
+        <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu openen"
+          ><span></span><span></span></button
+        >
+      </div>
+      <nav id="mobile-nav" class="mobile-nav" aria-label="Mobiele navigatie" hidden>
+        <a href="#lessen">De lessen</a><a href="#hamlet">Over Hamlet</a><a href="#vragen">Veelgestelde vragen</a><a
+          href="#contact">Contact & locatie</a
+        >
+      </nav>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-heading">
+        <img
+          class="hero-image"
+          src={asset('media/hamlet-performance.webp')}
+          width="1920"
+          height="1080"
+          alt="Hamlet speelt op zijn Spaanse gitaar in een intieme studio"
+          fetchpriority="high"
+        />
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <h1 id="hero-heading">Raak een<br /><em>snaar.</em></h1>
+          <p class="hero-intro">Gitaarles in Merksem, Antwerpen.</p>
+          <p class="hero-description">
+            Van dat eerste akkoord tot muziek die je voelt. Leer spelen met Hamlet, op jouw niveau.
+          </p>
+          <a class="button button-gold" href={`tel:${phone}`}>Bespreek je eerste les <Icon name="arrow" /></a>
+          <span class="hero-note">Persoonlijk contact met Hamlet</span>
+        </div>
+        <button class="watch-trigger" data-play-video aria-haspopup="dialog">
+          <span class="play-disc"><Icon name="play" size={24} /></span>
+          <span>Hoor Hamlet spelen<small>Flamenco · 2:36 · met geluid</small></span>
+        </button>
+        <div class="hero-side-note" aria-hidden="true">ZES SNAREN. JOUW VERHAAL.</div>
+      </section>
+      <div class="lesson-strip">
+        <span><Icon name="pin" size={17} /> Merksem, Antwerpen</span>
+        <span>Persoonlijke begeleiding</span>
+        <span>Beginners & gevorderden</span>
+        <a href={maps} target="_blank" rel="noopener noreferrer"
+          ><Icon name="star" size={15} /><strong>5,0</strong><span> op Google</span><span class="review-count">
+            · 3 reviews</span
+          ><Icon name="arrow" size={17} /></a
+        >
+      </div>
+
+      <section class="intro-section section-shell" id="lessen" aria-labelledby="lessons-heading">
+        <div class="intro-heading">
+          <h2 id="lessons-heading">Je hoeft het nog<br />niet te <em>kunnen.</em></h2><p>
+            Alleen zin hebben om te beginnen.
+          </p>
+        </div>
+        <div class="intro-copy">
+          <p>
+            Misschien staat die gitaar al jaren in de hoek. Misschien speel je al, maar mis je richting. Bij Hamlet
+            vertrek je van waar jij nu bent.
+          </p><p>Je leert in je eigen tempo, met aandacht voor techniek, ritme en vooral: plezier in het spelen.</p>
+        </div>
+        <div class="lesson-options">
+          <a class="lesson-option" href="#contact" data-interest="Ik begin net"
+            ><h3>Je eerste<br />akkoorden.</h3><p>
+              Een fijne houding, een helder geluid en stap voor stap de basis onder je vingers.
+            </p><span class="option-link">Ik wil beginnen <Icon name="arrow" /></span></a
+          >
+          <a class="lesson-option" href="#contact" data-interest="Ik speel al gitaar"
+            ><h3>Meer gevoel.<br />Meer vrijheid.</h3><p>
+              Werk aan je techniek, ritme en expressie. Geef wat je al speelt een nieuwe dimensie.
+            </p><span class="option-link">Ik wil verder groeien <Icon name="arrow" /></span></a
+          >
+          <a class="lesson-option flamenco-option" href="#contact" data-interest="Ik wil flamenco leren"
+            ><h3>De ziel van<br /><em>flamenco.</em></h3><p>
+              Ontdek Spaanse gitaar: het ritme, de aanslag en de bijzondere kracht van flamenco.
+            </p><span class="option-link">Ik wil dit leren <Icon name="arrow" /></span></a
+          >
+        </div>
+      </section>
+
+      <section class="teacher-section" id="hamlet" aria-labelledby="teacher-heading">
+        <div class="teacher-photo">
+          <img
+            src={asset('media/hamlet-portrait.webp')}
+            width="1000"
+            height="1000"
+            alt="Hamlet, gitarist en gitaarleraar in Merksem, tijdens zijn optreden"
+            loading="lazy"
+          /><span class="photo-caption">Hamlet, op zijn best: met een gitaar.</span>
+        </div>
+        <div class="teacher-copy">
+          <h2 id="teacher-heading">Een gitarist.<br />Een leraar.<br /><em>Jouw gids.</em></h2><p>
+            Je hoort het wanneer Hamlet speelt: de gitaar is zijn taal. Zijn specialiteit is Spaanse gitaar en flamenco,
+            van traditionele klanken tot een moderne benadering.
+          </p><p>
+            In de les draait het om jouw spel. Je krijgt persoonlijke begeleiding en oefeningen om thuis mee verder te
+            gaan. Of je nu voor het eerst een gitaar vastneemt of al jaren speelt.
+          </p><a class="text-link" href={`tel:${phone}`}>Maak kennis met Hamlet <Icon name="arrow" /></a>
+        </div>
+      </section>
+
+      <section class="quote-section section-shell" aria-label="Ervaring van een leerling">
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <blockquote>Fantastische maar vooral<br /><em>gepassioneerde leerkracht!</em></blockquote>
+        <p>Siel <span>· leerling via Apprentus · 2022</span></p>
+        <a
+          class="quiet-link"
+          href="https://www.apprentus.nl/priveles/antwerpen/muziek/flamenco/flamenco-guitar-beginners-to-professional-"
+          id="review-source"
+          target="_blank"
+          rel="noopener noreferrer">Lees de ervaring op Apprentus <Icon name="arrow" size={16} /></a
+        >
+      </section>
+
+      <section class="practice-section" aria-labelledby="practice-heading">
+        <div class="practice-image">
+          <img
+            src={asset('media/hamlet-guitar.webp')}
+            width="1400"
+            height="788"
+            alt="Detail van Hamlet’s handen en de snaren van zijn flamencogitaar"
+            loading="lazy"
+          />
+        </div>
+        <div class="practice-copy">
+          <h2 id="practice-heading">Een uur voor jezelf.<br /><em>Een geluid dat blijft.</em></h2><p>
+            In je les is er ruimte om te proberen, vragen te stellen en opnieuw te spelen. Met oefeningen voor thuis
+            neem je de muziek mee, ook nadat de les voorbij is.
+          </p><div class="lesson-facts">
+            <div><strong>60 min.</strong><span>per les</span></div><div>
+              <strong>Jouw tempo</strong><span>jouw vertrekpunt</span>
+            </div><div><strong>Merksem</strong><span>dicht bij huis</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq-section section-shell" id="vragen" aria-labelledby="faq-heading">
+        <div>
+          <h2 id="faq-heading">Nog even<br /><em>dit.</em></h2><p>
+            Een eerste les begint soms<br />met een kleine vraag.
+          </p><a class="text-link" href={`tel:${phone}`}>Stel ze aan Hamlet <Icon name="arrow" /></a>
+        </div>
+        <div class="faq-list">
+          {
+            faqs.map(([question, answer]) => (
+              <details>
+                <>
+                  <summary>
+                    {question}
+                    <Icon name="plus" size={20} />
+                  </summary>
+                  <p>{answer}</p>
+                </>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-heading">
+        <div class="contact-main">
+          <h2 id="contact-heading">Die gitaar wacht<br />al lang genoeg.<br /><em>Begin gewoon.</em></h2><p>
+            Vertel Hamlet wat je graag wilt leren.<br />Samen bespreken jullie een eerste les.
+          </p><a class="button button-dark" href={`tel:${phone}`}
+            ><Icon name="phone" size={19} /> Bel Hamlet <span>0483 50 22 20</span><Icon name="arrow" /></a
+          ><a class="sms-link" href={sms} id="sms-link"
+            ><Icon name="message" size={18} /> Liever een bericht? Stuur een sms <Icon name="arrow" size={18} /></a
+          ><p class="contact-interest" id="contact-interest" aria-live="polite"></p>
+        </div>
+        <div class="contact-location">
+          <svg class="location-mark" width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true"
+            ><circle cx="60" cy="60" r="55" stroke="currentColor" stroke-width="1"></circle><path
+              d="M35 34v52M45 34v52M55 34v52M65 34v52M75 34v52M85 34v52M35 60h50"
+              stroke="currentColor"
+              stroke-width="1.5"></path></svg
+          ><h3>Tot in Merksem.</h3><address>
+            Gitaarlessen Hamlet<br />Bredabaan 479<br />2170 Merksem, Antwerpen
+          </address><a class="text-link" href={maps} target="_blank" rel="noopener noreferrer"
+            >Plan je route <Icon name="arrow" /></a
+          ><span class="appointment-note">Lessen op afspraak</span>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-top">
+        <Brand /><p>Zes snaren. Eindeloos veel mogelijkheden.</p><a href="#main" class="back-top"
+          >Terug naar boven <Icon name="arrow" size={17} /></a
+        >
+      </div><div class="footer-bottom">
+        <span>© {new Date().getFullYear()} Gitaarlessen Hamlet</span><span>Gitaarles in Merksem · Antwerpen</span><a
+          href={asset('privacy/')}>Privacy</a
+        >
+      </div>
+    </footer>
+    <a class="mobile-call" href={`tel:${phone}`}
+      ><Icon name="phone" size={18} /> Bespreek je eerste les <Icon name="arrow" size={18} /></a
+    >
+    <dialog class="video-dialog" aria-labelledby="video-title">
+      <div class="video-dialog-header">
+        <h2 id="video-title">Hamlet speelt flamenco</h2><button class="close-video" aria-label="Video sluiten"
+          ><Icon name="close" size={24} /></button
+        >
+      </div><video
+        controls
+        playsinline
+        preload="none"
+        poster={asset('media/hamlet-performance.webp')}
+        data-src={asset('media/hamlet-flamenco.mp4')}
+        aria-label="Flamencogitaar door Hamlet, instrumentaal optreden van 2 minuten en 36 seconden"
+        ><track kind="captions" src={asset('media/performance.nl.vtt')} srclang="nl" label="Nederlands" /></video
+      ><p>Een instrumentaal optreden van Hamlet. Zet het geluid aan en luister mee.</p><p class="video-error" hidden>
+        De video kon niet laden. <a href={asset('media/hamlet-flamenco.mp4')}>Open de video rechtstreeks</a>.
+      </p>
+    </dialog>
+    <script>
+      const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
+      const menu = document.querySelector<HTMLElement>('#mobile-nav');
+      const closeMenu = () => {
+        if (menu && menuButton) {
+          menu.hidden = true;
+          menuButton.setAttribute('aria-expanded', 'false');
+          menuButton.setAttribute('aria-label', 'Menu openen');
+        }
+      };
+      menuButton?.addEventListener('click', () => {
+        if (!menu) return;
+        const open = menuButton.getAttribute('aria-expanded') !== 'true';
+        menu.hidden = !open;
+        menuButton.setAttribute('aria-expanded', String(open));
+        menuButton.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+      });
+      menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeMenu();
+      });
+      const dialog = document.querySelector<HTMLDialogElement>('.video-dialog');
+      const video = dialog?.querySelector<HTMLVideoElement>('video');
+      document.querySelectorAll('[data-play-video]').forEach((button) =>
+        button.addEventListener('click', () => {
+          if (!dialog || !video) return;
+          dialog.showModal();
+          document.body.style.overflow = 'hidden';
+          if (!video.src) video.src = video.dataset.src || '';
+          video.play().catch(() => {
+            /* Native controls remain available if autoplay is blocked. */
+          });
+        })
+      );
+      dialog?.querySelector('.close-video')?.addEventListener('click', () => dialog.close());
+      dialog?.addEventListener('click', (event) => {
+        if (event.target === dialog) {
+          const rect = dialog.getBoundingClientRect();
+          if (
+            event.clientX < rect.left ||
+            event.clientX > rect.right ||
+            event.clientY < rect.top ||
+            event.clientY > rect.bottom
+          )
+            dialog.close();
+        }
+      });
+      dialog?.addEventListener('close', () => {
+        video?.pause();
+        document.body.style.overflow = '';
+      });
+      video?.addEventListener('error', () => {
+        const error = dialog?.querySelector<HTMLElement>('.video-error');
+        if (error) error.hidden = false;
+      });
+      document.querySelectorAll<HTMLElement>('[data-interest]').forEach((link) =>
+        link.addEventListener('click', () => {
+          const interest = link.dataset.interest || '';
+          const smsLink = document.querySelector<HTMLAnchorElement>('#sms-link');
+          const message = document.querySelector<HTMLElement>('#contact-interest');
+          if (smsLink)
+            smsLink.href = `sms:+32483502220?body=${encodeURIComponent(`Dag Hamlet, ${interest.toLowerCase()}. Kunnen we een eerste gitaarles bespreken?`)}`;
+          if (message) message.textContent = `${interest}? Vertel het Hamlet. Je sms staat alvast klaar.`;
+        })
+      );
+    </script>
+  </body>
+</html>

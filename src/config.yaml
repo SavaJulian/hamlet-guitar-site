@@ -1,0 +1,29 @@
+site:
+  name: Hamlet — Gitaarles in Merksem
+  base: '/'
+  trailingSlash: false
+metadata:
+  title:
+    default: Gitaarles in Merksem en Antwerpen — Hamlet
+    template: '%s — Hamlet'
+  description: Persoonlijke gitaarlessen bij Hamlet in Merksem. Ontdek flamenco, hoor hem spelen en bespreek je eerste les.
+  robots:
+    index: true
+    follow: true
+  openGraph:
+    site_name: Hamlet — Gitaarles
+    type: website
+  twitter:
+    cardType: summary_large_image
+i18n:
+  language: nl-BE
+  textDirection: ltr
+apps:
+  blog:
+    isEnabled: false
+analytics:
+  vendors:
+    googleAnalytics:
+      id: null
+ui:
+  theme: dark:only
