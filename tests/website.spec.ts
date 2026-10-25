@@ -7,7 +7,7 @@ for (const width of [390, 768, 1440]) {
     page.on('pageerror', (error) => errors.push(error.message));
     const response = await page.goto('/');
     expect(response?.status()).toBe(200);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Raak een.*snaar\./);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Leer gitaar spelen\..*Op jouw tempo\./);
 
     // Exercise lazy loading through the complete page rather than only inspecting the hero.
     const images = page.locator('main img');

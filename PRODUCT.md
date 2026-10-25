@@ -37,3 +37,7 @@ User states Hamlet gives guitar lessons in Merksem, Antwerpen. Supplied video fi
 ## Product Principles
 
 Show his real playing. Make the first step easy. Explain beginner suitability without diluting flamenco expertise. Keep factual claims traceable.
+
+## Approved homepage copy
+
+Julian approved “Leer gitaar spelen. Op jouw tempo.” on 25 October 2026, replacing the metaphorical opening with a clear lesson offer.

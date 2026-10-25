@@ -240,8 +240,8 @@ button {
   max-width: 440px;
 }
 .hero h1 {
-  font-size: clamp(72px, 7.2vw, 96px);
-  line-height: 0.98;
+  font-size: clamp(48px, 4.7vw, 68px);
+  line-height: 1.04;
   letter-spacing: -0.035em;
   font-weight: 400;
   color: var(--gold);
@@ -862,7 +862,7 @@ button {
     height: 810px;
   }
   .hero h1 {
-    font-size: 96px;
+    font-size: 72px;
   }
   .hero-description {
     max-width: 360px;
@@ -894,7 +894,7 @@ button {
     right: 5%;
   }
   .hero h1 {
-    font-size: 85px;
+    font-size: 60px;
   }
   .hero-image {
     object-position: 42% center;
@@ -1030,9 +1030,9 @@ button {
     z-index: 1;
   }
   .hero h1 {
-    font-size: 72px;
+    font-size: 52px;
     margin-bottom: 20px;
-    line-height: 0.94;
+    line-height: 1.04;
     max-width: 100%;
     letter-spacing: -0.035em;
   }
@@ -1453,7 +1453,7 @@ button {
     top: 246px;
   }
   .hero h1 {
-    font-size: 62px;
+    font-size: 46px;
   }
   .lesson-option {
     column-gap: 17px;
@@ -1493,7 +1493,7 @@ button {
     gap: 16px;
   }
   .hero h1 {
-    font-size: 72px;
+    font-size: 48px;
   }
   .hero-content {
     left: 58%;

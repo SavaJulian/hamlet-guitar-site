@@ -15,9 +15,9 @@ colors:
 typography:
   display:
     fontFamily: 'Bodoni Moda Variable, Georgia, serif'
-    fontSize: 'clamp(72px, 7.2vw, 96px)'
+    fontSize: 'clamp(48px, 4.7vw, 68px)'
     fontWeight: 400
-    lineHeight: 0.98
+    lineHeight: 1.04
     letterSpacing: '-0.035em'
   headline:
     fontFamily: 'Bodoni Moda Variable, Georgia, serif'
@@ -121,7 +121,7 @@ Smoked plum and muted brass anchor the palette; lavender and warm paper soften i
 
 The display is expressive and tightly tracked, while body text and controls stay steady. The frontmatter records the implemented hierarchy, not a mathematical scale: the display belongs to the performance heading, headline to section headings, title to lesson choices, reading to explanatory copy, and button to primary actions. Italic emphasis retains the serif family.
 
-Mobile display is 72px, then 62px below 370px; section headlines are 43px. Lesson titles become 29px. Final mobile overrides keep main explanatory paragraphs at 14px and FAQ questions at 13px. Other section-specific heading sizes are adaptations rather than new universal roles. Reading measures are generally 320–470px; privacy copy has its own wider reading container.
+Mobile display is 52px, then 46px below 370px; section headlines are 43px. Lesson titles become 29px. Final mobile overrides keep main explanatory paragraphs at 14px and FAQ questions at 13px. Other section-specific heading sizes are adaptations rather than new universal roles. Reading measures are generally 320–470px; privacy copy has its own wider reading container.
 
 **The Two Voices Rule.** Use Bodoni Moda for expressive headings and Manrope for practical reading and controls.
 
