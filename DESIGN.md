@@ -83,7 +83,7 @@ components:
 
 **Creative North Star: "The Intimate Recital Stage"**
 
-An intimate recital stage: smoked plum grounds the interface, brass marks invitations, and paper and lavender give the performance room to breathe. Hamlet's authentic footage and extracted poster carry the identity alongside an original six-string H monogram. Two generated guitar still lifes provide distinct lesson and home-practice atmosphere below the hero, without claiming to show his actual studio.
+An intimate recital stage: smoked plum grounds the interface, brass marks invitations, and paper and lavender give the performance room to breathe. Hamlet's authentic footage and extracted poster, with a cleaned plain black backdrop, carry the identity alongside an original six-string H monogram. Two generated guitar still lifes provide distinct lesson and home-practice atmosphere below the hero, without claiming to show his actual studio.
 
 High-contrast Bodoni Moda gives headings a musical cadence; Manrope keeps practical information direct. Broad tonal sections, asymmetrical grids and fine rules create a composed, personal atmosphere without card shadows.
 
@@ -201,3 +201,7 @@ The brass wordmark pairs Bodoni lettering with the six-string H. Hover skews the
 Not canonized or repaired: utility labels as small as 8–10px (and smaller logo microtype) are not reusable reading defaults; the supporting 404 action's 2px radius and alternate hover differ from the home action. These are existing source exceptions outside this documentation-only pass. The 404 identity line and decorative vertical slogan are not endorsed as a reusable eyebrow pattern.
 
 Source evidence: `src/styles/hamlet.css`, `src/pages/index.astro`, `src/components/Brand.astro`, `src/components/Icon.astro`, `src/pages/privacy.astro`, and `src/pages/404.astro`; reconciled with `PRODUCT.md` and the home surface contract.
+
+## Introductory offer
+
+The user-confirmed line “Je eerste kennismakingsles is gratis.” appears after the hero description and before its action, in gold Manrope at 14px/700/1.6 (13px on mobile). The main action reads “Plan je gratis les”. The established gold contact section reinforces the offer with “Jouw eerste les. Helemaal gratis.” and direct phone/SMS routes. The approved hero headline remains unchanged.

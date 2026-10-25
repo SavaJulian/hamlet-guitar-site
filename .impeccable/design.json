@@ -207,7 +207,7 @@
       "kind": "button",
       "refersTo": "button-primary",
       "description": "Rectangular lesson inquiry action.",
-      "html": "<button class=\"ds-button ds-button-gold\">Bespreek je eerste les <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></button>",
+      "html": "<button class=\"ds-button ds-button-gold\">Plan je gratis les <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></button>",
       "css": ".ds-button{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 32px;\n  min-height: 55px;\n  padding: 16px 22px;\n  border: 1px solid transparent;\n  font-size: 12px;\n  font-weight: 750;\n  line-height: 1.4;\n  transition:\n    background 0.25s,\n    color 0.25s,\n    border-color 0.25s;\n}\n.ds-button svg{\n  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);\n}\n.ds-button:hover svg:last-child{\n  transform: translateX(5px);\n}\n.ds-button-gold{\n  background: var(--gold);\n  color: var(--ink);\n}\n.ds-button-gold:hover{\n  background: #ecdaa9;\n}.ds-button{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);cursor:pointer}.ds-button:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
     },
     {
@@ -215,7 +215,7 @@
       "kind": "button",
       "refersTo": "button-dark",
       "description": "Rectangular lesson inquiry action.",
-      "html": "<button class=\"ds-button ds-button-dark\">Bespreek je eerste les <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></button>",
+      "html": "<button class=\"ds-button ds-button-dark\">Plan je gratis les <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></button>",
       "css": ".ds-button{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 32px;\n  min-height: 55px;\n  padding: 16px 22px;\n  border: 1px solid transparent;\n  font-size: 12px;\n  font-weight: 750;\n  line-height: 1.4;\n  transition:\n    background 0.25s,\n    color 0.25s,\n    border-color 0.25s;\n}\n.ds-button svg{\n  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);\n}\n.ds-button:hover svg:last-child{\n  transform: translateX(5px);\n}\n.ds-button-dark{\n  color: var(--paper);\n  background: var(--ink);\n  gap: 16px;\n  flex-wrap: wrap;\n}\n.ds-button-dark:hover{\n  background: #483949;\n}.ds-button{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);cursor:pointer}.ds-button:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
     },
     {
@@ -258,7 +258,7 @@
   ],
   "narrative": {
     "northStar": "The Intimate Recital Stage",
-    "overview": "An intimate recital stage: smoked plum grounds the interface, brass marks invitations, and paper and lavender give the performance room to breathe. Hamlet's authentic footage and extracted poster carry the identity alongside an original six-string H monogram. Two generated guitar still lifes provide distinct lesson and home-practice atmosphere below the hero, without claiming to show his actual studio.\n\nHigh-contrast Bodoni Moda gives headings a musical cadence; Manrope keeps practical information direct. Broad tonal sections, asymmetrical grids and fine rules create a composed, personal atmosphere without card shadows.",
+    "overview": "An intimate recital stage: smoked plum grounds the interface, brass marks invitations, and paper and lavender give the performance room to breathe. Hamlet's authentic footage and extracted poster, with a cleaned plain black backdrop, carry the identity alongside an original six-string H monogram. Two generated guitar still lifes provide distinct lesson and home-practice atmosphere below the hero, without claiming to show his actual studio.\n\nHigh-contrast Bodoni Moda gives headings a musical cadence; Manrope keeps practical information direct. Broad tonal sections, asymmetrical grids and fine rules create a composed, personal atmosphere without card shadows.",
     "keyCharacteristics": [
       "Real performance footage, conceptual lesson imagery and an original six-string H.",
       "Bodoni Moda display with restrained italic emphasis.",

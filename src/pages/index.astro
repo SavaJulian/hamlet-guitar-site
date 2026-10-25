@@ -10,9 +10,13 @@ const base = withBase('/');
 const asset = (path: string) => `${base}${path}`;
 const phone = '+32483502220';
 const maps = 'https://www.google.com/maps?cid=4943289985205439662';
-const sms = `sms:${phone}?body=${encodeURIComponent('Dag Hamlet, ik heb interesse in gitaarles. Kunnen we een eerste les bespreken?')}`;
+const sms = `sms:${phone}?body=${encodeURIComponent('Dag Hamlet, ik wil graag een gratis kennismakingsles afspreken. Wanneer past het voor jou?')}`;
 const canonical = Astro.site ? new URL(base, Astro.site).href : undefined;
 const faqs = [
+  [
+    'Is de eerste kennismakingsles echt gratis?',
+    'Ja, je eerste kennismakingsles bij Hamlet is gratis. Bel of stuur een sms om een moment af te spreken. Zo kun je kennismaken en ervaren hoe de gitaarles bij hem voelt.',
+  ],
   [
     'Kan ik beginnen zonder ervaring?',
     'Zeker. Hamlet geeft les aan beginners én gevorderden. Je begint bij wat je al kunt, ook als dat nog helemaal niets is. Je hoeft dus niet eerst zelf akkoorden te leren.',
@@ -27,11 +31,11 @@ const faqs = [
   ],
   [
     'Hoe lang duurt een les?',
-    'Een les duurt 60 minuten. Het lesmoment spreek je af met Hamlet. Je krijgt oefeningen mee, zodat je thuis verder kunt spelen.',
+    'Een reguliere gitaarles duurt 60 minuten. De duur en het moment van je kennismakingsles bespreek je rechtstreeks met Hamlet.',
   ],
   [
     'Wat kost de gitaarles?',
-    'Vraag Hamlet naar het actuele tarief en de mogelijkheden. Zo weet je vóór je een les afspreekt precies waar je aan toe bent.',
+    'Je eerste kennismakingsles is gratis. Wil je daarna verder? Vraag Hamlet naar het actuele tarief voor de vervolglessen en de mogelijkheden.',
   ],
   [
     'Waar vinden de lessen plaats?',
@@ -55,7 +59,9 @@ const schema = {
   geo: { '@type': 'GeoCoordinates', latitude: 51.2448788, longitude: 4.4467246 },
   hasMap: maps,
   areaServed: ['Merksem', 'Antwerpen'],
-  ...(canonical ? { url: canonical, image: new URL(asset('media/hamlet-performance.webp'), Astro.site).href } : {}),
+  ...(canonical
+    ? { url: canonical, image: new URL(asset('media/hamlet-performance.webp?v=black-background'), Astro.site).href }
+    : {}),
 };
 ---
 
@@ -67,7 +73,7 @@ const schema = {
     <title>Gitaarles in Merksem, Antwerpen | Hamlet</title>
     <meta
       name="description"
-      content="Van je eerste akkoord tot flamenco. Ontdek persoonlijke gitaarlessen bij Hamlet in Merksem, Antwerpen. Bekijk zijn optreden en bespreek je eerste les."
+      content="Leer gitaar spelen bij Hamlet in Merksem, Antwerpen. Je eerste kennismakingsles is gratis. Van je eerste akkoord tot Spaanse gitaar en flamenco."
     />
     <meta name="theme-color" content="#252025" />
     {canonical && <link rel="canonical" href={canonical} />}
@@ -77,13 +83,13 @@ const schema = {
     <meta property="og:title" content="Hamlet — leer gitaar spelen. Op jouw tempo." />
     <meta
       property="og:description"
-      content="Persoonlijke gitaarlessen in Merksem. Van je eerste akkoord tot de wereld van flamenco."
+      content="Persoonlijke gitaarlessen in Merksem. Je eerste kennismakingsles is gratis. Van je eerste akkoord tot de wereld van flamenco."
     />
     <meta
       property="og:image"
       content={Astro.site
-        ? new URL(asset('media/hamlet-performance.webp'), Astro.site).href
-        : asset('media/hamlet-performance.webp')}
+        ? new URL(asset('media/hamlet-performance.webp?v=black-background'), Astro.site).href
+        : asset('media/hamlet-performance.webp?v=black-background')}
     />
     <meta name="twitter:card" content="summary_large_image" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
@@ -96,7 +102,7 @@ const schema = {
         <nav class="desktop-nav" aria-label="Hoofdnavigatie">
           <a href="#lessen">De lessen</a><a href="#hamlet">Over Hamlet</a><a href="#vragen">Veelgestelde vragen</a>
         </nav>
-        <a class="header-cta" href={`tel:${phone}`}>Bespreek je eerste les <Icon name="arrow" size={18} /></a>
+        <a class="header-cta" href={`tel:${phone}`}>Plan je gratis les <Icon name="arrow" size={18} /></a>
         <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu openen"
           ><span></span><span></span></button
         >
@@ -117,8 +123,8 @@ const schema = {
           loop
           playsinline
           preload="none"
-          poster={asset('media/hamlet-performance.webp')}
-          data-src={asset('media/hamlet-hero.mp4')}
+          poster={asset('media/hamlet-performance.webp?v=black-background')}
+          data-src={asset('media/hamlet-hero.mp4?v=black-background')}
           width="1280"
           height="720"
           aria-label="Hamlet speelt flamencogitaar op de achtergrond"></video>
@@ -129,8 +135,9 @@ const schema = {
           <p class="hero-description">
             Van dat eerste akkoord tot muziek die je voelt. Leer spelen met Hamlet, op jouw niveau.
           </p>
-          <a class="button button-gold" href={`tel:${phone}`}>Bespreek je eerste les <Icon name="arrow" /></a>
-          <span class="hero-note">Persoonlijk contact met Hamlet</span>
+          <p class="hero-offer">Je eerste kennismakingsles is gratis.</p>
+          <a class="button button-gold" href={`tel:${phone}`}>Plan je gratis les <Icon name="arrow" /></a>
+          <span class="hero-note">Bel Hamlet en spreek een moment af</span>
         </div>
         <div class="hero-controls" role="group" aria-label="Bediening achtergrondvideo">
           <button class="hero-sound" id="hero-sound" aria-controls="hero-video" aria-label="Geluid inschakelen">
@@ -274,8 +281,9 @@ const schema = {
 
       <section class="contact-section" id="contact" aria-labelledby="contact-heading">
         <div class="contact-main">
-          <h2 id="contact-heading">Die gitaar wacht<br />al lang genoeg.<br /><em>Begin gewoon.</em></h2><p>
-            Vertel Hamlet wat je graag wilt leren.<br />Samen bespreken jullie een eerste les.
+          <h2 id="contact-heading">Jouw eerste les.<br /><em>Helemaal gratis.</em></h2><p>
+            Maak kennis met Hamlet en ontdek hoe gitaarles bij hem voelt.<br />Bel of stuur een bericht om je gratis
+            kennismakingsles af te spreken.
           </p><a class="button button-dark" href={`tel:${phone}`}
             ><Icon name="phone" size={19} /> Bel Hamlet <span>0483 50 22 20</span><Icon name="arrow" /></a
           ><a class="sms-link" href={sms} id="sms-link"
@@ -308,7 +316,7 @@ const schema = {
       </div>
     </footer>
     <a class="mobile-call" href={`tel:${phone}`}
-      ><Icon name="phone" size={18} /> Bespreek je eerste les <Icon name="arrow" size={18} /></a
+      ><Icon name="phone" size={18} /> Plan je gratis les <Icon name="arrow" size={18} /></a
     >
     <dialog class="video-dialog" aria-labelledby="video-title">
       <div class="video-dialog-header">
@@ -319,7 +327,7 @@ const schema = {
         controls
         playsinline
         preload="none"
-        poster={asset('media/hamlet-performance.webp')}
+        poster={asset('media/hamlet-performance.webp?v=black-background')}
         data-src={asset('media/hamlet-flamenco.mp4')}
         aria-label="Flamencogitaar door Hamlet, instrumentaal optreden van 2 minuten en 36 seconden"
         ><track kind="captions" src={asset('media/performance.nl.vtt')} srclang="nl" label="Nederlands" /></video
@@ -461,8 +469,9 @@ const schema = {
           const smsLink = document.querySelector<HTMLAnchorElement>('#sms-link');
           const message = document.querySelector<HTMLElement>('#contact-interest');
           if (smsLink)
-            smsLink.href = `sms:+32483502220?body=${encodeURIComponent(`Dag Hamlet, ${interest.toLowerCase()}. Kunnen we een eerste gitaarles bespreken?`)}`;
-          if (message) message.textContent = `${interest}? Vertel het Hamlet. Je sms staat alvast klaar.`;
+            smsLink.href = `sms:+32483502220?body=${encodeURIComponent(`Dag Hamlet, ${interest.toLowerCase()}. Ik wil graag een gratis kennismakingsles afspreken. Wanneer past het voor jou?`)}`;
+          if (message)
+            message.textContent = `${interest}? Vraag je gratis kennismakingsles aan. Je sms staat alvast klaar.`;
         })
       );
     </script>

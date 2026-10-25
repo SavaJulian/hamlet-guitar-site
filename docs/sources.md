@@ -51,7 +51,7 @@ Search found Hamlet Niño Lazarios mentioned as a flamenco guitarist in Antwerp 
 - Video label: “Luister naar Hamlet” / “Een voorproefje van flamenco”.
 - Lesson propositions: “Begin bij jouw niveau”, “Techniek die je hoort”, “Een ritme om in te groeien”.
 - Process: kennismaken met je niveau/doel; afspreken over tijd en les; gericht oefenen tussen lessen.
-- Use personal attention, actual playing and welcoming beginner copy as proof; avoid invented diplomas, experience years, number of pupils, scarcity, refund promise, prices or free trial.
+- Use personal attention, actual playing and welcoming beginner copy as proof; avoid invented diplomas, experience years, number of pupils, scarcity, refund promise, prices or unconfirmed offers.
 - FAQ price: “Bespreek het actuele tarief en de praktische afspraken rechtstreeks met Hamlet.”
 - Location: “Bredabaan 479 · 2170 Merksem, Antwerpen”.
 
@@ -61,4 +61,10 @@ Agent Reach skill read. Its Exa mcporter binary was absent; web search + officia
 
 ## Conversion decisions
 
-Proof precedes the contact action: Hamlet’s real performance and a sourced learner quote. The repeated action is a discussion of a first lesson, with direct phone and SMS routes. No guarantees, artificial scarcity, free-lesson offer or unverifiable credentials. These choices follow Sabri Suby’s proof-adjacent-to-claims rule and Russell Brunson’s outcome-first copy principle in the local Sabri marketing knowledge base; conversion uplift has not been measured.
+Proof precedes the contact action: Hamlet’s real performance and a sourced learner quote. The repeated action is a discussion of a first lesson, with direct phone and SMS routes. No guarantees, artificial scarcity or unverifiable credentials. The later user-confirmed free introductory lesson is promoted as described below. These choices follow Sabri Suby’s proof-adjacent-to-claims rule and Russell Brunson’s outcome-first copy principle in the local Sabri marketing knowledge base; conversion uplift has not been measured.
+
+## User-confirmed free introductory lesson — 25 October 2026
+
+Julian explicitly requested: “zeggen dat de eerste kennismakingsles gratis is”. This is the source for the new hero, contact, FAQ and inquiry copy. The first introductory lesson is free; subsequent lesson rates remain to be discussed directly with Hamlet. No duration for the free lesson, deadline, limited places or absence of obligations was supplied or invented.
+
+Offer placement follows the single-next-step principle in the local Sabri Marketing BRAIN.md §2 (Hormozi and Sabri Suby, 17 May 2026) and ads-writer.md “Landing page”: repeat one clear offer at decision points. Conversion uplift has not been measured.

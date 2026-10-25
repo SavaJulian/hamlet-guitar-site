@@ -83,7 +83,7 @@ test('lesson choice prepares the matching SMS without sending anything', async (
   expect(sms.protocol).toBe('sms:');
   expect(sms.pathname).toBe('+32483502220');
   expect(sms.searchParams.get('body')).toContain('ik wil flamenco leren');
-  expect(sms.searchParams.get('body')).toContain('eerste gitaarles bespreken');
+  expect(sms.searchParams.get('body')).toContain('gratis kennismakingsles afspreken');
   await expect(page.locator('[aria-live="polite"]')).toContainText('Ik wil flamenco leren');
 });
 
@@ -142,7 +142,7 @@ test('reduced motion keeps the hero as a poster until the visitor starts it', as
   const start = page.getByRole('button', { name: 'Video afspelen', exact: true });
   await expect(start).toBeVisible();
   await expect(hero).not.toHaveAttribute('src');
-  await expect(hero).toHaveAttribute('poster', /hamlet-performance\.webp$/);
+  await expect(hero).toHaveAttribute('poster', /hamlet-performance\.webp\?v=black-background$/);
   expect(heroRequests).toHaveLength(0);
   expect(await hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
 

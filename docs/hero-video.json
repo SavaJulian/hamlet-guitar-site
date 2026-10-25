@@ -7,11 +7,26 @@
   "video_codec": "H264",
   "audio_codec": "AAC 128kbps",
   "frame_rate": 25,
-  "bytes": 2400008,
-  "sha256": "ab79652c8c4ee74c226cdd49dc3f9410fba475e2e1ed914cde5486226becc0fe",
+  "bytes": 2291457,
+  "sha256": "dd0656e3f7fd0661ecae7fc3c298538e5f0c476f045e8c53b1ca0f28d693df27",
   "faststart_verified": true,
   "full_decode_verified": true,
   "content": "Actual continuous performance excerpt; the source edit contains camera/crop cuts. No source typography in selected interval. No frozen or generated frames.",
-  "encoding": "libx264 slow crf24 maxrate1400k bufsize2800k; audio fade0.08s at beginning and ending to soften loop boundary",
-  "playback_intent": "Muted autoplay loop by default, user may enable audio; manual pause and reduced-motion handling belong to website."
+  "encoding": "libx264 slow crf22 maxrate1400k bufsize2800k; Rec.709 limited range; AAC128kbps with0.08s edge fades",
+  "playback_intent": "Muted autoplay loop by default, user may enable audio; manual pause and reduced-motion handling belong to website.",
+  "treatment": {
+    "intent": "Remove distracting near-black backdrop grain and composite on solid black, preserving bright subject tones and the real performance.",
+    "method": "FFmpeg colorkey black, similarity0.06, soft blend0.025, over generated solid black plate; source PTS rebased before composition. No global exposure or brightness reduction.",
+    "filter": "setpts=PTS-STARTPTS,scale=1280:720:flags=lanczos,format=rgba,colorkey=black:0.06:0.025; composite over color=black; output yuv420p",
+    "verification": "Compared all12sampled frames across cuts plus full-size face, poster and first frame against authentic source; aggressive earlier candidates rejected for lost facial shadow detail. Full300frame decode passed.",
+    "scope": "Hero excerpt and derived poster only; full performance and original source remain untouched."
+  },
+  "poster": {
+    "file": "hamlet-performance.webp",
+    "hero_time_seconds": 2.8,
+    "approximate_source_time_seconds": 27.9,
+    "dimensions": [1280, 720],
+    "bytes": 38970,
+    "sha256": "1842ebc2cbf662c900c25c718e73472d06d1c819a4300e45a90b6db2f3140e70"
+  }
 }

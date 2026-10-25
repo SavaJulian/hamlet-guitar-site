@@ -8,12 +8,14 @@
   "provenance": "Authentic user-provided performance footage supplies the hero excerpt, full video and extracted poster. Generated conceptual section images are recorded separately and do not depict Hamlet teaching or his actual studio. Original footage unchanged.",
   "stills": {
     "hamlet-performance.webp": {
-      "timecode_seconds": 28,
-      "dimensions": [1920, 1080],
-      "purpose": "Wide performance poster; face upper left/center, guitar lower left, dark space to the right.",
-      "bytes": 87304,
-      "source_type": "Frame extracted from authentic user-provided footage",
-      "provenance_sidecar": "hamlet-performance.webp.json"
+      "timecode_seconds": 27.9,
+      "dimensions": [1280, 720],
+      "purpose": "Wide performance poster derived from black-background hero treatment; actual Hamlet face and guitar left, clean black space right.",
+      "bytes": 38970,
+      "source_type": "Frame extracted from authentic user-provided footage after selective near-black backdrop treatment",
+      "provenance_sidecar": "hamlet-performance.webp.json",
+      "sha256": "1842ebc2cbf662c900c25c718e73472d06d1c819a4300e45a90b6db2f3140e70",
+      "treatment_manifest": "docs/hero-video.json"
     }
   },
   "video": {
@@ -35,11 +37,13 @@
     "source_interval_seconds": [25.1, 37.1],
     "duration_seconds": 12,
     "dimensions": [1280, 720],
-    "bytes": 2400008,
+    "bytes": 2291457,
     "audio": "AAC 128kbps",
     "web_delivery": "faststart",
     "playback": "Muted autoplay loop with sound and pause/resume controls; reduced motion starts with poster and manual play.",
-    "encoding_manifest": "docs/hero-video.json"
+    "encoding_manifest": "docs/hero-video.json",
+    "sha256": "dd0656e3f7fd0661ecae7fc3c298538e5f0c476f045e8c53b1ca0f28d693df27",
+    "treatment": "Near-black RGB key composited over solid black; no generated subject frames. See encoding manifest."
   },
   "generated_images": {
     "lesson-craft.webp": {

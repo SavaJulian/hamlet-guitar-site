@@ -32,7 +32,7 @@ Name Hamlet. User-supplied performance footage remains the primary visual proof.
 
 ## Evidence on Hand
 
-User states Hamlet gives guitar lessons in Merksem, Antwerpen. Supplied video filename flamenco_final_v3_1080p.mp4; exact matching file recovered from Downloads because original scratch path is unavailable. Verified business research is recorded in docs/sources.md, including phone and address. Current direct lesson prices and availability remain for Hamlet to confirm. The 12-second hero excerpt and the complete performance derive from this same authentic source; generated section imagery is documented separately in docs/media-manifest.json.
+User states Hamlet gives guitar lessons in Merksem, Antwerpen. Supplied video filename flamenco_final_v3_1080p.mp4; exact matching file recovered from Downloads because original scratch path is unavailable. Verified business research is recorded in docs/sources.md, including phone and address. Julian explicitly confirmed on 25 October 2026 that the first kennismakingsles is free and requested promoting it on the website. Rates for subsequent lessons and availability remain for Hamlet to confirm. The free introductory lesson duration has not been specified; the sourced 60-minute duration applies to regular lessons. The 12-second hero excerpt and the complete performance derive from this same authentic source; generated section imagery is documented separately in docs/media-manifest.json.
 
 ## Product Principles
 
@@ -43,3 +43,7 @@ Show his real playing. Make the first step easy. Explain beginner suitability wi
 Julian approved “Leer gitaar spelen. Op jouw tempo.” on 25 October 2026, replacing the metaphorical opening with a clear lesson offer.
 
 The teacher-section image caption is “Techniek. Ritme. Expressie.” The accompanying conceptual image shows a guitar, practice notebook and pencil. The private-practice section uses a different, wider guitar-and-chair scene beneath “Een uur voor jezelf. Een geluid dat blijft.”
+
+The user-confirmed introductory offer is “Je eerste kennismakingsles is gratis.” It appears beside the hero action, in the contact heading and FAQ. Primary invitations read “Plan je gratis les”; the default and interest-specific SMS drafts ask for a gratis kennismakingsles. No deadline, limited availability or follow-up obligation is claimed.
+
+Julian requested removing the distracting grain behind Hamlet in the hero. The real performance excerpt and its poster now use a cleaned near-black background composited onto pure black; the source recording and full performance remain unchanged.

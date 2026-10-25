@@ -15,3 +15,7 @@
 - An isolated subdirectory build verified every local asset/link starts with the configured base; canonical URLs use SITE_URL only when supplied.
 
 These checks do not measure commercial conversion or place live calls/send messages. The repository's workflow checks and builds pull requests, then publishes successful `main` builds to GitHub Pages using the configured `/hamlet-guitar-site` base path. A custom domain has not been configured.
+
+## Free introduction offer and black hero backdrop
+
+The user-confirmed free kennismakingsles is shown beside the hero CTA, in the gold contact section and FAQ, and in default/selected-interest SMS drafts. Regular lesson duration is distinguished from the unspecified introductory duration. Desktop/tablet/mobile layouts checked at 320, 390, 768 and 1440 pixels; 14 browser tests passed after the copy update. The hero backdrop and poster were cleaned and the surrounding hero background changed to pure black; versioned media URLs avoid reusing the old cached assets.
