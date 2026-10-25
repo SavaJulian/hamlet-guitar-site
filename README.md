@@ -36,7 +36,11 @@ Internal links and public assets can use `withBase()` from `src/lib/site.ts`; `a
 
 ## Content and contact
 
-The supplied performance video and extracted stills are used as real evidence of Hamlet's playing. Business details and source references are documented in `docs/sources.md`. Current prices and availability must be confirmed directly with Hamlet; the site does not invent them.
+The supplied performance video and its poster are real evidence of Hamlet's playing. The hero uses a 12-second, 720p excerpt that loops muted by default, with visible sound, pause/resume and full-video controls. Reduced-motion visitors initially see the poster and can start playback manually. Playback pauses while the hero is off screen, the browser tab is hidden or the full-video dialog is open.
+
+The teacher and practice sections use two generated conceptual mood images: `lesson-craft.webp` (1122 × 1402) and `practice-corner.webp` (1536 × 1024). Their alt text identifies them as atmosphere; they do not depict Hamlet teaching or his actual studio. Exact prompts are preserved in adjacent `.webp.json` sidecars. `docs/media-manifest.json` distinguishes these images from the authentic footage, and `docs/hero-video.json` records the excerpt's source and encoding.
+
+Business details and source references are documented in `docs/sources.md`. Current prices and availability must be confirmed directly with Hamlet; the site does not invent them. The approved opening is “Leer gitaar spelen. Op jouw tempo.”
 
 The site has no analytics, tracking pixels, account system or server-side lead database. Its contact links open the chosen communication channel. Review the privacy page whenever adding an external form, analytics or a booking provider.
 
@@ -50,4 +54,4 @@ Based on the MIT-licensed [AstroWind](https://github.com/arthelokyo/astrowind) s
 
 ## Brand assets
 
-Portable outlined SVG logos are in `public/brand/`: a brass logo, a dark-ink variant and a compact six-string H favicon. The full performance is delivered on demand as a 720p MP4 with audio; the original source is not modified.
+Portable outlined SVG logos are in `public/brand/`: a brass logo, a dark-ink variant and a compact six-string H favicon. The full 2:36 performance remains a separate 720p MP4 with audio, loaded only when its dialog is opened. The original source is not modified.

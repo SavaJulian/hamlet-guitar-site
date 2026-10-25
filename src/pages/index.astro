@@ -109,14 +109,19 @@ const schema = {
     </header>
     <main id="main">
       <section class="hero" aria-labelledby="hero-heading">
-        <img
-          class="hero-image"
-          src={asset('media/hamlet-performance.webp')}
-          width="1920"
-          height="1080"
-          alt="Hamlet speelt op zijn Spaanse gitaar in een intieme studio"
-          fetchpriority="high"
-        />
+        <video
+          id="hero-video"
+          class="hero-image hero-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster={asset('media/hamlet-performance.webp')}
+          data-src={asset('media/hamlet-hero.mp4')}
+          width="1280"
+          height="720"
+          aria-label="Hamlet speelt flamencogitaar op de achtergrond"></video>
         <div class="hero-shade"></div>
         <div class="hero-content">
           <h1 id="hero-heading">Leer gitaar spelen.<br /><em>Op jouw tempo.</em></h1>
@@ -127,10 +132,23 @@ const schema = {
           <a class="button button-gold" href={`tel:${phone}`}>Bespreek je eerste les <Icon name="arrow" /></a>
           <span class="hero-note">Persoonlijk contact met Hamlet</span>
         </div>
-        <button class="watch-trigger" data-play-video aria-haspopup="dialog">
-          <span class="play-disc"><Icon name="play" size={24} /></span>
-          <span>Hoor Hamlet spelen<small>Flamenco · 2:36 · met geluid</small></span>
-        </button>
+        <div class="hero-controls" role="group" aria-label="Bediening achtergrondvideo">
+          <button class="hero-sound" id="hero-sound" aria-controls="hero-video" aria-label="Geluid inschakelen">
+            <span data-sound-off><Icon name="sound-off" size={19} /></span>
+            <span data-sound-on hidden><Icon name="sound-on" size={19} /></span>
+            <span data-sound-label>Geluid aan</span>
+          </button>
+          <button class="hero-pause" id="hero-pause" aria-controls="hero-video" aria-label="Video pauzeren">
+            <span data-pause-icon><Icon name="pause" size={18} /></span>
+            <span data-resume-icon hidden><Icon name="play" size={18} /></span>
+          </button>
+          <button class="hero-full" data-play-video aria-haspopup="dialog"
+            >Volledige video <Icon name="arrow" size={16} /></button
+          >
+          <span class="hero-video-status" role="status" hidden
+            >De achtergrondvideo kon niet laden. Probeer de volledige video.</span
+          >
+        </div>
         <div class="hero-side-note" aria-hidden="true">ZES SNAREN. JOUW VERHAAL.</div>
       </section>
       <div class="lesson-strip">
@@ -178,12 +196,12 @@ const schema = {
       <section class="teacher-section" id="hamlet" aria-labelledby="teacher-heading">
         <div class="teacher-photo">
           <img
-            src={asset('media/hamlet-portrait.webp')}
-            width="1000"
-            height="1000"
-            alt="Hamlet, gitarist en gitaarleraar in Merksem, tijdens zijn optreden"
+            src={asset('media/lesson-craft.webp')}
+            width="1122"
+            height="1402"
+            alt="Sfeerbeeld: Spaanse gitaar, oefenschrift en potlood als uitnodiging om muziek te leren"
             loading="lazy"
-          /><span class="photo-caption">Hamlet, op zijn best: met een gitaar.</span>
+          /><span class="photo-caption">Techniek. Ritme. Expressie.</span>
         </div>
         <div class="teacher-copy">
           <h2 id="teacher-heading">Een gitarist.<br />Een leraar.<br /><em>Jouw gids.</em></h2><p>
@@ -212,10 +230,10 @@ const schema = {
       <section class="practice-section" aria-labelledby="practice-heading">
         <div class="practice-image">
           <img
-            src={asset('media/hamlet-guitar.webp')}
-            width="1400"
-            height="788"
-            alt="Detail van Hamlet’s handen en de snaren van zijn flamencogitaar"
+            src={asset('media/practice-corner.webp')}
+            width="1536"
+            height="1024"
+            alt="Sfeerbeeld: een Spaanse gitaar en een rustige plek om thuis te oefenen"
             loading="lazy"
           />
         </div>
@@ -332,10 +350,82 @@ const schema = {
       });
       const dialog = document.querySelector<HTMLDialogElement>('.video-dialog');
       const video = dialog?.querySelector<HTMLVideoElement>('video');
+      const heroVideo = document.querySelector<HTMLVideoElement>('#hero-video');
+      const soundButton = document.querySelector<HTMLButtonElement>('#hero-sound');
+      const pauseButton = document.querySelector<HTMLButtonElement>('#hero-pause');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let userPaused = reducedMotion.matches;
+      let heroInView = true;
+
+      const syncHeroControls = () => {
+        if (!heroVideo || !soundButton || !pauseButton) return;
+        const muted = heroVideo.muted;
+        soundButton.setAttribute('aria-label', muted ? 'Geluid inschakelen' : 'Geluid uitschakelen');
+        const soundLabel = soundButton.querySelector<HTMLElement>('[data-sound-label]');
+        if (soundLabel) soundLabel.textContent = muted ? 'Geluid aan' : 'Geluid uit';
+        soundButton.querySelector<HTMLElement>('[data-sound-off]')?.toggleAttribute('hidden', !muted);
+        soundButton.querySelector<HTMLElement>('[data-sound-on]')?.toggleAttribute('hidden', muted);
+        pauseButton.setAttribute('aria-label', heroVideo.paused ? 'Video afspelen' : 'Video pauzeren');
+        pauseButton.querySelector<HTMLElement>('[data-pause-icon]')?.toggleAttribute('hidden', heroVideo.paused);
+        pauseButton.querySelector<HTMLElement>('[data-resume-icon]')?.toggleAttribute('hidden', !heroVideo.paused);
+      };
+      const playHero = () => {
+        if (!heroVideo) return;
+        if (!heroVideo.src) heroVideo.src = heroVideo.dataset.src || '';
+        heroVideo.play().catch(syncHeroControls);
+      };
+      const updateHeroPlayback = () => {
+        if (!heroVideo) return;
+        if (userPaused || !heroInView || document.hidden || dialog?.open) heroVideo.pause();
+        else playHero();
+      };
+      if (heroVideo) {
+        heroVideo.muted = true;
+        heroVideo.addEventListener('play', syncHeroControls);
+        heroVideo.addEventListener('pause', syncHeroControls);
+        heroVideo.addEventListener('volumechange', syncHeroControls);
+        heroVideo.addEventListener('error', () => {
+          const status = document.querySelector<HTMLElement>('.hero-video-status');
+          if (status) status.hidden = false;
+          if (soundButton) soundButton.disabled = true;
+          if (pauseButton) pauseButton.disabled = true;
+        });
+        syncHeroControls();
+        updateHeroPlayback();
+        new IntersectionObserver(
+          ([entry]) => {
+            heroInView = entry.isIntersecting;
+            updateHeroPlayback();
+          },
+          { threshold: 0 }
+        ).observe(heroVideo);
+      }
+      soundButton?.addEventListener('click', () => {
+        if (!heroVideo) return;
+        heroVideo.muted = !heroVideo.muted;
+        if (!heroVideo.muted) {
+          userPaused = false;
+          playHero();
+        }
+        syncHeroControls();
+      });
+      pauseButton?.addEventListener('click', () => {
+        if (!heroVideo) return;
+        userPaused = !heroVideo.paused;
+        if (userPaused) heroVideo.pause();
+        else playHero();
+        syncHeroControls();
+      });
+      document.addEventListener('visibilitychange', updateHeroPlayback);
+      reducedMotion.addEventListener('change', () => {
+        userPaused = reducedMotion.matches;
+        updateHeroPlayback();
+      });
       document.querySelectorAll('[data-play-video]').forEach((button) =>
         button.addEventListener('click', () => {
           if (!dialog || !video) return;
           dialog.showModal();
+          heroVideo?.pause();
           document.body.style.overflow = 'hidden';
           if (!video.src) video.src = video.dataset.src || '';
           video.play().catch(() => {
@@ -359,6 +449,7 @@ const schema = {
       dialog?.addEventListener('close', () => {
         video?.pause();
         document.body.style.overflow = '';
+        updateHeroPlayback();
       });
       video?.addEventListener('error', () => {
         const error = dialog?.querySelector<HTMLElement>('.video-error');

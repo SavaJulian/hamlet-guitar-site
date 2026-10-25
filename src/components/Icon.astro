@@ -1,10 +1,13 @@
 ---
 interface Props {
-  name: 'arrow' | 'play' | 'phone' | 'pin' | 'plus' | 'close' | 'star' | 'message';
+  name: 'arrow' | 'play' | 'phone' | 'pin' | 'plus' | 'close' | 'star' | 'message' | 'sound-on' | 'sound-off' | 'pause';
   size?: number;
 }
 const { name, size = 20 } = Astro.props;
 const paths = {
+  'sound-on': 'M11 5 6 9H3v6h3l5 4V5ZM15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14',
+  'sound-off': 'M11 5 6 9H3v6h3l5 4V5ZM16 9l6 6M22 9l-6 6',
+  pause: 'M8 5v14M16 5v14',
   arrow: 'M4 12h16M13 5l7 7-7 7',
   play: 'M9 5l11 7-11 7V5Z',
   phone: 'M8 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-4l-5-2-2 2a14 14 0 0 1-6-6l2-2-2-5Z',

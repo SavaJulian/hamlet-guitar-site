@@ -297,46 +297,58 @@ button {
   font-size: 10px;
   margin-top: 12px;
 }
-.watch-trigger {
+.hero-controls {
   position: absolute;
   bottom: 44px;
   left: 5.1%;
   display: flex;
   align-items: center;
-  gap: 16px;
-  border: 0;
-  background: #191719d9;
-  padding: 10px 17px 10px 10px;
-  text-align: left;
-  font-size: 12px;
-  font-weight: 650;
-  transition: background 0.25s;
+  gap: 10px;
+  flex-wrap: wrap;
 }
-.watch-trigger:hover {
-  background: var(--ink);
-}
-.play-disc {
-  width: 52px;
-  height: 52px;
-  border: 1px solid #d7c99c;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
+.hero-controls button {
+  min-height: 46px;
+  border: 1px solid #857452;
+  background: #252025e8;
   color: var(--gold);
-  transition:
-    background 0.25s,
-    color 0.25s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 15px;
+  font-size: 11px;
+  line-height: 1.3;
+  transition: background 0.2s;
 }
-.watch-trigger:hover .play-disc {
-  background: var(--gold);
-  color: var(--ink);
+.hero-controls button:hover {
+  background: #483949;
 }
-.watch-trigger small {
-  display: block;
-  color: #c2b9b9;
-  font-size: 10px;
-  font-weight: 400;
-  margin-top: 4px;
+.hero-controls button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.hero-controls button > span {
+  display: inline-flex;
+  align-items: center;
+}
+.hero-controls .hero-pause {
+  width: 46px;
+  padding: 12px;
+}
+.hero-controls .hero-full {
+  border-color: transparent;
+  background: #252025c9;
+  color: var(--paper);
+}
+.hero-video-status {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  padding: 8px 12px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 11px;
 }
 .hero-side-note {
   position: absolute;
@@ -1062,26 +1074,26 @@ button {
     font-size: 9px;
     margin-top: 10px;
   }
-  .watch-trigger {
+  .hero-controls {
     bottom: auto;
     top: 272px;
     left: 7%;
-    padding: 6px 10px 6px 6px;
-    gap: 11px;
-    font-size: 10px;
+    right: 7%;
+    gap: 7px;
     z-index: 2;
   }
-  .play-disc {
-    width: 38px;
-    height: 38px;
+  .hero-controls button {
+    font-size: 10px;
+    padding: 10px;
+    gap: 7px;
+    min-height: 44px;
   }
-  .play-disc svg {
-    width: 18px;
-    height: 18px;
+  .hero-controls .hero-pause {
+    width: 44px;
+    padding: 10px;
   }
-  .watch-trigger small {
-    font-size: 8px;
-    margin-top: 2px;
+  .hero-controls .hero-full {
+    padding: 10px 7px;
   }
   .hero-side-note {
     display: none;
@@ -1449,7 +1461,7 @@ button {
   .hero-shade {
     height: 375px;
   }
-  .watch-trigger {
+  .hero-controls {
     top: 246px;
   }
   .hero h1 {

@@ -46,8 +46,6 @@ typography:
     fontSize: '12px'
     fontWeight: 750
     lineHeight: 1.4
-rounded:
-  play: '50%'
 spacing:
   control-gap: '32px'
   link-gap: '24px'
@@ -67,11 +65,12 @@ components:
     padding: '16px 22px'
   button-dark-hover:
     backgroundColor: '{colors.ink-hover}'
-  play-disc:
+  media-control:
+    backgroundColor: '#252025e8'
     textColor: '{colors.gold}'
-    rounded: '{rounded.play}'
-    width: '52px'
-    height: '52px'
+    borderColor: '#857452'
+    minHeight: '46px'
+    padding: '12px 15px'
   lesson-option:
     backgroundColor: '{colors.paper}'
     textColor: '{colors.ink}'
@@ -84,13 +83,13 @@ components:
 
 **Creative North Star: "The Intimate Recital Stage"**
 
-An intimate recital stage: smoked plum grounds the interface, brass marks invitations, and paper and lavender give the performance room to breathe. Real photographs and footage of Hamlet carry the identity alongside an original six-string H monogram.
+An intimate recital stage: smoked plum grounds the interface, brass marks invitations, and paper and lavender give the performance room to breathe. Hamlet's authentic footage and extracted poster carry the identity alongside an original six-string H monogram. Two generated guitar still lifes provide distinct lesson and home-practice atmosphere below the hero, without claiming to show his actual studio.
 
 High-contrast Bodoni Moda gives headings a musical cadence; Manrope keeps practical information direct. Broad tonal sections, asymmetrical grids and fine rules create a composed, personal atmosphere without card shadows.
 
 **Key Characteristics:**
 
-- Real performance imagery and an original six-string H.
+- Real performance footage, conceptual lesson imagery and an original six-string H.
 - Bodoni Moda display with restrained italic emphasis.
 - Rectangular actions, fine rules and broad tonal sections.
 
@@ -119,7 +118,7 @@ Smoked plum and muted brass anchor the palette; lavender and warm paper soften i
 
 **Display Font:** Bodoni Moda Variable, with Georgia and serif fallbacks. **Body Font:** Manrope Variable, with Arial and sans-serif fallbacks. Both are self-hosted; the home page also loads the Bodoni italic face.
 
-The display is expressive and tightly tracked, while body text and controls stay steady. The frontmatter records the implemented hierarchy, not a mathematical scale: the display belongs to the performance heading, headline to section headings, title to lesson choices, reading to explanatory copy, and button to primary actions. Italic emphasis retains the serif family.
+The display is expressive and tightly tracked, while body text and controls stay steady. The frontmatter records the implemented hierarchy, not a mathematical scale: the display belongs to the performance heading, headline to section headings, title to lesson choices, reading to explanatory copy, and button to primary actions. The approved hero reads “Leer gitaar spelen. Op jouw tempo.” with the second sentence in italic. Italic emphasis retains the serif family.
 
 Mobile display is 52px, then 46px below 370px; section headlines are 43px. Lesson titles become 29px. Final mobile overrides keep main explanatory paragraphs at 14px and FAQ questions at 13px. Other section-specific heading sizes are adaptations rather than new universal roles. Reading measures are generally 320–470px; privacy copy has its own wider reading container.
 
@@ -129,7 +128,7 @@ Mobile display is 52px, then 46px below 370px; section headlines are 43px. Lesso
 
 Broad sections alternate ink, paper, lavender and gold. Desktop section gutters use `max(5.1%, calc((100vw - 1294px) / 2))`; the header caps at 1440px and performance stage at 1920px. Split layouts use unequal tracks, while lesson options form three equal columns with rules. Main section padding is approximately 75–110px vertically; it is deliberately not a fabricated uniform spacing scale.
 
-At 1100px navigation and split-layout spacing tighten. At 760px navigation collapses to an expandable list, content stacks, section gutters become 7%, and a fixed call action uses the device safe-area inset. Lesson choices become horizontal title/copy rows within a vertical list. The stage image occupies the upper mobile area and copy follows it. A 761–900px correction reduces display size, and 1600px adds a larger stage. The final mobile line-break overrides are authoritative.
+At 1100px navigation and split-layout spacing tighten. At 760px navigation collapses to an expandable list, content stacks, section gutters become 7%, and a fixed call action uses the device safe-area inset. Lesson choices become horizontal title/copy rows within a vertical list. The stage video or poster occupies the upper mobile area, with its controls above the copy. A 761–900px correction reduces display size, and 1600px adds a larger stage. The final mobile line-break overrides are authoritative.
 
 Privacy uses a centered 740px reading column with 24px minimum side space; the 404 page uses a 700px container. These are supporting-page adaptations.
 
@@ -141,7 +140,7 @@ No box-shadow vocabulary is used. Depth comes from photographic cropping, dark i
 
 ## Shapes
 
-Main actions, images and the dialog use straight edges. The circular play disc is an intentional media affordance, not a general container radius. Thin outlined SVGs use current color and rounded stroke ends; play and rating stars use fills. The six-string H is six vertical strokes crossed by a horizontal bar.
+Main actions, media controls, images and the dialog use straight edges. Thin outlined SVGs use current color and rounded stroke ends; play and rating stars use fills. The six-string H is six vertical strokes crossed by a horizontal bar.
 
 ## Components
 
@@ -165,9 +164,19 @@ The desktop navigation uses Manrope at 12px/500 with 32px gaps. The mobile menu 
 
 Native details/summary rows use top and bottom rules. Questions use 13px/650 text with 24px vertical padding. The inline plus rotates 45 degrees when open. Answers remain in document flow; the final mobile answer size is 13px.
 
-### Performance control and dialog
+### Performance controls and dialog
 
-A dark translucent rectangular trigger contains a circular brass play control. Hover fills the disc with gold. The centered native dialog is at most 1100px or 94vw, becomes 96vw on mobile, and provides native video controls plus a labeled close button. Its entrance is a 10px rise with opacity over 350ms using `cubic-bezier(0.16, 1, 0.3, 1)`. Reduced motion removes transitions and animations and disables smooth scrolling.
+The 12-second authentic hero excerpt loops muted by default. The control group provides a labeled sound toggle, a square pause/resume button and “Volledige video”. Controls use translucent smoked plum, brass text and a fine brass border; the full-video button uses warm paper text and a transparent border. Desktop controls have a 46px minimum height, 10px gaps and 11px text. At the mobile breakpoint they use a 44px minimum height, 7px gaps and 10px text. Hover changes the background to ink-hover over 200ms.
+
+The hero pauses outside the viewport, when the browser tab is hidden and while the full-performance dialog is open. Its source is assigned only when playback is requested; reduced-motion visitors initially receive the poster and manual play. Sound is enabled only through the sound control. A load failure reveals a status message and disables the hero controls; the full-video action remains available.
+
+The full 2:36 performance is assigned and loaded on opening the centered native dialog, with native video controls and a labeled close button. The dialog is at most 1100px or 94vw and becomes 96vw on mobile. Its entrance is a 10px rise with opacity over 350ms using `cubic-bezier(0.16, 1, 0.3, 1)`. Reduced motion removes transitions and animations and disables smooth scrolling.
+
+### Section imagery
+
+`lesson-craft.webp` is a 1122 × 1402 conceptual close-up of a classical guitar, practice notebook and pencil. It accompanies “Een gitarist. Een leraar. Jouw gids.” and the caption “Techniek. Ritme. Expressie.” The teacher panel crops it with `object-fit: cover`, centered on desktop and at `center 32%` on mobile.
+
+`practice-corner.webp` is a separate 1536 × 1024 conceptual home-practice scene with a guitar and empty wooden chair. The practice panel crops it to a 1.3 aspect ratio on desktop and 1.45 on mobile, with `object-position: 38% center`. Both alt descriptions begin with “Sfeerbeeld”; neither image is evidence of Hamlet's actual studio or teaching activity. Exact generation prompts accompany each asset in a `.webp.json` sidecar.
 
 ### Brand
 
@@ -177,14 +186,15 @@ The brass wordmark pairs Bodoni lettering with the six-string H. Hover skews the
 
 ### Do:
 
-- **Do** use real Hamlet performance imagery and preserve the six-string H identity.
+- **Do** use real Hamlet footage as performance proof and preserve the six-string H identity.
+- **Do** distinguish conceptual section imagery from authentic footage in alt descriptions and provenance.
 - **Do** preserve the serif/sans division and the established light-on-dark or dark-on-light pairings.
 - **Do** keep visible keyboard focus, native video controls and reduced-motion support.
 - **Do** adapt split layouts into a single reading sequence on small screens.
 
 ### Don't:
 
-- **Don't** substitute generic guitar stock photography for the teacher's performance.
+- **Don't** replace Hamlet's performance proof with a conceptual image or describe generated rooms as his actual studio.
 - **Don't** turn lesson rows into floating, shadowed cards.
 - **Don't** inherit the smallest utility-text sizes as a body-text scale.
 

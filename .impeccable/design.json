@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-25T18:47:56.662610+00:00",
+  "generatedAt": "2026-10-25T19:27:11.302930+00:00",
   "title": "Design System: Hamlet Guitar",
   "extensions": {
     "colorMeta": {
@@ -165,12 +165,17 @@
       {
         "name": "color-transition",
         "value": "0.25s",
-        "purpose": "Filled action color and media trigger transitions."
+        "purpose": "Filled action color transitions."
       },
       {
         "name": "dialog-entrance",
         "value": "0.35s",
         "purpose": "10px rise and opacity from 0.6 to 1; disabled for reduced motion."
+      },
+      {
+        "name": "media-control-hover",
+        "value": "0.2s",
+        "purpose": "Hero media control background hover; disabled for reduced motion."
       }
     ],
     "breakpoints": [
@@ -236,11 +241,12 @@
       "css": ".ds-lesson-option{\n  padding: 34px 34px 10px 0;\n  display: flex;\n  flex-direction: column;\n  position: relative;\n  border-right: 1px solid #bfb9bf;\n}\n.ds-lesson-option h3{\n  font-size: 40px;\n  line-height: 1.12;\n  margin-bottom: 22px;\n}\n.ds-lesson-option p{\n  font-size: 12px;\n  line-height: 1.8;\n  max-width: 290px;\n  margin-bottom: 26px;\n}\n.ds-option-link{\n  display: flex;\n  align-items: center;\n  gap: 20px;\n  font-size: 11px;\n  font-weight: 750;\n  margin-top: auto;\n}\n.ds-option-link svg{\n  transition: transform 0.3s;\n}\n.ds-lesson-option:hover .ds-option-link svg{\n  transform: translateX(8px);\n}\n.ds-lesson-option:hover h3{\n  color: #77603a;\n}\n.ds-lesson-option:focus-visible{\n  outline-color: var(--ink);\n  outline-offset: 4px;\n}.ds-lesson-option{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);background:var(--paper,#f0eeea);color:var(--ink,#252025);text-decoration:none}.ds-lesson-option h3{font-family:var(--serif,\"Bodoni Moda Variable\",Georgia,serif);font-weight:450;letter-spacing:-.025em;margin-top:0}.ds-lesson-option:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
     },
     {
-      "name": "Performance Trigger",
-      "kind": "button",
-      "description": "Circular play affordance within the rectangular caption control.",
-      "html": "<button class=\"ds-watch-trigger\"><span class=\"ds-play-disc\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M9 5l11 7-11 7V5Z\"/></svg></span><span>Hoor Hamlet spelen<small>Flamenco · 2:36 · met geluid</small></span></button>",
-      "css": ".ds-watch-trigger{\n  position: relative;\n  \n  \n  display: flex;\n  align-items: center;\n  gap: 16px;\n  border: 0;\n  background: #191719d9;\n  padding: 10px 17px 10px 10px;\n  text-align: left;\n  font-size: 12px;\n  font-weight: 650;\n  transition: background 0.25s;\n}\n.ds-watch-trigger:hover{\n  background: var(--ink);\n}\n.ds-play-disc{\n  width: 52px;\n  height: 52px;\n  border: 1px solid #d7c99c;\n  border-radius: 50%;\n  display: grid;\n  place-items: center;\n  color: var(--gold);\n  transition:\n    background 0.25s,\n    color 0.25s;\n}\n.ds-watch-trigger:hover .ds-play-disc{\n  background: var(--gold);\n  color: var(--ink);\n}\n.ds-watch-trigger small{\n  display: block;\n  color: #c2b9b9;\n  font-size: 10px;\n  font-weight: 400;\n  margin-top: 4px;\n}.ds-watch-trigger{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);color:var(--paper,#f0eeea);cursor:pointer}.ds-watch-trigger:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
+      "name": "Hero Media Controls",
+      "kind": "custom",
+      "refersTo": "media-control",
+      "description": "Rectangular sound toggle, pause/resume and full-video action. The authentic 12-second excerpt loops muted by default; reduced motion begins on its poster. Full performance loads on dialog activation. This specimen displays the default playing/muted state.",
+      "html": "<div class=\"ds-hero-controls\" role=\"group\" aria-label=\"Bediening achtergrondvideo\"><button class=\"ds-hero-sound\" aria-label=\"Geluid inschakelen\"><span><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 5 6 9H3v6h3l5 4V5ZM16 9l6 6M22 9l-6 6\"/></svg></span><span>Geluid aan</span></button><button class=\"ds-hero-pause\" aria-label=\"Video pauzeren\"><span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 5v14M16 5v14\"/></svg></span></button><button class=\"ds-hero-full\" aria-haspopup=\"dialog\">Volledige video <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></button></div>",
+      "css": ".ds-hero-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }\n.ds-hero-controls button { min-height: 46px; border: 1px solid #857452; background: #252025e8; color: var(--gold, #ddc185); display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 15px; font-family: var(--sans, \"Manrope Variable\", Arial, sans-serif); font-size: 11px; line-height: 1.3; transition: background 0.2s; cursor: pointer; }\n.ds-hero-controls button:hover { background: #483949; }\n.ds-hero-controls button:disabled { opacity: 0.5; cursor: default; }\n.ds-hero-controls button > span { display: inline-flex; align-items: center; }\n.ds-hero-controls .ds-hero-pause { width: 46px; padding: 12px; }\n.ds-hero-controls .ds-hero-full { border-color: transparent; background: #252025c9; color: var(--paper, #f0eeea); }\n.ds-hero-controls button:focus-visible { outline: 2px solid var(--gold, #ddc185); outline-offset: 6px; }\n@media (max-width: 760px) { .ds-hero-controls { gap: 7px; } .ds-hero-controls button { font-size: 10px; padding: 10px; gap: 7px; min-height: 44px; } .ds-hero-controls .ds-hero-pause { width: 44px; padding: 10px; } .ds-hero-controls .ds-hero-full { padding: 10px 7px; } }\n@media (prefers-reduced-motion: reduce) { .ds-hero-controls button { transition: none; } }"
     },
     {
       "name": "Question Row",
@@ -252,9 +258,9 @@
   ],
   "narrative": {
     "northStar": "The Intimate Recital Stage",
-    "overview": "An intimate recital stage: smoked plum grounds the interface, brass marks invitations, and paper and lavender give the performance room to breathe. Real photographs and footage of Hamlet carry the identity alongside an original six-string H monogram.\n\nHigh-contrast Bodoni Moda gives headings a musical cadence; Manrope keeps practical information direct. Broad tonal sections, asymmetrical grids and fine rules create a composed, personal atmosphere without card shadows.",
+    "overview": "An intimate recital stage: smoked plum grounds the interface, brass marks invitations, and paper and lavender give the performance room to breathe. Hamlet's authentic footage and extracted poster carry the identity alongside an original six-string H monogram. Two generated guitar still lifes provide distinct lesson and home-practice atmosphere below the hero, without claiming to show his actual studio.\n\nHigh-contrast Bodoni Moda gives headings a musical cadence; Manrope keeps practical information direct. Broad tonal sections, asymmetrical grids and fine rules create a composed, personal atmosphere without card shadows.",
     "keyCharacteristics": [
-      "Real performance imagery and an original six-string H.",
+      "Real performance footage, conceptual lesson imagery and an original six-string H.",
       "Bodoni Moda display with restrained italic emphasis.",
       "Rectangular actions, fine rules and broad tonal sections."
     ],
@@ -276,13 +282,14 @@
       }
     ],
     "dos": [
-      "Do use real Hamlet performance imagery and preserve the six-string H identity.",
+      "Do use real Hamlet footage as performance proof and preserve the six-string H identity.",
+      "Do distinguish conceptual section imagery from authentic footage in alt descriptions and provenance.",
       "Do preserve the serif/sans division and the established light-on-dark or dark-on-light pairings.",
       "Do keep visible keyboard focus, native video controls and reduced-motion support.",
       "Do adapt split layouts into a single reading sequence on small screens."
     ],
     "donts": [
-      "Don't substitute generic guitar stock photography for the teacher's performance.",
+      "Don't replace Hamlet's performance proof with a conceptual image or describe generated rooms as his actual studio.",
       "Don't turn lesson rows into floating, shadowed cards.",
       "Don't inherit the smallest utility-text sizes as a body-text scale."
     ]

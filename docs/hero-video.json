@@ -1,0 +1,17 @@
+{
+  "source": "flamenco_final_v3_1080p.mp4",
+  "source_sha256": "d0caf177ec6d90d900d0a5a2da090129bfe5372b8521df4c8a95266cb43a946d",
+  "source_interval_seconds": [25.1, 37.1],
+  "duration_seconds": 12,
+  "dimensions": [1280, 720],
+  "video_codec": "H264",
+  "audio_codec": "AAC 128kbps",
+  "frame_rate": 25,
+  "bytes": 2400008,
+  "sha256": "ab79652c8c4ee74c226cdd49dc3f9410fba475e2e1ed914cde5486226becc0fe",
+  "faststart_verified": true,
+  "full_decode_verified": true,
+  "content": "Actual continuous performance excerpt; the source edit contains camera/crop cuts. No source typography in selected interval. No frozen or generated frames.",
+  "encoding": "libx264 slow crf24 maxrate1400k bufsize2800k; audio fade0.08s at beginning and ending to soften loop boundary",
+  "playback_intent": "Muted autoplay loop by default, user may enable audio; manual pause and reduced-motion handling belong to website."
+}
