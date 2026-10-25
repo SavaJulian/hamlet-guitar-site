@@ -22,17 +22,17 @@ bun run preview
 
 For browser tests, install Chromium once with `bunx playwright install chromium`. The tests exercise navigation, responsive layouts, FAQ, contact destinations and on-demand video playback without sending messages or making calls.
 
-The static output is `dist/`. GitHub Actions checks and builds the repository; it does not publish a website automatically.
+The static output is `dist/`. GitHub Actions checks and builds every pull request. Successful builds on `main` publish automatically to [the public website](https://savajulian.github.io/hamlet-guitar-site/) through GitHub Pages.
 
 ## Deployment configuration
 
-Set `SITE_URL` to the confirmed production origin when deploying. Without it, the build intentionally emits no fabricated canonical URL or sitemap. If publishing under a subdirectory, set `BASE_PATH` as well and rebuild.
+The GitHub Pages workflow sets `SITE_URL=https://savajulian.github.io` and `BASE_PATH=/hamlet-guitar-site`. To reproduce the hosted build locally:
 
 ```sh
-SITE_URL=https://your-confirmed-domain.be BASE_PATH=/ bun run build
+SITE_URL=https://savajulian.github.io BASE_PATH=/hamlet-guitar-site bun run build
 ```
 
-Internal links and public assets can use `withBase()` from `src/lib/site.ts`; `absoluteUrl(path, Astro.site)` produces a URL only when the production origin is configured. Fonts are self-hosted through Fontsource packages.
+For a future custom domain, update these build variables and the hosting configuration together. Without `SITE_URL`, the build emits no canonical URL or sitemap. Internal links and public assets can use `withBase()` from `src/lib/site.ts`; `absoluteUrl(path, Astro.site)` produces a URL only when the production origin is configured. Fonts are self-hosted through Fontsource packages.
 
 ## Content and contact
 

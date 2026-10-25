@@ -14,4 +14,4 @@
 - The refinement reviewer found an overlapping hero error message on mobile. The message now sits above the controls; a separate visual recheck and a browser regression test verified that an intercepted 404 keeps the heading readable and the full-video recovery path usable.
 - An isolated subdirectory build verified every local asset/link starts with the configured base; canonical URLs use SITE_URL only when supplied.
 
-These checks do not measure commercial conversion or place live calls/send messages. The repository includes a build/check workflow; public hosting and a production domain are not configured by this change.
+These checks do not measure commercial conversion or place live calls/send messages. The repository's workflow checks and builds pull requests, then publishes successful `main` builds to GitHub Pages using the configured `/hamlet-guitar-site` base path. A custom domain has not been configured.
