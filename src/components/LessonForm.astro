@@ -1,0 +1,336 @@
+---
+import Icon from './Icon.astro';
+import { withBase } from '../lib/site';
+
+interface Props {
+  action?: string;
+  hiddenFields?: Record<string, string>;
+}
+
+const { action, hiddenFields = {} } = Astro.props;
+const ready = Boolean(action);
+---
+
+<form
+  id="kennismakingsformulier"
+  class="lesson-form"
+  action={action}
+  method="post"
+  data-ready={String(ready)}
+  aria-label="Gratis kennismakingsles aanvragen"
+  aria-describedby="lesson-form-note"
+>
+  {Object.entries(hiddenFields).map(([name, value]) => <input type="hidden" name={name} value={value} />)}
+  <div class="form-fields">
+    <div class="form-field">
+      <label for="lesson-name">Je naam <span>(verplicht)</span></label>
+      <input
+        id="lesson-name"
+        name="naam"
+        type="text"
+        autocomplete="name"
+        maxlength="120"
+        required
+        aria-describedby="lesson-name-error"
+      />
+      <p class="field-error" id="lesson-name-error" hidden></p>
+    </div>
+    <div class="form-field">
+      <label for="lesson-email">E-mailadres <span>(verplicht)</span></label>
+      <input
+        id="lesson-email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        inputmode="email"
+        maxlength="254"
+        required
+        aria-describedby="lesson-email-error"
+      />
+      <p class="field-error" id="lesson-email-error" hidden></p>
+    </div>
+    <div class="form-field">
+      <label for="lesson-phone">Telefoonnummer <span>(optioneel)</span></label>
+      <input id="lesson-phone" name="telefoon" type="tel" autocomplete="tel" maxlength="40" />
+    </div>
+    <div class="form-field">
+      <label for="lesson-interest">Waar sta je nu? <span>(optioneel)</span></label>
+      <select id="lesson-interest" name="interesse">
+        <option value="">Kies wat bij je past</option>
+        <option>Ik begin net</option>
+        <option>Ik speel al gitaar</option>
+        <option>Ik wil flamenco leren</option>
+      </select>
+    </div>
+    <div class="form-field form-field-wide">
+      <label for="lesson-message">Wat wil je graag leren? <span>(optioneel)</span></label>
+      <textarea id="lesson-message" name="bericht" rows="3" maxlength="1200"></textarea>
+    </div>
+  </div>
+  <p class="form-note" id="lesson-form-note">
+    Met je aanvraag spreek je een moment af voor je gratis kennismakingsles. Je les is nog niet geboekt.
+  </p>
+  <button class="form-submit" type="submit" disabled={!ready}>
+    <span>Vraag je gratis les aan</span><Icon name="arrow" />
+  </button>
+  <p class="form-status" id="lesson-form-status" role="status" aria-live="polite">
+    {!ready && 'Dit formulier staat klaar als voorbeeld. Verzenden is nog niet ingeschakeld.'}
+  </p>
+  <p class="form-privacy">
+    Hamlet gebruikt je gegevens om je vraag over gitaarles te beantwoorden. <a href={withBase('/privacy/')}
+      >Lees het privacybeleid.</a
+    >
+  </p>
+  <a class="form-phone" href="tel:+32483502220">Liever bellen? <span>0483 50 22 20</span></a>
+  <noscript
+    ><p class="form-note">Je kunt Hamlet ook rechtstreeks bellen om een kennismakingsles af te spreken.</p></noscript
+  >
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#kennismakingsformulier');
+  if (form) {
+    const status = form.querySelector<HTMLElement>('#lesson-form-status');
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement>('input[required]'));
+    form.noValidate = true;
+
+    const validateField = (field: HTMLInputElement) => {
+      let message = '';
+      if (!field.value.trim()) {
+        message = field.name === 'naam' ? 'Vul je naam in.' : 'Vul je e-mailadres in.';
+      } else if (field.type === 'email' && field.validity.typeMismatch) {
+        message = 'Vul een geldig e-mailadres in, zoals naam@voorbeeld.be.';
+      }
+      const error = document.getElementById(`${field.id}-error`);
+      if (error) {
+        error.textContent = message;
+        error.hidden = !message;
+      }
+      if (message) field.setAttribute('aria-invalid', 'true');
+      else field.removeAttribute('aria-invalid');
+      return !message;
+    };
+
+    fields.forEach((field) => {
+      field.addEventListener('blur', () => {
+        if (field.value || field.hasAttribute('aria-invalid')) validateField(field);
+      });
+      field.addEventListener('input', () => {
+        if (field.hasAttribute('aria-invalid')) validateField(field);
+      });
+    });
+
+    form.addEventListener('submit', (event) => {
+      if (form.dataset.ready !== 'true') {
+        event.preventDefault();
+        if (status) status.textContent = 'Verzenden is nog niet ingeschakeld. Je kunt Hamlet wel rechtstreeks bellen.';
+        return;
+      }
+      const invalid = fields.filter((field) => !validateField(field));
+      if (invalid.length) {
+        event.preventDefault();
+        if (status) status.textContent = 'Controleer de gemarkeerde velden voordat je je aanvraag verstuurt.';
+        invalid[0].focus();
+        return;
+      }
+      fields.forEach((field) => (field.value = field.value.trim()));
+      if (submit) {
+        submit.disabled = true;
+        submit.setAttribute('aria-busy', 'true');
+        const label = submit.querySelector('span');
+        if (label) label.textContent = 'Je aanvraag wordt verstuurd…';
+      }
+      if (status) status.textContent = 'Je aanvraag wordt verstuurd. Wacht op de bevestiging op de volgende pagina.';
+    });
+
+    // A native POST can leave this page in the browser's back-forward cache.
+    window.addEventListener('pageshow', () => {
+      if (submit && form.dataset.ready === 'true') {
+        submit.disabled = false;
+        submit.removeAttribute('aria-busy');
+        const label = submit.querySelector('span');
+        if (label) label.textContent = 'Vraag je gratis les aan';
+        if (status) status.textContent = '';
+      }
+    });
+  }
+</script>
+
+<style>
+  .lesson-form {
+    color-scheme: light;
+    color: var(--ink);
+    max-width: 650px;
+    min-width: 0;
+  }
+  .form-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px 20px;
+  }
+  .form-field {
+    min-width: 0;
+  }
+  .form-field-wide {
+    grid-column: 1 / -1;
+  }
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 700;
+  }
+  label span {
+    color: #584923;
+    font-size: 11px;
+    font-weight: 450;
+  }
+  input,
+  select,
+  textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    border: 1px solid #8e7544;
+    border-radius: 0;
+    background: #ead6a9;
+    color: var(--ink);
+    caret-color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 12px 13px;
+    transition:
+      border-color 180ms,
+      background-color 180ms;
+  }
+  input,
+  select {
+    min-height: 50px;
+  }
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: var(--ink);
+  }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+    border-color: var(--ink);
+    background: #f0e0bd;
+  }
+  input::selection,
+  textarea::selection {
+    color: var(--paper);
+    background: var(--ink);
+  }
+  textarea {
+    resize: vertical;
+    min-height: 102px;
+  }
+  input[aria-invalid='true'] {
+    border-color: #722c31;
+  }
+  .field-error {
+    color: #722c31;
+    font-size: 12px;
+    line-height: 1.55;
+    margin-top: 8px;
+  }
+  .form-note,
+  .form-privacy,
+  .form-status {
+    color: #584923;
+    font-size: 12px;
+    line-height: 1.7;
+    max-width: 62ch;
+  }
+  .form-note {
+    margin: 20px 0;
+  }
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 55px;
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    padding: 16px 22px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 750;
+    transition: background-color 200ms;
+  }
+  .form-submit:hover:not(:disabled) {
+    background: #483949;
+  }
+  .form-submit:disabled {
+    cursor: not-allowed;
+    background: #635543;
+    border-color: #635543;
+  }
+  .form-submit[aria-busy='true'] {
+    cursor: progress;
+  }
+  .form-submit :global(svg) {
+    transition: transform 200ms;
+  }
+  .form-submit:hover:not(:disabled) :global(svg) {
+    transform: translateX(4px);
+  }
+  .form-status:not(:empty) {
+    margin-top: 14px;
+  }
+  .form-privacy {
+    margin-top: 20px;
+    font-size: 11px;
+  }
+  .form-privacy a,
+  .form-phone span {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .form-phone {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 44px;
+    margin-top: 12px;
+    font-size: 13px;
+  }
+  .form-phone span {
+    font-weight: 700;
+  }
+  a:focus-visible,
+  button:focus-visible {
+    outline-color: var(--ink);
+  }
+  @container (min-width: 460px) {
+    .form-fields {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .form-submit {
+      width: 100%;
+      text-align: left;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    input,
+    select,
+    textarea,
+    .form-submit,
+    .form-submit :global(svg) {
+      transition: none;
+    }
+  }
+</style>

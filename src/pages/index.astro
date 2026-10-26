@@ -6,16 +6,23 @@ import '../styles/hamlet.css';
 import Brand from '../components/Brand.astro';
 import { withBase } from '../lib/site';
 import Icon from '../components/Icon.astro';
+import LessonForm from '../components/LessonForm.astro';
+import { lessonFormEndpoint } from '../lib/lessonForm';
 const base = withBase('/');
 const asset = (path: string) => `${base}${path}`;
 const phone = '+32483502220';
 const maps = 'https://www.google.com/maps?cid=4943289985205439662';
-const sms = `sms:${phone}?body=${encodeURIComponent('Dag Hamlet, ik wil graag een gratis kennismakingsles afspreken. Wanneer past het voor jou?')}`;
+const lessonFormAction = lessonFormEndpoint(import.meta.env.PUBLIC_LESSON_FORM_ENDPOINT);
+const lessonFormFields = {
+  _subject: 'Hamlet — aanvraag gratis kennismakingsles',
+  _template: 'table',
+  ...(Astro.site ? { _next: new URL(asset('bedankt/'), Astro.site).href } : {}),
+};
 const canonical = Astro.site ? new URL(base, Astro.site).href : undefined;
 const faqs = [
   [
     'Is de eerste kennismakingsles echt gratis?',
-    'Ja, je eerste kennismakingsles bij Hamlet is gratis. Bel of stuur een sms om een moment af te spreken. Zo kun je kennismaken en ervaren hoe de gitaarles bij hem voelt.',
+    'Ja, je eerste kennismakingsles bij Hamlet is gratis. Vul het formulier in om een moment af te spreken. Zo kun je kennismaken en ervaren hoe de gitaarles bij hem voelt.',
   ],
   [
     'Kan ik beginnen zonder ervaring?',
@@ -102,7 +109,7 @@ const schema = {
         <nav class="desktop-nav" aria-label="Hoofdnavigatie">
           <a href="#lessen">De lessen</a><a href="#hamlet">Over Hamlet</a><a href="#vragen">Veelgestelde vragen</a>
         </nav>
-        <a class="header-cta" href={`tel:${phone}`}>Plan je gratis les <Icon name="arrow" size={18} /></a>
+        <a class="header-cta" href="#contact">Plan je gratis les <Icon name="arrow" size={18} /></a>
         <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu openen"
           ><span></span><span></span></button
         >
@@ -142,8 +149,8 @@ const schema = {
             Van dat eerste akkoord tot muziek die je voelt. Leer spelen met Hamlet, op jouw niveau.
           </p>
           <p class="hero-offer">Je eerste kennismakingsles is gratis.</p>
-          <a class="button button-gold" href={`tel:${phone}`}>Plan je gratis les <Icon name="arrow" /></a>
-          <span class="hero-note">Bel Hamlet en spreek een moment af</span>
+          <a class="button button-gold" href="#contact">Plan je gratis les <Icon name="arrow" /></a>
+          <span class="hero-note">Vul het formulier in en spreek een moment af</span>
         </div>
         <button
           class="hero-sound"
@@ -219,7 +226,7 @@ const schema = {
           </p><p>
             In de les draait het om jouw spel. Je krijgt persoonlijke begeleiding en oefeningen om thuis mee verder te
             gaan. Of je nu voor het eerst een gitaar vastneemt of al jaren speelt.
-          </p><a class="text-link" href={`tel:${phone}`}>Maak kennis met Hamlet <Icon name="arrow" /></a>
+          </p><a class="text-link" href="#contact">Maak kennis met Hamlet <Icon name="arrow" /></a>
         </div>
       </section>
 
@@ -284,14 +291,11 @@ const schema = {
       <section class="contact-section" id="contact" aria-labelledby="contact-heading">
         <div class="contact-main">
           <h2 id="contact-heading">Jouw eerste les.<br /><em>Helemaal gratis.</em></h2><p>
-            Maak kennis met Hamlet en ontdek hoe gitaarles bij hem voelt.<br />Bel of stuur een bericht om je gratis
-            kennismakingsles af te spreken.
-          </p><a class="button button-dark" href={`tel:${phone}`}
-            ><Icon name="phone" size={19} /> Bel Hamlet <span>0483 50 22 20</span><Icon name="arrow" /></a
-          ><a class="sms-link" href={sms} id="sms-link"
-            ><Icon name="message" size={18} /> Liever een bericht? Stuur een sms <Icon name="arrow" size={18} /></a
-          ><p class="contact-interest" id="contact-interest" aria-live="polite"></p>
+            Maak kennis met Hamlet en ontdek hoe gitaarles bij hem voelt. Laat je gegevens achter, dan spreken jullie
+            samen een moment af.
+          </p>
         </div>
+        <div class="contact-form-area"><LessonForm action={lessonFormAction} hiddenFields={lessonFormFields} /></div>
         <div class="contact-location">
           <svg class="location-mark" width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true"
             ><circle cx="60" cy="60" r="55" stroke="currentColor" stroke-width="1"></circle><path
@@ -317,8 +321,8 @@ const schema = {
         >
       </div>
     </footer>
-    <a class="mobile-call" href={`tel:${phone}`}
-      ><Icon name="phone" size={18} /> Plan je gratis les <Icon name="arrow" size={18} /></a
+    <a class="mobile-call" href="#contact"
+      ><Icon name="message" size={18} /> Plan je gratis les <Icon name="arrow" size={18} /></a
     >
     <script>
       const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
@@ -441,12 +445,8 @@ const schema = {
       document.querySelectorAll<HTMLElement>('[data-interest]').forEach((link) =>
         link.addEventListener('click', () => {
           const interest = link.dataset.interest || '';
-          const smsLink = document.querySelector<HTMLAnchorElement>('#sms-link');
-          const message = document.querySelector<HTMLElement>('#contact-interest');
-          if (smsLink)
-            smsLink.href = `sms:+32483502220?body=${encodeURIComponent(`Dag Hamlet, ${interest.toLowerCase()}. Ik wil graag een gratis kennismakingsles afspreken. Wanneer past het voor jou?`)}`;
-          if (message)
-            message.textContent = `${interest}? Vraag je gratis kennismakingsles aan. Je sms staat alvast klaar.`;
+          const select = document.querySelector<HTMLSelectElement>('#lesson-interest');
+          if (select) select.value = interest;
         })
       );
     </script>

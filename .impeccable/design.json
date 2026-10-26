@@ -195,30 +195,40 @@
         "value": "1600px"
       }
     ],
-    "documentationUpdatedAt": "2026-10-26"
+    "documentationUpdatedAt": "2026-10-26",
+    "inquiryFormStatus": {
+      "status": "local-draft-unactivated",
+      "date": "2026-10-26",
+      "source": "src/components/LessonForm.astro",
+      "endpointVariable": "PUBLIC_LESSON_FORM_ENDPOINT",
+      "activation": "Recipient confirmed privately; never record it in public source, HTML, documentation or URLs. FormSubmit opaque endpoint selected; activation pending. Privacy and /bedankt pages being prepared separately. Keep draft on codex/free-lesson-form until activated endpoint and connected delivery/privacy review are complete.",
+      "provider": "FormSubmit",
+      "providerDocumentation": "https://formsubmit.co/documentation",
+      "validation": "20 local browser tests passed before the latest backend configuration and thank-you-page work. Real delivery and publication not yet verified."
+    }
   },
   "components": [
     {
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Rectangular lesson inquiry action.",
-      "html": "<button class=\"ds-button ds-button-gold\">Plan je gratis les <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></button>",
+      "description": "Rectangular lesson invitation linking to #contact in the local form draft.",
+      "html": "<a class=\"ds-button ds-button-gold\" href=\"#contact\">Plan je gratis les <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></a>",
       "css": ".ds-button{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 32px;\n  min-height: 55px;\n  padding: 16px 22px;\n  border: 1px solid transparent;\n  font-size: 12px;\n  font-weight: 750;\n  line-height: 1.4;\n  transition:\n    background 0.25s,\n    color 0.25s,\n    border-color 0.25s;\n}\n.ds-button svg{\n  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);\n}\n.ds-button:hover svg:last-child{\n  transform: translateX(5px);\n}\n.ds-button-gold{\n  background: var(--gold);\n  color: var(--ink);\n}\n.ds-button-gold:hover{\n  background: #ecdaa9;\n}.ds-button{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);cursor:pointer}.ds-button:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
     },
     {
       "name": "Dark Button",
       "kind": "button",
       "refersTo": "button-dark",
-      "description": "Rectangular lesson inquiry action.",
+      "description": "Retained dark action styling; the local inquiry form uses its own submit component and states.",
       "html": "<button class=\"ds-button ds-button-dark\">Plan je gratis les <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></button>",
       "css": ".ds-button{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 32px;\n  min-height: 55px;\n  padding: 16px 22px;\n  border: 1px solid transparent;\n  font-size: 12px;\n  font-weight: 750;\n  line-height: 1.4;\n  transition:\n    background 0.25s,\n    color 0.25s,\n    border-color 0.25s;\n}\n.ds-button svg{\n  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);\n}\n.ds-button:hover svg:last-child{\n  transform: translateX(5px);\n}\n.ds-button-dark{\n  color: var(--paper);\n  background: var(--ink);\n  gap: 16px;\n  flex-wrap: wrap;\n}\n.ds-button-dark:hover{\n  background: #483949;\n}.ds-button{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);cursor:pointer}.ds-button:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
     },
     {
       "name": "Text Link",
       "kind": "button",
-      "description": "Ruled secondary action.",
-      "html": "<a class=\"ds-text-link\" href=\"#\">Maak kennis met Hamlet <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></a>",
+      "description": "Ruled secondary action; Maak kennis met Hamlet links to #contact in the local draft.",
+      "html": "<a class=\"ds-text-link\" href=\"#contact\">Maak kennis met Hamlet <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></a>",
       "css": ".ds-text-link{\n  display: inline-flex;\n  align-items: center;\n  gap: 24px;\n  border-bottom: 1px solid currentColor;\n  padding-bottom: 7px;\n  font-size: 12px;\n  font-weight: 650;\n  transition: gap 0.3s;\n}\n.ds-text-link:hover{\n  gap: 32px;\n}.ds-text-link{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);color:var(--gold,#ddc185);text-decoration:none}.ds-text-link:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
     },
     {
@@ -250,6 +260,14 @@
       "description": "Native expanding question separated by fine rules.",
       "html": "<div class=\"ds-faq-list\"><details><summary>Kan ik beginnen zonder ervaring? <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></summary><p>Zeker. Hamlet geeft les aan beginners én gevorderden.</p></details></div>",
       "css": ".ds-faq-list{\n  border-top: 1px solid #bfb9bf;\n}\n.ds-faq-list details{\n  border-bottom: 1px solid #bfb9bf;\n}\n.ds-faq-list summary{\n  padding: 24px 0;\n  list-style: none;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  gap: 20px;\n  font-size: 13px;\n  font-weight: 650;\n}\n.ds-faq-list summary::-webkit-details-marker{\n  display: none;\n}\n.ds-faq-list summary svg{\n  transition: transform 0.3s;\n}\n.ds-faq-list details[open] summary svg{\n  transform: rotate(45deg);\n}\n.ds-faq-list details p{\n  padding: 0 40px 25px 0;\n  font-size: 12px;\n  line-height: 1.85;\n  color: #5b505a;\n  max-width: 600px;\n}.ds-faq-list{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);background:var(--paper,#f0eeea);color:var(--ink,#252025)}.ds-faq-list summary{cursor:pointer}.ds-faq-list summary:focus-visible{outline:2px solid #77603a;outline-offset:6px}"
+    },
+    {
+      "name": "Lesson Inquiry Form",
+      "kind": "custom",
+      "refersTo": "form-field",
+      "description": "Local unactivated draft in the gold contact section. Required name/email; optional telephone, experience/interest and message. Primary actions target #contact and lesson choices preselect interest. Native POST uses PUBLIC_LESSON_FORM_ENDPOINT with an opaque FormSubmit identifier, concealing the privately confirmed recipient from public source and URLs. Activation, connected-flow verification and privacy/bedankt review remain pending. Disabled state shown; no real delivery or publication claimed.",
+      "html": "<div class=\"ds-lesson-form\"><label for=\"ds-lesson-name\">Je naam <span>(verplicht)</span></label><input id=\"ds-lesson-name\" name=\"naam\" type=\"text\" autocomplete=\"name\" required><label for=\"ds-lesson-email\">E-mailadres <span>(verplicht)</span></label><input id=\"ds-lesson-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required><p>Met je aanvraag spreek je een moment af voor je gratis kennismakingsles. Je les is nog niet geboekt.</p><button class=\"ds-form-submit\" type=\"button\" disabled>Vraag je gratis les aan</button><p role=\"status\">Dit formulier staat klaar als voorbeeld. Verzenden is nog niet ingeschakeld.</p></div>",
+      "css": ".ds-lesson-form { color-scheme: light; color: var(--ink, #252025); background: var(--gold, #ddc185); max-width: 650px; font-family: var(--sans, \"Manrope Variable\", Arial, sans-serif); }\n.ds-lesson-form label { display: block; margin-bottom: 8px; font-size: 13px; line-height: 1.5; font-weight: 700; }\n.ds-lesson-form label span { color: #584923; font-size: 11px; font-weight: 450; }\n.ds-lesson-form input { display: block; box-sizing: border-box; width: 100%; min-height: 50px; border: 1px solid #8e7544; border-radius: 0; background: #ead6a9; color: var(--ink, #252025); caret-color: var(--ink, #252025); font: inherit; font-size: 16px; line-height: 1.5; padding: 12px 13px; margin-bottom: 22px; transition: border-color 180ms, background-color 180ms; }\n.ds-lesson-form input:focus { outline: 2px solid var(--ink, #252025); outline-offset: 2px; border-color: var(--ink, #252025); background: #f0e0bd; }\n.ds-lesson-form p { color: #584923; font-size: 12px; line-height: 1.7; }\n.ds-form-submit { min-height: 55px; border: 1px solid var(--ink, #252025); border-radius: 0; padding: 16px 22px; background: var(--ink, #252025); color: var(--paper, #f0eeea); font-size: 13px; line-height: 1.4; font-weight: 750; }\n.ds-form-submit:disabled { cursor: not-allowed; background: #635543; border-color: #635543; }\n@media (prefers-reduced-motion: reduce) { .ds-lesson-form input { transition: none; } }"
     }
   ],
   "narrative": {
