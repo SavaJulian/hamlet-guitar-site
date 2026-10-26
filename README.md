@@ -1,6 +1,8 @@
 # Hamlet — gitaarles in Merksem
 
-A Dutch-language, performance-led website for Hamlet's guitar lessons in Merksem, Antwerpen. Built from Julian's local AstroWind website kit using Astro, Tailwind and Bun.
+A Dutch-language website for Hamlet's guitar lessons in Merksem, Antwerpen. Built from Julian's local AstroWind website kit using Astro, Tailwind and Bun.
+
+The current visual direction is a user-requested independent redesign. No installed design skill was used. Warm ivory, bold Manrope type and terracotta actions surround Hamlet's authentic performance in a contained black video frame.
 
 ## Develop
 
@@ -20,9 +22,9 @@ bun run test
 bun run preview
 ```
 
-For browser tests, install Chromium once with `bunx playwright install chromium`. The tests exercise navigation, responsive layouts, FAQ, contact destinations and hero playback behavior without sending messages or making calls.
+For browser tests, install Chromium once with `bunx playwright install chromium`. Tests cover navigation, responsive layouts, FAQ, contact destinations, form validation and hero playback without sending messages or making calls. These commands describe the verification workflow; this document does not certify the current build or production delivery.
 
-The static output is `dist/`. GitHub Actions checks and builds every pull request. Successful builds on `main` publish automatically to [the public website](https://savajulian.github.io/hamlet-guitar-site/) through GitHub Pages.
+The static output is `dist/`. GitHub Actions checks and builds pull requests. Successful builds on `main` publish automatically to [the public website](https://savajulian.github.io/hamlet-guitar-site/) through GitHub Pages.
 
 ## Deployment configuration
 
@@ -32,43 +34,41 @@ The GitHub Pages workflow sets `SITE_URL=https://savajulian.github.io` and `BASE
 SITE_URL=https://savajulian.github.io BASE_PATH=/hamlet-guitar-site bun run build
 ```
 
-For a future custom domain, update these build variables and the hosting configuration together. Without `SITE_URL`, the build emits no canonical URL or sitemap. Internal links and public assets can use `withBase()` from `src/lib/site.ts`; `absoluteUrl(path, Astro.site)` produces a URL only when the production origin is configured. Fonts are self-hosted through Fontsource packages.
+For a custom domain, update these variables and the hosting configuration together. Without `SITE_URL`, the build emits no canonical URL or sitemap. `withBase()` in `src/lib/site.ts` handles internal links and assets; `absoluteUrl(path, Astro.site)` returns a URL only when the production origin is configured. Routes use trailing slashes. Fonts are self-hosted through Fontsource packages.
 
-## Content and contact
+## Content and playback
 
-The supplied performance video and its poster are real evidence of Hamlet's playing. As requested on 26 October 2026, the 12-second, 720p hero excerpt first attempts playback with sound. Browsers that reject audible autoplay trigger a muted fallback; automatic sound is not guaranteed. A single 44px circular speaker button controls sound, with an accessible name and tooltip but no visible text label. Click or tap the performance image, or focus its transparent playback button and use the keyboard, to pause or resume. A play/pause hint appears when paused or keyboard-focused. Reduced-motion visitors see the poster until they explicitly start playback, initially with sound. Playback pauses off screen and in a hidden tab while retaining manual pause and mute choices. A loading error disables the media controls and exposes a retry link.
+The approved opening is “Leer gitaar spelen. Op jouw tempo.” The free kennismakingsles is user-confirmed. Subsequent prices and availability must be confirmed with Hamlet. Business details and references are in `docs/sources.md`.
 
-The teacher and practice sections use two generated conceptual mood images: `lesson-craft.webp` (1122 × 1402) and `practice-corner.webp` (1536 × 1024). Their alt text identifies them as atmosphere; they do not depict Hamlet teaching or his actual studio. Exact prompts are preserved in adjacent `.webp.json` sidecars. `docs/media-manifest.json` distinguishes these images from the authentic footage, and `docs/hero-video.json` records the excerpt's source and encoding.
+The authentic 12-second, 720p hero excerpt first attempts playback with sound. When the browser rejects audible autoplay, it retries muted. A single 44px speaker button controls sound; the performance image is a keyboard-accessible pause/resume button. Its hint appears when paused or focused. Reduced-motion visitors see the poster until they explicitly play. Offscreen and hidden-tab pauses retain manual choices. Loading failures disable controls and provide a retry link.
 
-Business details and source references are documented in `docs/sources.md`. Current prices and availability must be confirmed directly with Hamlet; the site does not invent them. The approved opening is “Leer gitaar spelen. Op jouw tempo.”
+The excerpt and matching poster have a plain black background. `docs/hero-video.json` records their source and encoding. The complete 2:36 performance is retained in the media archive but is not loaded or linked by the interface; the original recording is unchanged.
 
-The site has no analytics, tracking pixels, account system or server-side lead database. Form submissions use FormSubmit, and the verified telephone number remains available as a fallback. The receiving address is confirmed privately and remains absent from public source, HTML, documentation and URLs. The privacy page describes the provider flow, and `/bedankt` distinguishes a submitted request from a confirmed lesson.
+The teacher and practice sections use different generated conceptual images: `lesson-craft.webp` (1122 × 1402) and `practice-corner.webp` (1536 × 1024). Their alt text identifies them as “Sfeerbeeld”; neither depicts Hamlet teaching or his actual studio. Prompts remain in adjacent `.webp.json` sidecars, with provenance in `docs/media-manifest.json`.
 
-## Lesson inquiry form
+## Lesson inquiries and privacy
 
-Every “Plan je gratis les” action and “Maak kennis met Hamlet” leads to `#contact`. `src/components/LessonForm.astro` sits in the gold contact section; lesson choices preselect `#lesson-interest`. The form requests name and email, with optional phone, experience/interest and a message. It is an inquiry to agree a lesson time, not a confirmed booking.
+Every “Plan je gratis les” action and “Maak kennis met Hamlet” leads to `#contact`. Lesson rows preselect `#lesson-interest`. The light form panel sits inside the dark contact section. On mobile, the form comes before the route information; the floating lesson action hides while the hero's primary action or contact section is visible.
 
-The form uses native browser `POST` to an opaque FormSubmit endpoint. Recipient activation was confirmed on 26 October 2026. GitHub's repository variable `LESSON_FORM_ENDPOINT` supplies `PUBLIC_LESSON_FORM_ENDPOINT` during builds; local development uses the latter in ignored `.env`. `src/lib/lessonForm.ts` accepts only an anonymous HTTPS FormSubmit identifier and rejects addresses exposed in endpoint URLs without echoing the rejected value into logs. No receiving email belongs in this repository.
+`src/components/LessonForm.astro` requests name and email, with optional phone, experience/interest and message. Submission requests a lesson time, not a confirmed booking. The verified telephone number remains a fallback. The site has no analytics, tracking pixels, account system or own lead database.
 
-The POST includes a subject, table template and a base-aware `_next` URL for `/bedankt/`. A loading message or thank-you page is not proof that the recipient's inbox received the request. [FormSubmit's documentation](https://formsubmit.co/documentation) describes the opaque identifier and a 30-day submission archive; the privacy page reflects that provider behavior.
+Native `POST` uses an activated opaque FormSubmit endpoint. GitHub repository variable `LESSON_FORM_ENDPOINT` supplies `PUBLIC_LESSON_FORM_ENDPOINT` during builds; local development uses the latter in ignored `.env`. `src/lib/lessonForm.ts` accepts only an anonymous HTTPS FormSubmit identifier and rejects exposed-email URLs without logging the rejected value. The receiving address remains private and absent from public source, HTML, documentation and URLs.
 
-Twenty-two local browser tests passed, including endpoint validation and intercepted POSTs. Activation is confirmed; final configured checks, deployment and real production delivery are verified separately and are not claimed complete here.
+The POST includes a subject, table template and base-aware `_next` URL for `/bedankt/`. Provider reCAPTCHA remains enabled. The privacy page describes provider processing and [FormSubmit's documented 30-day submission archive](https://formsubmit.co/documentation). Neither a loading message nor the thank-you page proves inbox receipt; production delivery requires a separate controlled check.
 
-### Change the receiving inbox
+To change the receiving inbox:
 
-1. Confirm the new inbox privately with FormSubmit and obtain its activated opaque endpoint. Never commit the receiving email or use an email-address URL.
-2. Update the GitHub repository variable `LESSON_FORM_ENDPOINT`; update `PUBLIC_LESSON_FORM_ENDPOINT` in ignored local `.env` when needed.
-3. Rebuild and deploy so the static form receives the new endpoint. The existing `main` workflow publishes successful builds automatically.
-4. Verify a controlled submission, the `/bedankt/` return and receipt in the new inbox. Preserve the telephone fallback and review privacy information if the provider changes.
+1. Activate the new inbox privately with FormSubmit and obtain its opaque endpoint. Never commit an email-address endpoint.
+2. Update repository variable `LESSON_FORM_ENDPOINT` and, when needed, `PUBLIC_LESSON_FORM_ENDPOINT` in ignored local `.env`.
+3. Rebuild and deploy so the static form receives the new endpoint.
+4. Verify a controlled submission, return to `/bedankt/` and actual receipt in the new inbox.
 
 ## Design and maintenance
 
-`PRODUCT.md` captures product facts. `DESIGN.md` and `.impeccable/design.json` capture the final identity and implementation tokens. Keep the real performance footage, truthful claims, keyboard support and mobile layout intact when making changes.
+`PRODUCT.md` records product facts. `DESIGN.md` records current tokens, layouts and interactions. `docs/direction.md` summarizes the independent design direction. Files retained under `.impeccable/` are descriptive metadata, not an active workflow or design authority.
+
+Portable outlined SVG logos are in `public/brand/`: a light wordmark for dark surfaces, an ink wordmark for light surfaces, and the six-string H favicon. Terracotta and bold Manrope align the assets with the interface. Preserve genuine footage, traceable claims, keyboard support and recipient privacy when editing.
 
 ## Attribution
 
-Based on the MIT-licensed [AstroWind](https://github.com/arthelokyo/astrowind) starter. Original license is retained in `LICENSE.md`. The starter's reusable components remain available in source, but demo pages, sample posts and the unused CMS are removed from the published route set.
-
-## Brand assets
-
-Portable outlined SVG logos are in `public/brand/`: a brass logo, a dark-ink variant and a compact six-string H favicon. The full 2:36 performance remains a separate 720p MP4 with audio in the media archive, but the current interface does not link to or load it. The previous full-video dialog and visible control bar were removed on 26 October 2026. The original source is not modified.
+Based on the MIT-licensed [AstroWind](https://github.com/arthelokyo/astrowind) starter. The original license remains in `LICENSE.md`. Reusable starter components remain in source; demo pages, sample posts and the unused CMS are removed from the published route set.

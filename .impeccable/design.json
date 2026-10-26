@@ -1,176 +1,93 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-25T19:27:11.302930+00:00",
+  "generatedAt": "2026-10-26T11:00:12.110208+00:00",
   "title": "Design System: Hamlet Guitar",
   "extensions": {
+    "documentationUpdatedAt": "2026-10-26",
+    "documentationMethod": "Source-based record of the user-requested independent redesign. No installed design skill was used. This file is descriptive metadata, not an active workflow.",
+    "sourceFiles": [
+      "src/pages/index.astro",
+      "src/styles/hamlet.css",
+      "src/components/Brand.astro",
+      "src/components/LessonForm.astro"
+    ],
     "colorMeta": {
-      "ink": {
-        "role": "neutral",
-        "displayName": "Ink",
-        "tonalRamp": [
-          "oklch(15.00% 0.0119 325.92)",
-          "oklch(26.43% 0.0119 325.92)",
-          "oklch(37.86% 0.0119 325.92)",
-          "oklch(49.29% 0.0119 325.92)",
-          "oklch(60.71% 0.0119 325.92)",
-          "oklch(72.14% 0.0119 325.92)",
-          "oklch(83.57% 0.0119 325.92)",
-          "oklch(95.00% 0.0119 325.92)"
-        ]
-      },
-      "gold": {
-        "role": "primary",
-        "displayName": "Gold",
-        "tonalRamp": [
-          "oklch(15.00% 0.0838 85.60)",
-          "oklch(26.43% 0.0838 85.60)",
-          "oklch(37.86% 0.0838 85.60)",
-          "oklch(49.29% 0.0838 85.60)",
-          "oklch(60.71% 0.0838 85.60)",
-          "oklch(72.14% 0.0838 85.60)",
-          "oklch(83.57% 0.0838 85.60)",
-          "oklch(95.00% 0.0838 85.60)"
-        ]
-      },
-      "lavender": {
-        "role": "secondary",
-        "displayName": "Lavender",
-        "tonalRamp": [
-          "oklch(15.00% 0.0234 308.16)",
-          "oklch(26.43% 0.0234 308.16)",
-          "oklch(37.86% 0.0234 308.16)",
-          "oklch(49.29% 0.0234 308.16)",
-          "oklch(60.71% 0.0234 308.16)",
-          "oklch(72.14% 0.0234 308.16)",
-          "oklch(83.57% 0.0234 308.16)",
-          "oklch(95.00% 0.0234 308.16)"
-        ]
-      },
       "paper": {
-        "role": "neutral",
+        "value": "#f7f5ef",
         "displayName": "Paper",
-        "tonalRamp": [
-          "oklch(15.00% 0.0058 84.57)",
-          "oklch(26.43% 0.0058 84.57)",
-          "oklch(37.86% 0.0058 84.57)",
-          "oklch(49.29% 0.0058 84.57)",
-          "oklch(60.71% 0.0058 84.57)",
-          "oklch(72.14% 0.0058 84.57)",
-          "oklch(83.57% 0.0058 84.57)",
-          "oklch(95.00% 0.0058 84.57)"
-        ]
+        "role": "neutral"
+      },
+      "ink": {
+        "value": "#242320",
+        "displayName": "Ink",
+        "role": "neutral"
+      },
+      "accent": {
+        "value": "#b64b2c",
+        "displayName": "Accent",
+        "role": "primary"
+      },
+      "accent-hover": {
+        "value": "#933b23",
+        "displayName": "Accent Hover",
+        "role": "primary"
       },
       "muted": {
-        "role": "neutral",
+        "value": "#6b675e",
         "displayName": "Muted",
-        "tonalRamp": [
-          "oklch(15.00% 0.0107 325.68)",
-          "oklch(26.43% 0.0107 325.68)",
-          "oklch(37.86% 0.0107 325.68)",
-          "oklch(49.29% 0.0107 325.68)",
-          "oklch(60.71% 0.0107 325.68)",
-          "oklch(72.14% 0.0107 325.68)",
-          "oklch(83.57% 0.0107 325.68)",
-          "oklch(95.00% 0.0107 325.68)"
-        ]
+        "role": "neutral"
       },
       "line": {
-        "role": "neutral",
+        "value": "#d9d4c9",
         "displayName": "Line",
-        "tonalRamp": [
-          "oklch(15.00% 0.0200 329.15)",
-          "oklch(26.43% 0.0200 329.15)",
-          "oklch(37.86% 0.0200 329.15)",
-          "oklch(49.29% 0.0200 329.15)",
-          "oklch(60.71% 0.0200 329.15)",
-          "oklch(72.14% 0.0200 329.15)",
-          "oklch(83.57% 0.0200 329.15)",
-          "oklch(95.00% 0.0200 329.15)"
-        ]
+        "role": "neutral"
       },
-      "gold-hover": {
-        "role": "primary",
-        "displayName": "Gold Hover",
-        "tonalRamp": [
-          "oklch(15.00% 0.0668 90.26)",
-          "oklch(26.43% 0.0668 90.26)",
-          "oklch(37.86% 0.0668 90.26)",
-          "oklch(49.29% 0.0668 90.26)",
-          "oklch(60.71% 0.0668 90.26)",
-          "oklch(72.14% 0.0668 90.26)",
-          "oklch(83.57% 0.0668 90.26)",
-          "oklch(95.00% 0.0668 90.26)"
-        ]
+      "practice": {
+        "value": "#eae5d9",
+        "displayName": "Practice",
+        "role": "neutral"
       },
-      "ink-hover": {
-        "role": "neutral",
-        "displayName": "Ink Hover",
-        "tonalRamp": [
-          "oklch(15.00% 0.0335 324.23)",
-          "oklch(26.43% 0.0335 324.23)",
-          "oklch(37.86% 0.0335 324.23)",
-          "oklch(49.29% 0.0335 324.23)",
-          "oklch(60.71% 0.0335 324.23)",
-          "oklch(72.14% 0.0335 324.23)",
-          "oklch(83.57% 0.0335 324.23)",
-          "oklch(95.00% 0.0335 324.23)"
-        ]
+      "form-panel": {
+        "value": "#fffefa",
+        "displayName": "Form Panel",
+        "role": "neutral"
       },
-      "paper-rule": {
-        "role": "neutral",
-        "displayName": "Paper Rule",
-        "tonalRamp": [
-          "oklch(15.00% 0.0107 325.68)",
-          "oklch(26.43% 0.0107 325.68)",
-          "oklch(37.86% 0.0107 325.68)",
-          "oklch(49.29% 0.0107 325.68)",
-          "oklch(60.71% 0.0107 325.68)",
-          "oklch(72.14% 0.0107 325.68)",
-          "oklch(83.57% 0.0107 325.68)",
-          "oklch(95.00% 0.0107 325.68)"
-        ]
-      },
-      "brass-text": {
-        "role": "primary",
-        "displayName": "Brass Text",
-        "tonalRamp": [
-          "oklch(15.00% 0.0617 79.21)",
-          "oklch(26.43% 0.0617 79.21)",
-          "oklch(37.86% 0.0617 79.21)",
-          "oklch(49.29% 0.0617 79.21)",
-          "oklch(60.71% 0.0617 79.21)",
-          "oklch(72.14% 0.0617 79.21)",
-          "oklch(83.57% 0.0617 79.21)",
-          "oklch(95.00% 0.0617 79.21)"
-        ]
+      "contact-emphasis": {
+        "value": "#e6b69c",
+        "displayName": "Contact Emphasis",
+        "role": "neutral"
       }
     },
     "typographyMeta": {
       "display": {
-        "displayName": "Performance Display",
-        "purpose": "Expressive performance heading."
+        "displayName": "Clear lesson heading",
+        "purpose": "Bold Manrope hero and section headings."
       },
-      "reading": {
-        "displayName": "Explanatory Reading",
-        "purpose": "Main explanatory paragraphs; mobile final overrides preserve this size."
+      "tagline": {
+        "displayName": "Personal pace",
+        "purpose": "Bodoni Moda italic for the hero tagline."
+      },
+      "quote": {
+        "displayName": "Student voice",
+        "purpose": "Bodoni Moda 500, regular style, for the attributed quote."
+      },
+      "body": {
+        "displayName": "Practical information",
+        "purpose": "Manrope for reading, navigation, labels and controls."
       }
     },
-    "shadows": [],
+    "shadows": [
+      {
+        "name": "mobile-lesson-action",
+        "value": "0 5px 24px #24232026",
+        "purpose": "Separates the floating mobile action from the page."
+      }
+    ],
     "motion": [
       {
-        "name": "stage-ease",
-        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Brand and button arrow motion."
-      },
-      {
-        "name": "color-transition",
-        "value": "0.25s",
-        "purpose": "Filled action color transitions."
-      },
-      {
-        "name": "media-control-hover",
+        "name": "interaction",
         "value": "0.2s",
-        "purpose": "Speaker border/background hover and playback hint opacity; disabled for reduced motion."
+        "purpose": "Button arrows, colors and media hints; disabled for reduced motion."
       }
     ],
     "breakpoints": [
@@ -179,12 +96,12 @@
         "value": "370px"
       },
       {
-        "name": "mobile",
-        "value": "760px"
+        "name": "phone",
+        "value": "580px"
       },
       {
-        "name": "tablet-heading",
-        "value": "900px"
+        "name": "tablet",
+        "value": "800px"
       },
       {
         "name": "compact-desktop",
@@ -195,118 +112,102 @@
         "value": "1600px"
       }
     ],
-    "documentationUpdatedAt": "2026-10-26",
     "inquiryFormStatus": {
       "status": "implemented-activation-confirmed",
-      "date": "2026-10-26",
       "source": "src/components/LessonForm.astro",
-      "endpointVariable": "PUBLIC_LESSON_FORM_ENDPOINT",
-      "activation": "FormSubmit recipient activation confirmed on 26 October 2026. Receiving address remains private and absent from public source, HTML, documentation and URLs. Only the opaque endpoint is configured; validator rejects exposed-email URLs. Privacy and /bedankt pages implemented.",
       "provider": "FormSubmit",
-      "providerDocumentation": "https://formsubmit.co/documentation",
-      "validation": "22 local browser tests passed, including endpoint validation and locally intercepted POSTs. Final configured checks, deployment and production inbox delivery are verified separately, not claimed complete here.",
-      "repositoryVariable": "LESSON_FORM_ENDPOINT"
+      "endpointVariable": "PUBLIC_LESSON_FORM_ENDPOINT",
+      "repositoryVariable": "LESSON_FORM_ENDPOINT",
+      "privacy": "Only an activated opaque endpoint is configured. The receiving address remains private and absent from public source, HTML, documentation and URLs.",
+      "validation": "Verification and production inbox receipt are separate from this design record."
     }
   },
   "components": [
     {
-      "name": "Primary Button",
+      "name": "Primary lesson action",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Rectangular lesson invitation linking to #contact.",
-      "html": "<a class=\"ds-button ds-button-gold\" href=\"#contact\">Plan je gratis les <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></a>",
-      "css": ".ds-button{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 32px;\n  min-height: 55px;\n  padding: 16px 22px;\n  border: 1px solid transparent;\n  font-size: 12px;\n  font-weight: 750;\n  line-height: 1.4;\n  transition:\n    background 0.25s,\n    color 0.25s,\n    border-color 0.25s;\n}\n.ds-button svg{\n  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);\n}\n.ds-button:hover svg:last-child{\n  transform: translateX(5px);\n}\n.ds-button-gold{\n  background: var(--gold);\n  color: var(--ink);\n}\n.ds-button-gold:hover{\n  background: #ecdaa9;\n}.ds-button{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);cursor:pointer}.ds-button:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
+      "description": "White text on terracotta, 55px minimum height, 5px corners. Targets #contact."
     },
     {
-      "name": "Dark Button",
-      "kind": "button",
-      "refersTo": "button-dark",
-      "description": "Retained dark action styling; the inquiry form uses its own submit component and states.",
-      "html": "<button class=\"ds-button ds-button-dark\">Plan je gratis les <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></button>",
-      "css": ".ds-button{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 32px;\n  min-height: 55px;\n  padding: 16px 22px;\n  border: 1px solid transparent;\n  font-size: 12px;\n  font-weight: 750;\n  line-height: 1.4;\n  transition:\n    background 0.25s,\n    color 0.25s,\n    border-color 0.25s;\n}\n.ds-button svg{\n  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);\n}\n.ds-button:hover svg:last-child{\n  transform: translateX(5px);\n}\n.ds-button-dark{\n  color: var(--paper);\n  background: var(--ink);\n  gap: 16px;\n  flex-wrap: wrap;\n}\n.ds-button-dark:hover{\n  background: #483949;\n}.ds-button{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);cursor:pointer}.ds-button:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
-    },
-    {
-      "name": "Text Link",
-      "kind": "button",
-      "description": "Ruled secondary action; Maak kennis met Hamlet links to #contact.",
-      "html": "<a class=\"ds-text-link\" href=\"#contact\">Maak kennis met Hamlet <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></a>",
-      "css": ".ds-text-link{\n  display: inline-flex;\n  align-items: center;\n  gap: 24px;\n  border-bottom: 1px solid currentColor;\n  padding-bottom: 7px;\n  font-size: 12px;\n  font-weight: 650;\n  transition: gap 0.3s;\n}\n.ds-text-link:hover{\n  gap: 32px;\n}.ds-text-link{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);color:var(--gold,#ddc185);text-decoration:none}.ds-text-link:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
-    },
-    {
-      "name": "Desktop Navigation",
-      "kind": "nav",
-      "description": "Quiet Manrope navigation with brass hover.",
-      "html": "<nav class=\"ds-desktop-nav\"><a href=\"#\">De lessen</a><a href=\"#\">Over Hamlet</a><a href=\"#\">Veelgestelde vragen</a></nav>",
-      "css": ".ds-desktop-nav{\n  display: flex;\n  gap: 32px;\n  font-size: 12px;\n  font-weight: 500;\n}.ds-desktop-nav{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);color:var(--paper,#f0eeea);background:var(--ink,#252025)}.ds-desktop-nav a{color:inherit;text-decoration:none;transition:color .2s}.ds-desktop-nav a:hover{color:var(--gold,#ddc185)}.ds-desktop-nav a:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
-    },
-    {
-      "name": "Lesson Choice",
+      "name": "Lesson row",
       "kind": "card",
-      "refersTo": "lesson-option",
-      "description": "A ruled linked choice, without shadow or raised surface.",
-      "html": "<a class=\"ds-lesson-option\" href=\"#\"><h3>Je eerste<br>akkoorden.</h3><p>Een fijne houding, een helder geluid en stap voor stap de basis onder je vingers.</p><span class=\"ds-option-link\">Ik wil beginnen <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></span></a>",
-      "css": ".ds-lesson-option{\n  padding: 34px 34px 10px 0;\n  display: flex;\n  flex-direction: column;\n  position: relative;\n  border-right: 1px solid #bfb9bf;\n}\n.ds-lesson-option h3{\n  font-size: 40px;\n  line-height: 1.12;\n  margin-bottom: 22px;\n}\n.ds-lesson-option p{\n  font-size: 12px;\n  line-height: 1.8;\n  max-width: 290px;\n  margin-bottom: 26px;\n}\n.ds-option-link{\n  display: flex;\n  align-items: center;\n  gap: 20px;\n  font-size: 11px;\n  font-weight: 750;\n  margin-top: auto;\n}\n.ds-option-link svg{\n  transition: transform 0.3s;\n}\n.ds-lesson-option:hover .ds-option-link svg{\n  transform: translateX(8px);\n}\n.ds-lesson-option:hover h3{\n  color: #77603a;\n}\n.ds-lesson-option:focus-visible{\n  outline-color: var(--ink);\n  outline-offset: 4px;\n}.ds-lesson-option{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);background:var(--paper,#f0eeea);color:var(--ink,#252025);text-decoration:none}.ds-lesson-option h3{font-family:var(--serif,\"Bodoni Moda Variable\",Georgia,serif);font-weight:450;letter-spacing:-.025em;margin-top:0}.ds-lesson-option:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
+      "description": "A full-width linked row separated by fine warm-gray rules, with a circular arrow. Preselects form interest."
     },
     {
-      "name": "Hero Sound Control",
+      "name": "Performance frame",
       "kind": "custom",
-      "refersTo": "media-control",
-      "description": "Single 44px circular speaker button with accessible name and tooltip, without a visible label. The hero tries audible autoplay and falls back to muted playback on NotAllowedError. Tapping or keyboard-activating the transparent image playback area pauses/resumes; its hint appears when paused or focused. Reduced motion begins on the poster. No full-performance modal or link remains. This specimen displays the audible playing state.",
-      "html": "<button class=\"ds-hero-sound\" aria-label=\"Geluid uitschakelen\" title=\"Geluid uitschakelen\"><span><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 5 6 9H3v6h3l5 4V5ZM15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14\"/></svg></span></button>",
-      "css": ".ds-hero-sound { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #ddc18566; border-radius: 50%; background: #0008; color: var(--gold, #ddc185); transition: border-color 0.2s, background 0.2s; cursor: pointer; }\n.ds-hero-sound:hover { border-color: var(--gold, #ddc185); background: #252025; }\n.ds-hero-sound > span { display: flex; }\n.ds-hero-sound:disabled { opacity: 0.4; cursor: default; }\n.ds-hero-sound:focus-visible { outline: 2px solid var(--gold, #ddc185); outline-offset: 6px; }\n@media (prefers-reduced-motion: reduce) { .ds-hero-sound { transition: none; } }"
+      "refersTo": "media-frame",
+      "description": "Contained black frame with authentic video. Attempts sound and falls back to muted autoplay; reduced motion begins with the poster."
     },
     {
-      "name": "Question Row",
+      "name": "Sound control",
       "kind": "custom",
-      "description": "Native expanding question separated by fine rules.",
-      "html": "<div class=\"ds-faq-list\"><details><summary>Kan ik beginnen zonder ervaring? <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></summary><p>Zeker. Hamlet geeft les aan beginners én gevorderden.</p></details></div>",
-      "css": ".ds-faq-list{\n  border-top: 1px solid #bfb9bf;\n}\n.ds-faq-list details{\n  border-bottom: 1px solid #bfb9bf;\n}\n.ds-faq-list summary{\n  padding: 24px 0;\n  list-style: none;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  gap: 20px;\n  font-size: 13px;\n  font-weight: 650;\n}\n.ds-faq-list summary::-webkit-details-marker{\n  display: none;\n}\n.ds-faq-list summary svg{\n  transition: transform 0.3s;\n}\n.ds-faq-list details[open] summary svg{\n  transform: rotate(45deg);\n}\n.ds-faq-list details p{\n  padding: 0 40px 25px 0;\n  font-size: 12px;\n  line-height: 1.85;\n  color: #5b505a;\n  max-width: 600px;\n}.ds-faq-list{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);background:var(--paper,#f0eeea);color:var(--ink,#252025)}.ds-faq-list summary{cursor:pointer}.ds-faq-list summary:focus-visible{outline:2px solid #77603a;outline-offset:6px}"
+      "description": "44px circular speaker, white on near-black #171715, with an accessible name and tooltip. An image-sized button separately controls pause/resume."
     },
     {
-      "name": "Lesson Inquiry Form",
+      "name": "Teacher panel",
       "kind": "custom",
-      "refersTo": "form-field",
-      "description": "Implemented inquiry form in the gold contact section. Required name/email; optional telephone, experience/interest and message. Primary actions target #contact and lesson choices preselect interest. Native POST uses an activated opaque FormSubmit endpoint via PUBLIC_LESSON_FORM_ENDPOINT; the validator rejects URLs exposing the private recipient. Privacy and /bedankt pages are implemented. Production delivery is verified separately. Specimen shows the enabled appearance without submitting data.",
-      "html": "<div class=\"ds-lesson-form\"><label for=\"ds-lesson-name\">Je naam <span>(verplicht)</span></label><input id=\"ds-lesson-name\" name=\"naam\" type=\"text\" autocomplete=\"name\" required><label for=\"ds-lesson-email\">E-mailadres <span>(verplicht)</span></label><input id=\"ds-lesson-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required><p>Met je aanvraag spreek je een moment af voor je gratis kennismakingsles. Je les is nog niet geboekt.</p><button class=\"ds-form-submit\" type=\"button\">Vraag je gratis les aan</button><p role=\"status\"></p></div>",
-      "css": ".ds-lesson-form { color-scheme: light; color: var(--ink, #252025); background: var(--gold, #ddc185); max-width: 650px; font-family: var(--sans, \"Manrope Variable\", Arial, sans-serif); }\n.ds-lesson-form label { display: block; margin-bottom: 8px; font-size: 13px; line-height: 1.5; font-weight: 700; }\n.ds-lesson-form label span { color: #584923; font-size: 11px; font-weight: 450; }\n.ds-lesson-form input { display: block; box-sizing: border-box; width: 100%; min-height: 50px; border: 1px solid #8e7544; border-radius: 0; background: #ead6a9; color: var(--ink, #252025); caret-color: var(--ink, #252025); font: inherit; font-size: 16px; line-height: 1.5; padding: 12px 13px; margin-bottom: 22px; transition: border-color 180ms, background-color 180ms; }\n.ds-lesson-form input:focus { outline: 2px solid var(--ink, #252025); outline-offset: 2px; border-color: var(--ink, #252025); background: #f0e0bd; }\n.ds-lesson-form p { color: #584923; font-size: 12px; line-height: 1.7; }\n.ds-form-submit { min-height: 55px; border: 1px solid var(--ink, #252025); border-radius: 0; padding: 16px 22px; background: var(--ink, #252025); color: var(--paper, #f0eeea); font-size: 13px; line-height: 1.4; font-weight: 750; }\n.ds-form-submit:disabled { cursor: not-allowed; background: #635543; border-color: #635543; }\n@media (prefers-reduced-motion: reduce) { .ds-lesson-form input { transition: none; } }"
+      "description": "Conceptual guitar image paired with the teacher introduction and attributed student quote."
+    },
+    {
+      "name": "Practice panel",
+      "kind": "custom",
+      "description": "Compact beige inset with explanatory copy and a separate guitar-and-chair mood image."
+    },
+    {
+      "name": "FAQ row",
+      "kind": "custom",
+      "description": "Native details and summary, divided by fine rules with a rotating plus icon."
+    },
+    {
+      "name": "Lesson inquiry form",
+      "kind": "custom",
+      "refersTo": "form-panel",
+      "description": "Light panel within dark contact section. Required name/email; optional phone, interest and message. White fields and full-width terracotta submit. Mobile places route information after the form."
+    },
+    {
+      "name": "Mobile lesson action",
+      "kind": "button",
+      "description": "Floating terracotta contact link, hidden while the primary hero action or contact section is visible."
     }
   ],
   "narrative": {
-    "northStar": "The Intimate Recital Stage",
-    "overview": "An intimate recital stage: smoked plum grounds the interface, brass marks invitations, and paper and lavender give the performance room to breathe. Hamlet's authentic footage and extracted poster, with a cleaned plain black backdrop, carry the identity alongside an original six-string H monogram. Two generated guitar still lifes provide distinct lesson and home-practice atmosphere below the hero, without claiming to show his actual studio.\n\nHigh-contrast Bodoni Moda gives headings a musical cadence; Manrope keeps practical information direct. Broad tonal sections, asymmetrical grids and fine rules create a composed, personal atmosphere without card shadows.",
+    "northStar": "A warm, contemporary guitar studio",
+    "overview": "Ivory surroundings, strong ink typography and terracotta invitations place authentic playing at the center. A contained black performance frame balances the clear lesson offer. Linked lesson rows, a teacher panel with its quote, compact practice imagery and a light form on dark ink complete the path to an inquiry.",
     "keyCharacteristics": [
-      "Real performance footage, conceptual lesson imagery and an original six-string H.",
-      "Bodoni Moda display with restrained italic emphasis.",
-      "Rectangular lesson actions, one circular speaker control, fine rules and broad tonal sections."
+      "Bold Manrope headings and wordmark with a retained six-string H.",
+      "Bodoni Moda only for the italic hero tagline and student quote.",
+      "Authentic performance, distinct conceptual supporting imagery and traceable business claims.",
+      "Responsive reading order and one clear inquiry destination."
     ],
     "rules": [
       {
-        "name": "The Stage and Light Rule",
-        "body": "Use ink for the stage, paper for explanatory sections, lavender for a quiet testimonial pause and gold for invitations.",
+        "name": "Color hierarchy",
+        "body": "Use ivory for the main page, ink for text and the final contact section, and terracotta for invitations.",
         "section": "colors"
       },
       {
-        "name": "The Two Voices Rule",
-        "body": "Use Bodoni Moda for expressive headings and Manrope for practical reading and controls.",
+        "name": "Typography hierarchy",
+        "body": "Manrope carries headings and reading; Bodoni adds limited expression in the hero tagline and quote.",
         "section": "typography"
       },
       {
-        "name": "The Ruled Surface Rule",
-        "body": "Separate lesson choices and questions with fine rules; use tonal contrast and imagery for depth.",
-        "section": "elevation"
+        "name": "Responsive contact",
+        "body": "Keep the form before route information on mobile and hide the floating action while an existing primary destination is visible.",
+        "section": "layout"
       }
     ],
     "dos": [
-      "Do use real Hamlet footage as performance proof and preserve the six-string H identity.",
-      "Do distinguish conceptual section imagery from authentic footage in alt descriptions and provenance.",
-      "Do preserve the serif/sans division and the established light-on-dark or dark-on-light pairings.",
-      "Do keep visible keyboard focus, accessible image and sound controls, and reduced-motion support.",
-      "Do adapt split layouts into a single reading sequence on small screens."
+      "Preserve the approved headline and free introductory lesson offer.",
+      "Preserve source provenance, quote attribution and business facts.",
+      "Keep visible focus, reduced-motion behavior and manual playback choices.",
+      "Keep the recipient private and all primary invitations directed to #contact."
     ],
     "donts": [
-      "Don't replace Hamlet's performance proof with a conceptual image or describe generated rooms as his actual studio.",
-      "Don't turn lesson rows into floating, shadowed cards.",
-      "Don't inherit the smallest utility-text sizes as a body-text scale."
+      "Do not describe conceptual images as Hamlet teaching or his actual studio.",
+      "Do not invent prices, availability, credentials or outcomes.",
+      "Do not treat submitted requests as confirmed lessons or guaranteed inbox delivery."
     ]
   }
 }

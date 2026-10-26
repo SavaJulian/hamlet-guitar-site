@@ -161,13 +161,14 @@ const ready = Boolean(action);
   .lesson-form {
     color-scheme: light;
     color: var(--ink);
-    max-width: 650px;
+    max-width: 620px;
     min-width: 0;
+    margin: 0 auto;
   }
   .form-fields {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 22px 20px;
+    gap: 22px 18px;
   }
   .form-field {
     min-width: 0;
@@ -178,13 +179,13 @@ const ready = Boolean(action);
   label {
     display: block;
     margin-bottom: 8px;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.5;
     font-weight: 700;
   }
   label span {
-    color: #584923;
-    font-size: 11px;
+    color: #6b675e;
+    font-size: 12px;
     font-weight: 450;
   }
   input,
@@ -193,9 +194,9 @@ const ready = Boolean(action);
     display: block;
     width: 100%;
     min-width: 0;
-    border: 1px solid #8e7544;
-    border-radius: 0;
-    background: #ead6a9;
+    border: 1px solid #969084;
+    border-radius: 6px;
+    background: #fff;
     color: var(--ink);
     caret-color: var(--ink);
     font-family: var(--sans);
@@ -213,15 +214,15 @@ const ready = Boolean(action);
   input:hover,
   select:hover,
   textarea:hover {
-    border-color: var(--ink);
+    border-color: #6b675e;
   }
   input:focus,
   select:focus,
   textarea:focus {
-    outline: 2px solid var(--ink);
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
-    border-color: var(--ink);
-    background: #f0e0bd;
+    border-color: var(--accent);
+    background: #fff;
   }
   input::selection,
   textarea::selection {
@@ -230,51 +231,53 @@ const ready = Boolean(action);
   }
   textarea {
     resize: vertical;
-    min-height: 102px;
+    min-height: 110px;
   }
   input[aria-invalid='true'] {
-    border-color: #722c31;
+    border-color: #a12626;
   }
   .field-error {
-    color: #722c31;
-    font-size: 12px;
+    color: #a12626;
+    font-size: 13px;
     line-height: 1.55;
     margin-top: 8px;
   }
   .form-note,
   .form-privacy,
   .form-status {
-    color: #584923;
-    font-size: 12px;
-    line-height: 1.7;
+    color: #6b675e;
+    font-size: 13px;
+    line-height: 1.65;
     max-width: 62ch;
   }
   .form-note {
-    margin: 20px 0;
+    margin: 22px 0;
   }
   .form-submit {
     display: inline-flex;
+    width: 100%;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    min-height: 55px;
-    border: 1px solid var(--ink);
-    border-radius: 0;
-    padding: 16px 22px;
-    background: var(--ink);
-    color: var(--paper);
-    font-size: 13px;
+    min-height: 56px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 17px 22px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 15px;
     line-height: 1.4;
     font-weight: 750;
     transition: background-color 200ms;
   }
   .form-submit:hover:not(:disabled) {
-    background: #483949;
+    background: #943c23;
+    border-color: #943c23;
   }
   .form-submit:disabled {
     cursor: not-allowed;
-    background: #635543;
-    border-color: #635543;
+    background: #786f61;
+    border-color: #786f61;
   }
   .form-submit[aria-busy='true'] {
     cursor: progress;
@@ -289,8 +292,8 @@ const ready = Boolean(action);
     margin-top: 14px;
   }
   .form-privacy {
-    margin-top: 20px;
-    font-size: 11px;
+    margin-top: 18px;
+    font-size: 12px;
   }
   .form-privacy a,
   .form-phone span {
@@ -298,20 +301,24 @@ const ready = Boolean(action);
     text-underline-offset: 4px;
   }
   .form-phone {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 6px;
     min-height: 44px;
-    margin-top: 12px;
-    font-size: 13px;
+    justify-content: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #d9d4c9;
+    font-size: 14px;
   }
   .form-phone span {
     font-weight: 700;
   }
   a:focus-visible,
   button:focus-visible {
-    outline-color: var(--ink);
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
   }
   @container (min-width: 460px) {
     .form-fields {

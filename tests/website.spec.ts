@@ -94,6 +94,27 @@ test('mobile navigation opens, closes on a section selection, and responds to Es
   await expect(toggle).toHaveAccessibleName('Menu openen');
 });
 
+test('mobile lesson shortcut stays out of the hero and contact form', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const shortcut = page.locator('.mobile-call');
+  await expect(page.locator('.hero-actions .button')).toBeInViewport();
+  await expect(shortcut).toBeHidden();
+
+  await page.locator('#lessen').evaluate((element) => element.scrollIntoView({ block: 'start' }));
+  await expect(shortcut).toBeVisible();
+  await expect(shortcut).toBeInViewport();
+  await expect(shortcut).toHaveAttribute('href', '#contact');
+
+  await page.locator('.contact-form-area').scrollIntoViewIfNeeded();
+  await expect(shortcut).toBeHidden();
+  const formBounds = await page.locator('.contact-form-area').boundingBox();
+  const locationBounds = await page.locator('.contact-location').boundingBox();
+  expect(formBounds).not.toBeNull();
+  expect(locationBounds).not.toBeNull();
+  expect(formBounds!.y + formBounds!.height).toBeLessThanOrEqual(locationBounds!.y);
+});
+
 test('FAQ answers open and close with the keyboard', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');

@@ -14,7 +14,7 @@ import { withBase } from '../lib/site';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, follow" />
-    <meta name="theme-color" content="#252025" />
+    <meta name="theme-color" content="#f7f5ef" />
     <title>Bedankt voor je aanvraag — Hamlet</title>
     <link rel="icon" href={withBase('/brand/hamlet-monogram.svg')} type="image/svg+xml" />
   </head>
@@ -41,61 +41,66 @@ import { withBase } from '../lib/site';
     display: flex;
     flex-direction: column;
     min-height: 100svh;
-    width: min(840px, calc(100% - 48px));
+    width: min(1040px, calc(100% - 48px));
     margin: 0 auto;
   }
   header {
-    padding: 38px 0;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
   }
   main {
     flex: 1;
-    padding: clamp(48px, 9vh, 100px) 0 76px;
+    padding: clamp(56px, 10vh, 110px) 0 90px;
   }
   h1 {
-    font-size: clamp(48px, 8vw, 82px);
-    line-height: 1.06;
-    letter-spacing: -0.035em;
+    font-family: var(--sans);
+    font-size: clamp(44px, 7vw, 80px);
+    font-weight: 780;
+    line-height: 1.04;
+    letter-spacing: -0.05em;
     margin-bottom: 32px;
   }
   h1 em {
-    color: var(--gold);
+    color: var(--accent);
+    font-style: normal;
+    font-weight: inherit;
   }
   .confirmation {
-    max-width: 48ch;
-    font-size: 17px;
-    line-height: 1.8;
+    max-width: 51ch;
+    font-size: 18px;
+    line-height: 1.75;
   }
   .booking-note {
     color: var(--muted);
-    margin: 14px 0 32px;
+    margin: 16px 0 36px;
     font-size: 14px;
   }
   .direct-contact {
-    margin-top: 28px;
-    font-size: 13px;
+    margin-top: 32px;
+    font-size: 14px;
     color: var(--muted);
   }
   .direct-contact a {
-    color: var(--gold);
+    color: var(--accent);
     text-decoration: underline;
     text-underline-offset: 5px;
     white-space: nowrap;
   }
   footer {
     border-top: 1px solid var(--line);
-    padding: 25px 0;
+    padding: 24px 0;
     color: var(--muted);
-    font-size: 12px;
+    font-size: 13px;
   }
   @media (max-width: 600px) {
     header {
-      padding: 28px 0;
+      padding: 24px 0;
     }
     main {
-      padding-top: 45px;
+      padding-top: 52px;
     }
     .confirmation {
-      font-size: 15px;
+      font-size: 16px;
     }
   }
 </style>

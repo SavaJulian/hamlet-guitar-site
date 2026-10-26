@@ -1,0 +1,26 @@
+{
+  "updated": "2026-10-26",
+  "direction": "Warm contemporary guitar studio",
+  "wordmark": {
+    "font": "Manrope Variable",
+    "weight": 800,
+    "size": 32,
+    "letterSpacing": "-0.06em"
+  },
+  "descriptor": {
+    "font": "Manrope Variable",
+    "weight": 600,
+    "size": 8,
+    "letterSpacing": "0.24em"
+  },
+  "fontSource": "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2",
+  "technique": "Variable font instantiation and HarfBuzz shaping; outlined SVG paths",
+  "monogram": "Six-string H geometry from src/components/Brand.astro",
+  "accent": "#b64b2c",
+  "variants": {
+    "hamlet-logo.svg": "Cream wordmark for dark backgrounds",
+    "hamlet-logo-dark.svg": "Ink wordmark for light backgrounds",
+    "hamlet-monogram.svg": "Terracotta monogram on transparent background"
+  },
+  "externalFontDependency": false
+}

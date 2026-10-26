@@ -1,5 +1,4 @@
 ---
-import '@fontsource-variable/bodoni-moda';
 import '@fontsource-variable/manrope';
 import { withBase } from '../lib/site';
 ---
@@ -11,6 +10,7 @@ import { withBase } from '../lib/site';
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content="Hoe deze website omgaat met privacy en contactgegevens." />
     <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#f7f5ef" />
     <title>Privacy — Hamlet</title>
   </head>
   <body>
@@ -67,54 +67,65 @@ import { withBase } from '../lib/site';
 </html>
 <style>
   :global(html) {
-    background: #252025;
-    color: #f0eeea;
+    background: #f7f5ef;
+    color: #242320;
     font-family: 'Manrope Variable', sans-serif;
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
   }
   :global(body) {
     margin: 0;
   }
   :global(::selection) {
-    background: #ddc185;
-    color: #252025;
+    background: #b64b2c;
+    color: #fff;
   }
   main {
     width: min(740px, calc(100% - 48px));
     margin: 0 auto;
-    padding: 48px 0 40px;
+    padding: 36px 0 32px;
   }
   .back,
   a {
-    color: #ddc185;
-    text-underline-offset: 5px;
+    color: #a24025;
+    text-underline-offset: 4px;
   }
   .back {
     display: inline-block;
     padding: 12px 0;
+    font-size: 14px;
+    font-weight: 650;
   }
   a:focus-visible {
-    outline: 2px solid #ddc185;
+    outline: 2px solid #b64b2c;
     outline-offset: 6px;
   }
   h1 {
-    font-family: 'Bodoni Moda Variable', serif;
-    font-weight: 500;
-    font-size: clamp(3.5rem, 10vw, 6rem);
+    font-family: 'Manrope Variable', sans-serif;
+    font-weight: 780;
+    font-size: clamp(3rem, 9vw, 5rem);
     line-height: 1.05;
-    margin: 64px 0 28px;
+    letter-spacing: -0.05em;
+    margin: 68px 0 28px;
   }
   .intro {
     font-size: 1.25rem;
-    line-height: 1.6;
+    line-height: 1.65;
+    padding-bottom: 36px;
+    border-bottom: 1px solid #d9d4c9;
   }
   section {
-    margin-top: 48px;
+    margin-top: 40px;
   }
   h2 {
     font-size: 1.25rem;
+    font-weight: 750;
+    line-height: 1.35;
+    letter-spacing: -0.025em;
     margin: 0 0 14px;
   }
   p {
+    font-size: 16px;
     line-height: 1.8;
     margin: 0;
   }
@@ -124,7 +135,17 @@ import { withBase } from '../lib/site';
   footer {
     margin-top: 64px;
     padding-top: 24px;
-    border-top: 1px solid #4b414a;
-    font-size: 0.8rem;
+    border-top: 1px solid #d9d4c9;
+    color: #6b675e;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  @media (max-width: 600px) {
+    h1 {
+      margin-top: 44px;
+    }
+    .intro {
+      font-size: 18px;
+    }
   }
 </style>

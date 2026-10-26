@@ -2,56 +2,43 @@
 
 <!-- impeccable:product-schema 1 -->
 
+## Purpose and audience
+
+A Dutch-language local website introducing Hamlet's guitar lessons to beginners and existing players in Merksem and Antwerpen. His real flamenco performance demonstrates his playing; clear lesson choices and one inquiry form make the next step easy.
+
 ## Platform
 
-web
+Static Astro + Tailwind site, built from Julian's local business-site kit with Bun. Repository: `SavaJulian/hamlet-guitar-site`. Hosting: GitHub Pages. The current design was independently implemented at Julian's request without installed design skills.
 
-## Stack
+## Confirmed offer and business facts
 
-Astro + Tailwind, copied from Julian's local astro-business-site kit; Bun dependencies. User explicitly delegated creative decisions and requested this GitHub repository.
+- Gitaarlessen Hamlet, Bredabaan 479, 2170 Merksem / Antwerpen.
+- Public telephone: +32 483 50 22 20.
+- Lessons for beginners and advanced players, including Spanish guitar and flamenco.
+- The first kennismakingsles is free, confirmed by Julian. Its duration is unspecified; the sourced 60-minute duration applies to regular lessons.
+- Rates after the introduction and current availability require confirmation from Hamlet.
+- Source references, including the Google profile and attributed student review, are in `docs/sources.md`. Published rating information is previously verified evidence, not a live feed.
 
-## Users
+Do not invent credentials, lesson outcomes, prices, scarcity or availability.
 
-People in Merksem and Antwerpen interested in guitar lessons, from first-time players to existing guitarists. Dutch-language local audience is an implementation assumption.
+## Content and identity
 
-## Product Purpose
+Preserve the approved opening: “Leer gitaar spelen. Op jouw tempo.” Primary actions read “Plan je gratis les”; “Maak kennis met Hamlet” also leads to the inquiry form.
 
-Introduce Hamlet as a guitar teacher and let prospective students hear him play, understand the lessons and contact him to arrange a first lesson.
+The identity pairs the original six-string H with a bold Manrope wordmark. Warm ivory, ink and terracotta support a friendly, clear guitar-studio presentation. The authentic performance sits in a contained black hero frame. Linked lesson rows lead into a teacher panel with an attributed student quote, a compact practice panel, FAQ and a dark contact section with a light form.
 
-## Positioning
+The user-supplied recording is the evidence of Hamlet's playing. The cleaned hero excerpt and poster use a plain black backdrop; the original recording remains unchanged. The complete performance is retained but unused by the interface. `lesson-craft.webp` and `practice-corner.webp` are distinct conceptual mood images, identified as “Sfeerbeeld”; neither claims to show Hamlet teaching or his actual studio. See `docs/media-manifest.json` and `docs/hero-video.json`.
 
-A real local teacher demonstrated through the user's supplied flamenco performance. Personal instruction, no invented result guarantees.
+## Interaction requirements
 
-## Capabilities and Constraints
+The hero attempts playback with sound and retries muted if the browser refuses audible autoplay. A small speaker controls sound, while the image-sized playback button supports pause/resume by touch and keyboard. Reduced motion starts with the poster. Offscreen and hidden-tab pauses preserve manual choices; load errors expose a retry. Do not promise automatic sound in every browser.
 
-Responsive, accessible static website with an authentic hero performance excerpt and a verified telephone fallback. Primary lesson actions lead to an in-page inquiry form using an activated opaque FormSubmit endpoint. Provider activation and local test results do not by themselves establish real production delivery. Playback attempts sound first and falls back to muted playback when the browser rejects audible autoplay; audible autoplay cannot be guaranteed. One circular speaker button controls sound, and the performance image is a keyboard- and touch-accessible pause/resume control. Reduced-motion preference leaves the hero poster visible until explicit playback. Offscreen and hidden-tab pauses preserve manual pause and mute choices. The former full-performance dialog and visible control bar are removed; the complete video file remains retained but unused by the interface. Real business details must be sourced. Do not invent availability, prices, street address, review counts or credentials. Full creative freedom including new logo explicitly authorized. Save to SavaJulian/hamlet-guitar-site.
+Primary lesson actions lead to `#contact`; lesson rows preselect the interest field. On mobile, the contact form precedes the route information. The floating lesson action hides while the hero's primary action or the contact section is visible.
 
-## Brand Commitments
+## Inquiry and privacy
 
-Name Hamlet. User-supplied performance footage remains the primary visual proof. Generated conceptual guitar still lifes support the lesson and private-practice sections without implying that they show Hamlet's actual teaching space. Preserve the original six-string H identity; the copied starter is scaffolding, not brand authority.
+The form collects required name/email and optional telephone, interest and message. It requests a time for a free introductory lesson; it does not confirm a booking. The telephone remains a fallback.
 
-## Evidence on Hand
+Native POST uses an activated opaque FormSubmit endpoint through repository variable `LESSON_FORM_ENDPOINT` and build variable `PUBLIC_LESSON_FORM_ENDPOINT`. Local configuration stays in ignored `.env`. The endpoint validator rejects addresses exposed in URLs. The receiving address must remain absent from public source, HTML, documentation and URLs.
 
-User states Hamlet gives guitar lessons in Merksem, Antwerpen. Supplied video filename flamenco_final_v3_1080p.mp4; exact matching file recovered from Downloads because original scratch path is unavailable. Verified business research is recorded in docs/sources.md, including phone and address. Julian explicitly confirmed on 25 October 2026 that the first kennismakingsles is free and requested promoting it on the website. Rates for subsequent lessons and availability remain for Hamlet to confirm. The free introductory lesson duration has not been specified; the sourced 60-minute duration applies to regular lessons. The 12-second hero excerpt and the complete performance derive from this same authentic source; generated section imagery is documented separately in docs/media-manifest.json.
-
-## Product Principles
-
-Show his real playing. Make the first step easy. Explain beginner suitability without diluting flamenco expertise. Keep factual claims traceable.
-
-## Approved homepage copy
-
-Julian approved “Leer gitaar spelen. Op jouw tempo.” on 25 October 2026, replacing the metaphorical opening with a clear lesson offer.
-
-The teacher-section image caption is “Techniek. Ritme. Expressie.” The accompanying conceptual image shows a guitar, practice notebook and pencil. The private-practice section uses a different, wider guitar-and-chair scene beneath “Een uur voor jezelf. Een geluid dat blijft.”
-
-The user-confirmed introductory offer is “Je eerste kennismakingsles is gratis.” It appears beside the hero action, in the contact heading and FAQ. Primary invitations read “Plan je gratis les”. They point to `#contact`, as does “Maak kennis met Hamlet”; lesson choices preselect the form interest field. This replaces the previous primary phone/SMS flow while retaining a telephone fallback. No deadline, limited availability or follow-up obligation is claimed.
-
-Julian requested removing the distracting grain behind Hamlet in the hero. The real performance excerpt and its poster now use a cleaned near-black background composited onto pure black; the source recording and full performance remain unchanged.
-
-On 26 October 2026 Julian requested sound by default and removal of the prominent sound/pause/full-video bar. The current implementation uses the browser-permitted audible-first behavior and a single discreet speaker button, with playback controlled directly on the image.
-
-## Inquiry form — 26 October 2026
-
-`LessonForm.astro` collects required name and email plus optional telephone, interest and message. Submission requests a lesson time; it is not a completed booking. Native POST uses an opaque FormSubmit endpoint supplied through GitHub repository variable `LESSON_FORM_ENDPOINT` and build variable `PUBLIC_LESSON_FORM_ENDPOINT`. Local configuration lives in ignored `.env`. The endpoint validator rejects URLs that expose a receiving address.
-
-The recipient is confirmed privately and must never be written into this public repository, rendered HTML or public URLs. FormSubmit activation is confirmed. The privacy and `/bedankt` pages are implemented, and 22 local browser tests passed, including endpoint validation and locally intercepted POSTs. Deployment and real production inbox delivery are checked separately; they are not claimed complete in these notes.
+The privacy page explains provider processing, and `/bedankt/` describes the submitted inquiry. No analytics, tracking pixels, account system or own lead database is present. Actual inbox receipt is verified separately from form activation, browser tests or the thank-you page.
