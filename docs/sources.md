@@ -68,3 +68,7 @@ Proof precedes the contact action: Hamlet’s real performance and a sourced lea
 Julian explicitly requested: “zeggen dat de eerste kennismakingsles gratis is”. This is the source for the new hero, contact, FAQ and inquiry copy. The first introductory lesson is free; subsequent lesson rates remain to be discussed directly with Hamlet. No duration for the free lesson, deadline, limited places or absence of obligations was supplied or invented.
 
 Offer placement follows the single-next-step principle in the local Sabri Marketing BRAIN.md §2 (Hormozi and Sabri Suby, 17 May 2026) and ads-writer.md “Landing page”: repeat one clear offer at decision points. Conversion uplift has not been measured.
+
+## User-confirmed experience — 26 October 2026
+
+Julian explicitly requested: “include he has 24 years of experience”. This user-provided fact supports publishing “24 jaar ervaring” for Hamlet. It does not establish that all 24 years were spent teaching, a career start year or specific qualifications. Keep the stated figure until the user supplies an update; do not increment it automatically.

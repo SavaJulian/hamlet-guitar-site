@@ -15,6 +15,7 @@ Static Astro + Tailwind site, built from Julian's local business-site kit with B
 - Gitaarlessen Hamlet, Bredabaan 479, 2170 Merksem / Antwerpen.
 - Public telephone: +32 483 50 22 20.
 - Lessons for beginners and advanced players, including Spanish guitar and flamenco.
+- Hamlet has 24 years of experience, confirmed by Julian on 26 October 2026. This does not establish 24 years of teaching, a career start year or qualifications; do not increment the figure automatically.
 - The first kennismakingsles is free, confirmed by Julian. Its duration is unspecified; the sourced 60-minute duration applies to regular lessons.
 - Rates after the introduction and current availability require confirmation from Hamlet.
 - Source references, including the Google profile and attributed student review, are in `docs/sources.md`. Published rating information is previously verified evidence, not a live feed.
