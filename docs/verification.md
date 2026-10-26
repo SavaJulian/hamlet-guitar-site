@@ -1,13 +1,13 @@
 # Verification — 26 October 2026
 
-## Inquiry form draft — activation pending
+## Inquiry form
 
 - All primary lesson actions and the teacher introduction link lead to the inline contact form. Lesson choices preselect interest without clearing entered details.
 - Twenty-two browser tests pass, including required-field errors and focus, no submission when unconfigured, anonymous endpoint validation, locally intercepted native POST payloads, privacy and thank-you routes, and existing video behavior. These tests send no external lead.
 - Reviewed form layouts at 320, 390, 768 and 1440 pixels and the thank-you page at 390 and 1440 pixels, with no horizontal overflow. The tablet layout stacks; form fields respond to their container width.
 - Astro check reports zero errors, warnings or hints; lint, formatting and the production subpath build pass. Four routes are generated. The route policy now consistently uses trailing slashes, fixing local privacy and thank-you navigation.
 - FormSubmit is selected with default reCAPTCHA, a subject, table email format and a base-aware return URL. The build rejects email-address action URLs and permits only an anonymous FormSubmit endpoint. The receiver is absent from source, generated pages and public documentation.
-- FormSubmit displayed its activation-email-sent confirmation. The mailbox holder must activate and supply the opaque endpoint. Real delivery is not yet verified; this branch is a draft and has not replaced the live site.
+- FormSubmit displayed its successful activation confirmation for the selected receiving mailbox. Its anonymous endpoint is configured in the repository deployment variable and local ignored environment file. The configured build and all 22 local tests pass; production delivery is verified separately after deployment.
 
 ## Video quality comparison
 

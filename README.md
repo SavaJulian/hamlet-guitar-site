@@ -42,27 +42,24 @@ The teacher and practice sections use two generated conceptual mood images: `les
 
 Business details and source references are documented in `docs/sources.md`. Current prices and availability must be confirmed directly with Hamlet; the site does not invent them. The approved opening is “Leer gitaar spelen. Op jouw tempo.”
 
-The site has no analytics, tracking pixels, account system or server-side lead database. The local form draft described below is not activated and currently sends no form data. The verified telephone number remains available as a fallback. The recipient is now confirmed privately and FormSubmit is selected. The receiving address must remain absent from public source, HTML, documentation and URLs. The privacy update and dedicated `/bedankt` page are implemented; activation and final delivery checks remain pending.
+The site has no analytics, tracking pixels, account system or server-side lead database. Form submissions use FormSubmit, and the verified telephone number remains available as a fallback. The receiving address is confirmed privately and remains absent from public source, HTML, documentation and URLs. The privacy page describes the provider flow, and `/bedankt` distinguishes a submitted request from a confirmed lesson.
 
-## Local lesson form draft — activation pending
+## Lesson inquiry form
 
-The 26 October 2026 local draft routes every “Plan je gratis les” action and “Maak kennis met Hamlet” to `#contact`. `src/components/LessonForm.astro` sits in the existing gold contact section. Lesson-choice links preselect `#lesson-interest`, replacing the previous interest-specific SMS route. Telephone remains a secondary fallback.
+Every “Plan je gratis les” action and “Maak kennis met Hamlet” leads to `#contact`. `src/components/LessonForm.astro` sits in the gold contact section; lesson choices preselect `#lesson-interest`. The form requests name and email, with optional phone, experience/interest and a message. It is an inquiry to agree a lesson time, not a confirmed booking.
 
-The form requests name and email, with optional phone, experience/interest and a short message. It is an inquiry to agree a lesson time, not a confirmed booking. When configured, it uses a native browser `POST` to FormSubmit through the build-time `PUBLIC_LESSON_FORM_ENDPOINT`; it does not send email itself. Use only the opaque endpoint supplied after recipient confirmation, never an email-address endpoint. The local loading message must not be treated as proof of delivery. The `/bedankt` page distinguishes a submitted request from a confirmed lesson.
+The form uses native browser `POST` to an opaque FormSubmit endpoint. Recipient activation was confirmed on 26 October 2026. GitHub's repository variable `LESSON_FORM_ENDPOINT` supplies `PUBLIC_LESSON_FORM_ENDPOINT` during builds; local development uses the latter in ignored `.env`. `src/lib/lessonForm.ts` accepts only an anonymous HTTPS FormSubmit identifier and rejects addresses exposed in endpoint URLs without echoing the rejected value into logs. No receiving email belongs in this repository.
 
-**Activation TODO: keep the draft on `codex/free-lesson-form` until the opaque endpoint is active.** The recipient was supplied privately; it must not be copied into this public repository. FormSubmit activation is still pending, so do not claim working delivery or publish an unactivated form.
+The POST includes a subject, table template and a base-aware `_next` URL for `/bedankt/`. A loading message or thank-you page is not proof that the recipient's inbox received the request. [FormSubmit's documentation](https://formsubmit.co/documentation) describes the opaque identifier and a 30-day submission archive; the privacy page reflects that provider behavior.
 
-[FormSubmit's documentation](https://formsubmit.co/documentation) describes an opaque action identifier issued after email confirmation and a 30-day submission archive. The public form must use that identifier, concealing the receiving address in its source and URLs. This does not make the submission endpoint a secret.
+Twenty-two local browser tests passed, including endpoint validation and intercepted POSTs. Activation is confirmed; final configured checks, deployment and real production delivery are verified separately and are not claimed complete here.
 
-Before publishing the form:
+### Change the receiving inbox
 
-1. Complete FormSubmit recipient confirmation and obtain the opaque endpoint. Keep the receiving address out of the repository, generated pages and public URLs.
-2. Set the GitHub repository variable `LESSON_FORM_ENDPOINT` to the activated opaque endpoint. The workflow passes it as `PUBLIC_LESSON_FORM_ENDPOINT`; local development uses the latter in `.env`.
-3. Verify the configured provider flow and return to `/bedankt/`; privacy already describes FormSubmit and its 30-day archive.
-4. Verify the connected delivery, redirect and error experience. A submitted request is not a lesson booking.
-5. Publish after activation and final checks. The `main` workflow deploys automatically; the current feature branch keeps the unfinished integration separate.
-
-Twenty local browser tests passed before the current backend configuration and thank-you-page work. Connected delivery, provider activation and form publication are not yet verified.
+1. Confirm the new inbox privately with FormSubmit and obtain its activated opaque endpoint. Never commit the receiving email or use an email-address URL.
+2. Update the GitHub repository variable `LESSON_FORM_ENDPOINT`; update `PUBLIC_LESSON_FORM_ENDPOINT` in ignored local `.env` when needed.
+3. Rebuild and deploy so the static form receives the new endpoint. The existing `main` workflow publishes successful builds automatically.
+4. Verify a controlled submission, the `/bedankt/` return and receipt in the new inbox. Preserve the telephone fallback and review privacy information if the provider changes.
 
 ## Design and maintenance
 
