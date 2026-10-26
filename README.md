@@ -69,6 +69,12 @@ To change the receiving inbox:
 
 Portable outlined SVG logos are in `public/brand/`: a light wordmark for dark surfaces, an ink wordmark for light surfaces, and the six-string H favicon. Terracotta and bold Manrope align the assets with the interface. Preserve genuine footage, traceable claims, keyboard support and recipient privacy when editing.
 
+## Logo selection page
+
+`/logo-keuze/` is a separate, unlinked selection page with the current logo and six naming/logo concepts. It has noindex metadata and contains its images, font, styles and interactions in one HTML file, so the same file can be forwarded and opened offline. A visitor can enlarge each logo, choose a favorite and copy the choice; nothing is submitted or sent automatically.
+
+Edit `src/brand-review/logo-choice.html` and rebuild with `bun run build:logo-choice`. Concept previews are optimized WebP files in `src/assets/logo-concepts/`; the first three omit the location name at Julian's request. The main site continues to use its existing logo. The regular build refreshes `public/logo-keuze/index.html` before Astro copies it to the published site.
+
 ## Attribution
 
 Based on the MIT-licensed [AstroWind](https://github.com/arthelokyo/astrowind) starter. The original license remains in `LICENSE.md`. Reusable starter components remain in source; demo pages, sample posts and the unused CMS are removed from the published route set.

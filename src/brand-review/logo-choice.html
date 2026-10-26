@@ -1,0 +1,1423 @@
+<!doctype html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#f5f2eb" />
+    <meta
+      name="description"
+      content="Zeven logo's voor Hamlet. Bekijk de ontwerpen, kies je favoriet en geef mee wat bij jou past."
+    />
+    <title>Welk logo past bij jou, Hamlet?</title>
+    <style>
+      @font-face {
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: 200 800;
+        font-display: swap;
+        src: url('{{FONT_MANROPE}}') format('woff2');
+      }
+      :root {
+        --paper: #f5f2eb;
+        --ink: #25251f;
+        --muted: #736f65;
+        --line: #d8d3c7;
+        --accent: #b84e30;
+        --white: #fffdf8;
+        color-scheme: light;
+        font-family: Manrope, Arial, sans-serif;
+        scroll-behavior: smooth;
+        scroll-padding-top: 24px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        -webkit-font-smoothing: antialiased;
+      }
+      body[data-choice] {
+        padding-bottom: var(--bar-space, 160px);
+      }
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+      button,
+      a,
+      input,
+      textarea {
+        -webkit-tap-highlight-color: transparent;
+      }
+      button {
+        cursor: pointer;
+        color: inherit;
+      }
+      a {
+        color: inherit;
+      }
+      button {
+        touch-action: manipulation;
+      }
+      :focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 5px;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      ::selection {
+        color: var(--ink);
+        background: #edbea9;
+      }
+      .shell {
+        width: min(1280px, calc(100% - 80px));
+        margin-inline: auto;
+      }
+      .masthead {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 28px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .masthead-brand {
+        display: flex;
+        gap: 13px;
+        align-items: center;
+      }
+      .masthead-mark {
+        width: 22px;
+        height: 27px;
+        color: var(--accent);
+      }
+      .masthead-end {
+        color: var(--muted);
+        font-weight: 500;
+        letter-spacing: 0.08em;
+      }
+      .intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 70px;
+        align-items: end;
+        padding: 68px 0 58px;
+      }
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 750;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        margin: 0 0 20px;
+      }
+      .eyebrow::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      h1 {
+        font-size: clamp(42px, 5.6vw, 76px);
+        font-weight: 650;
+        line-height: 1.08;
+        letter-spacing: -0.06em;
+        margin: 0;
+        max-width: 800px;
+      }
+      h1 span {
+        color: var(--accent);
+      }
+      .intro-copy {
+        max-width: 540px;
+        margin: 26px 0 0;
+        font-size: 16px;
+        line-height: 1.8;
+        color: #5e5c53;
+      }
+      .choice-note {
+        border-top: 1px solid var(--line);
+        padding-top: 19px;
+        padding-bottom: 4px;
+      }
+      .choice-note strong {
+        font-size: 13px;
+        font-weight: 750;
+      }
+      .choice-note p {
+        font-size: 13px;
+        line-height: 1.8;
+        color: var(--muted);
+        margin: 9px 0 0;
+      }
+      .section-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin: 0 0 18px;
+      }
+      .section-heading h2 {
+        font-size: 13px;
+        font-weight: 650;
+        margin: 0;
+        letter-spacing: 0.01em;
+      }
+      .section-heading span {
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .options {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 30px 24px;
+      }
+      .logo-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        overflow: hidden;
+        transition:
+          border-color 0.18s,
+          box-shadow 0.18s;
+        scroll-margin-top: 24px;
+      }
+      .logo-card:has(input:checked) {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px var(--accent);
+      }
+      .image-stage {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        aspect-ratio: 1;
+        overflow: hidden;
+        background: var(--canvas, var(--paper));
+        text-decoration: none;
+      }
+      .image-stage img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+      .image-stage:hover .enlarge-icon,
+      .image-stage:focus-visible .enlarge-icon {
+        color: var(--ink);
+        background: #fffefbf5;
+        transform: translateY(-2px);
+      }
+      .image-stage:focus-visible {
+        outline-offset: -5px;
+      }
+      .enlarge-icon {
+        position: absolute;
+        bottom: 14px;
+        right: 14px;
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        color: #4b493f;
+        background: #fffdf8cf;
+        border: 1px solid #ffffffaa;
+        border-radius: 50%;
+        transition:
+          background 0.18s,
+          transform 0.18s;
+      }
+      .enlarge-icon svg {
+        width: 15px;
+        height: 15px;
+      }
+      .card-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 22px 23px 19px;
+        border-top: 1px solid #25251f0d;
+      }
+      .card-heading {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+      }
+      .card-number {
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 750;
+        letter-spacing: 0.04em;
+      }
+      .card-heading h3 {
+        font-size: 22px;
+        letter-spacing: -0.04em;
+        line-height: 1.2;
+        font-weight: 750;
+        margin: 0;
+      }
+      .card-subtitle {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 650;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin: 10px 0 0;
+      }
+      .card-description {
+        color: #706c62;
+        font-size: 13px;
+        line-height: 1.75;
+        margin: 14px 0 22px;
+        flex: 1;
+      }
+      .select-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        border-top: 1px solid #e6e1d6;
+        padding-top: 17px;
+        min-height: 44px;
+        font-size: 12px;
+        font-weight: 650;
+      }
+      .select-label input {
+        margin: 0;
+        width: 18px;
+        height: 18px;
+        accent-color: var(--accent);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .select-label .selected-label {
+        display: none;
+      }
+      .select-label:has(input:checked) .default-label {
+        display: none;
+      }
+      .select-label:has(input:checked) .selected-label {
+        display: inline;
+        color: var(--accent);
+      }
+      .original {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        margin-bottom: 34px;
+      }
+      .original .image-stage {
+        aspect-ratio: auto;
+        min-height: 255px;
+      }
+      .original .image-stage img {
+        width: min(68%, 390px);
+        height: auto;
+        max-height: 120px;
+      }
+      .original .card-content {
+        padding: 32px 36px;
+        border-top: 0;
+        border-left: 1px solid var(--line);
+      }
+      .original .card-description {
+        max-width: 35ch;
+        margin-bottom: 20px;
+      }
+      .original .card-heading h3 {
+        font-size: 28px;
+      }
+      .concept-divider {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin: 0 0 18px;
+        padding-top: 5px;
+      }
+      .concept-divider p {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 650;
+      }
+      .concept-divider span {
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .reflection {
+        margin-top: 54px;
+        padding: 36px 0;
+        border-top: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+        gap: 70px;
+      }
+      .reflection h2 {
+        margin: 0 0 12px;
+        font-size: 25px;
+        font-weight: 650;
+        letter-spacing: -0.04em;
+      }
+      .reflection p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.8;
+        max-width: 42ch;
+      }
+      .note-label {
+        display: block;
+        margin-bottom: 9px;
+        font-size: 12px;
+        font-weight: 650;
+      }
+      .note-label span {
+        font-weight: 400;
+        color: var(--muted);
+      }
+      #choice-note {
+        display: block;
+        width: 100%;
+        min-height: 115px;
+        padding: 14px 16px;
+        border: 1px solid #cfc9bd;
+        border-radius: 8px;
+        background: #fffdf8;
+        color: var(--ink);
+        resize: vertical;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      #choice-note::placeholder {
+        color: #969084;
+      }
+      .page-footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 25px;
+        border-top: 1px solid var(--line);
+        padding: 23px 0 35px;
+        margin-top: 16px;
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .page-footer button {
+        background: none;
+        border: 0;
+        padding: 0;
+        color: var(--muted);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        font-size: 11px;
+      }
+      .selection-bar {
+        position: fixed;
+        inset: auto 0 0;
+        z-index: 20;
+        background: #25251ff5;
+        color: #fffdf8;
+        border-top: 1px solid #ffffff14;
+        padding: 18px 0 calc(18px + env(safe-area-inset-bottom));
+        box-shadow: 0 -8px 28px #25251f0c;
+      }
+      .selection-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px 30px;
+      }
+      .selection-summary {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .selection-number {
+        display: grid;
+        place-items: center;
+        width: 43px;
+        height: 43px;
+        border: 1px solid #ffffff40;
+        border-radius: 50%;
+        font-size: 13px;
+      }
+      .selection-summary small {
+        display: block;
+        color: #c6c2b7;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .selection-summary strong {
+        font-size: 17px;
+        font-weight: 650;
+        letter-spacing: -0.02em;
+      }
+      .selection-actions {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .selection-actions p {
+        color: #c6c2b7;
+        font-size: 11px;
+        margin: 0;
+        max-width: 130px;
+        line-height: 1.5;
+      }
+      .copy-button {
+        min-height: 45px;
+        padding: 12px 21px;
+        border: 1px solid #fffdf8;
+        background: #fffdf8;
+        color: var(--ink);
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 750;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 13px;
+      }
+      .copy-button:hover {
+        background: #e7d7c5;
+        border-color: #e7d7c5;
+      }
+      .copy-button svg {
+        width: 17px;
+        height: 17px;
+      }
+      #copy-status {
+        width: 100%;
+        font-size: 12px;
+        color: #f2d8bd;
+        margin: 0;
+      }
+      .copy-fallback {
+        width: 100%;
+        border-top: 1px solid #ffffff26;
+        padding-top: 14px;
+      }
+      .copy-fallback label {
+        display: block;
+        color: #ddd8cd;
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+      #copy-text {
+        width: 100%;
+        min-height: 62px;
+        max-height: 150px;
+        background: #fffdf8;
+        border: 1px solid #ffffff55;
+        border-radius: 5px;
+        padding: 10px 12px;
+        color: var(--ink);
+        font-size: 13px;
+        line-height: 1.5;
+        resize: vertical;
+      }
+      dialog {
+        width: min(880px, calc(100% - 40px));
+        max-height: calc(100dvh - 40px);
+        border: 0;
+        padding: 0;
+        border-radius: 15px;
+        background: var(--white);
+        color: var(--ink);
+        box-shadow: 0 20px 100px #0004;
+        overflow: auto;
+      }
+      dialog::backdrop {
+        background: #171914bd;
+        backdrop-filter: blur(5px);
+      }
+      .dialog-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 18px 22px;
+      }
+      .dialog-title {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 9px;
+      }
+      .dialog-title span {
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .dialog-title h2 {
+        font-size: 20px;
+        line-height: 1.3;
+        letter-spacing: -0.03em;
+        margin: 0;
+      }
+      .dialog-close {
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: transparent;
+      }
+      .dialog-close svg {
+        width: 18px;
+        height: 18px;
+      }
+      .dialog-stage {
+        display: grid;
+        place-items: center;
+        background: var(--paper);
+      }
+      .dialog-stage img {
+        display: block;
+        width: 100%;
+        height: min(65dvh, 650px);
+        object-fit: contain;
+      }
+      .dialog-stage.original-stage {
+        min-height: min(52dvh, 480px);
+        padding: 50px;
+      }
+      .dialog-stage.original-stage img {
+        width: 80%;
+        height: auto;
+        max-height: 180px;
+      }
+      .dialog-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 16px 22px;
+      }
+      .dialog-footer p {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.5;
+        margin: 0;
+      }
+      .dialog-select {
+        min-height: 43px;
+        border: 0;
+        border-radius: 5px;
+        background: var(--ink);
+        color: var(--white);
+        padding: 10px 17px;
+        font-size: 12px;
+        font-weight: 650;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      @media (max-width: 1000px) {
+        .intro {
+          grid-template-columns: minmax(0, 1fr) 235px;
+          gap: 38px;
+        }
+        .options {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .shell {
+          width: calc(100% - 56px);
+        }
+        .original {
+          grid-template-columns: 1fr 1fr;
+        }
+        .original .card-content {
+          padding: 26px;
+        }
+        .original .image-stage {
+          min-height: 250px;
+        }
+        .reflection {
+          gap: 40px;
+        }
+      }
+      @media (max-width: 650px) {
+        .shell {
+          width: calc(100% - 36px);
+        }
+        .masthead {
+          padding-block: 22px;
+          font-size: 10px;
+        }
+        .masthead-end {
+          font-size: 9px;
+        }
+        .intro {
+          display: block;
+          padding: 42px 0 34px;
+        }
+        h1 {
+          font-size: 47px;
+          letter-spacing: -0.065em;
+        }
+        .intro-copy {
+          font-size: 14px;
+          line-height: 1.8;
+          margin-top: 21px;
+        }
+        .eyebrow {
+          margin-bottom: 17px;
+          font-size: 10px;
+        }
+        .choice-note {
+          margin-top: 27px;
+          padding-top: 17px;
+        }
+        .choice-note strong {
+          font-size: 12px;
+        }
+        .choice-note p {
+          font-size: 12px;
+          max-width: 39ch;
+        }
+        .section-heading span,
+        .concept-divider span {
+          font-size: 10px;
+        }
+        .original {
+          display: flex;
+          margin-bottom: 31px;
+        }
+        .original .image-stage {
+          min-height: 210px;
+        }
+        .original .image-stage img {
+          width: min(69%, 300px);
+        }
+        .original .card-content {
+          border-left: 0;
+          border-top: 1px solid var(--line);
+          padding: 24px;
+        }
+        .original .card-heading h3 {
+          font-size: 24px;
+        }
+        .original .card-description {
+          max-width: none;
+        }
+        .options {
+          grid-template-columns: 1fr;
+          gap: 25px;
+        }
+        .card-content {
+          padding: 22px 24px;
+        }
+        .card-description {
+          font-size: 14px;
+        }
+        .select-label {
+          font-size: 13px;
+          min-height: 48px;
+        }
+        .reflection {
+          display: block;
+          margin-top: 38px;
+          padding-top: 29px;
+        }
+        .reflection p {
+          max-width: none;
+        }
+        .reflection-note {
+          margin-top: 22px;
+        }
+        .reflection h2 {
+          font-size: 25px;
+        }
+        .page-footer {
+          gap: 14px;
+          font-size: 10px;
+        }
+        .page-footer > span {
+          max-width: 24ch;
+        }
+        .selection-bar {
+          padding-top: 13px;
+          padding-bottom: calc(13px + env(safe-area-inset-bottom));
+        }
+        .selection-inner {
+          gap: 12px;
+        }
+        .selection-summary {
+          gap: 10px;
+        }
+        .selection-number {
+          width: 34px;
+          height: 34px;
+          font-size: 11px;
+        }
+        .selection-summary strong {
+          font-size: 14px;
+        }
+        .selection-summary small {
+          font-size: 9px;
+          margin-bottom: 3px;
+        }
+        .selection-actions {
+          gap: 0;
+        }
+        .selection-actions p {
+          display: none;
+        }
+        .copy-button {
+          padding: 11px 13px;
+          font-size: 11px;
+          gap: 8px;
+        }
+        .copy-button svg {
+          width: 15px;
+          height: 15px;
+        }
+        dialog {
+          width: calc(100% - 24px);
+          max-height: calc(100dvh - 24px);
+          border-radius: 10px;
+        }
+        .dialog-header {
+          padding: 14px 16px;
+        }
+        .dialog-title h2 {
+          font-size: 17px;
+        }
+        .dialog-title {
+          gap: 7px;
+        }
+        .dialog-footer {
+          padding: 14px 16px;
+          gap: 15px;
+        }
+        .dialog-footer p {
+          font-size: 11px;
+          max-width: 18ch;
+        }
+        .dialog-select {
+          padding: 10px 12px;
+          font-size: 11px;
+        }
+        .dialog-stage.original-stage {
+          padding: 28px;
+          min-height: 250px;
+        }
+        .dialog-stage.original-stage img {
+          width: 95%;
+        }
+        .dialog-close {
+          width: 36px;
+          height: 36px;
+        }
+      }
+      @media (max-width: 370px) {
+        h1 {
+          font-size: 41px;
+        }
+        .masthead-end {
+          display: none;
+        }
+        .selection-summary strong {
+          font-size: 12px;
+        }
+        .selection-number {
+          display: none;
+        }
+        .copy-button {
+          padding-inline: 10px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        :root {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+      @media print {
+        @page {
+          margin: 15mm;
+        }
+        body,
+        body[data-choice] {
+          background: white;
+          padding: 0;
+        }
+        .shell {
+          width: 100%;
+        }
+        .masthead {
+          padding: 0 0 12px;
+        }
+        .intro {
+          display: block;
+          padding: 22px 0;
+        }
+        h1 {
+          font-size: 35px;
+        }
+        .intro-copy {
+          margin-top: 12px;
+          font-size: 11px;
+        }
+        .choice-note {
+          display: none;
+        }
+        .original {
+          margin-bottom: 22px;
+          grid-template-columns: 1fr 1fr;
+        }
+        .original .image-stage {
+          min-height: 160px;
+        }
+        .original .image-stage img {
+          max-width: 240px;
+        }
+        .original .card-content {
+          padding: 22px;
+        }
+        .options {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 18px;
+        }
+        .logo-card {
+          break-inside: avoid;
+          box-shadow: none !important;
+          border-color: #d8d3c7 !important;
+        }
+        .card-content {
+          padding: 14px;
+        }
+        .card-heading h3 {
+          font-size: 17px;
+        }
+        .card-description {
+          font-size: 10px;
+          margin-bottom: 0;
+        }
+        .card-subtitle {
+          font-size: 8px;
+        }
+        .enlarge-icon,
+        .select-label,
+        .reflection,
+        .page-footer button,
+        .selection-bar,
+        dialog {
+          display: none !important;
+        }
+        .image-stage {
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+        .page-footer {
+          margin-top: 22px;
+          padding-bottom: 0;
+        }
+        .section-heading,
+        .concept-divider {
+          break-after: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="masthead">
+        <div class="masthead-brand">
+          <svg class="masthead-mark" viewBox="0 0 28 34" fill="none" aria-hidden="true">
+            <path
+              d="M3 2v30M7 2v30M11 2v30M17 2v30M21 2v30M25 2v30M3 17h22"
+              stroke="currentColor"
+              stroke-width="1.2"
+            /></svg
+          ><span>Hamlet · een eigen gezicht</span>
+        </div>
+        <span class="masthead-end">Logo-verkenning / 7 richtingen</span>
+      </header>
+      <main>
+        <section class="intro" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow">Een keuze voor jouw muziek</p>
+            <h1 id="page-title">Welk logo past<br />bij jou, <span>Hamlet?</span></h1>
+            <p class="intro-copy">
+              Zeven richtingen, elk met een eigen karakter. Bekijk ze op je gemak, kies je favoriet of vertel welke
+              elementen je wilt combineren.
+            </p>
+          </div>
+          <aside class="choice-note">
+            <strong>Het mag nog helemaal jouw kant op.</strong>
+            <p>De naam kan nog veranderen. Kies vooral de uitstraling die bij je past.</p>
+          </aside>
+        </section>
+
+        <div class="section-heading">
+          <h2>Het huidige logo</h2>
+          <span>Klik op een logo om het groter te bekijken</span>
+        </div>
+        <section aria-label="De zeven logo-opties">
+          <article
+            class="logo-card original"
+            id="origineel"
+            data-name="Hamlet — origineel"
+            data-number="01"
+            style="--canvas: #f7f5ef"
+          >
+            <button
+              class="image-stage"
+              type="button"
+              data-enlarge
+              aria-label="Bekijk 01 — Hamlet, het originele logo, vergroot"
+            >
+              <img
+                src="{{LOGO_ORIGINAL}}"
+                alt="Het originele Hamlet-logo: een H van zes snaren naast een krachtig woordmerk."
+              /><span class="enlarge-icon" aria-hidden="true"
+                ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
+                  <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
+              ></span>
+            </button>
+            <div class="card-content">
+              <div class="card-heading">
+                <span class="card-number">01</span>
+                <h3>Hamlet</h3>
+              </div>
+              <p class="card-subtitle">Het originele website-logo</p>
+              <p class="card-description">
+                Helder en persoonlijk. De zes snaren vormen een H, met je naam stevig op de voorgrond.
+              </p>
+              <label class="select-label"
+                ><input
+                  type="radio"
+                  name="favorite"
+                  value="origineel"
+                  aria-label="Kies 01 — Hamlet, het originele logo"
+                /><span class="default-label">Dit is mijn favoriet</span
+                ><span class="selected-label">Gekozen als favoriet</span></label
+              >
+            </div>
+          </article>
+          <div class="concept-divider">
+            <p>Zes nieuwe mogelijkheden</p>
+            <span>Van expressief tot ingetogen</span>
+          </div>
+          <div class="options">
+            <article
+              class="logo-card"
+              id="casa-hamlet"
+              data-name="Casa Hamlet"
+              data-number="02"
+              style="--canvas: #f7f0e1"
+            >
+              <button class="image-stage" type="button" data-enlarge aria-label="Bekijk 02 — Casa Hamlet vergroot">
+                <img
+                  src="{{LOGO_CASA}}"
+                  alt="Casa Hamlet: een terracotta rozet en vloeiende, expressieve serifletters op crème."
+                /><span class="enlarge-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
+                    <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
+                ></span>
+              </button>
+              <div class="card-content">
+                <div class="card-heading">
+                  <span class="card-number">02</span>
+                  <h3>Casa Hamlet</h3>
+                </div>
+                <p class="card-subtitle">Warm · artistiek · expressief</p>
+                <p class="card-description">
+                  Een persoonlijk huis voor gitaar, met warme kleuren en de beweging van flamenco.
+                </p>
+                <label class="select-label"
+                  ><input type="radio" name="favorite" value="casa-hamlet" aria-label="Kies 02 — Casa Hamlet" /><span
+                    class="default-label"
+                    >Dit is mijn favoriet</span
+                  ><span class="selected-label">Gekozen als favoriet</span></label
+                >
+              </div>
+            </article>
+            <article class="logo-card" id="tokkel" data-name="Tokkel" data-number="03" style="--canvas: #f0f5ff">
+              <button class="image-stage" type="button" data-enlarge aria-label="Bekijk 03 — Tokkel vergroot">
+                <img
+                  src="{{LOGO_TOKKEL}}"
+                  alt="Tokkel: stevige blauwe letters met een klankgat en snaren in de o en een oranje accent."
+                /><span class="enlarge-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
+                    <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
+                ></span>
+              </button>
+              <div class="card-content">
+                <div class="card-heading">
+                  <span class="card-number">03</span>
+                  <h3>Tokkel</h3>
+                </div>
+                <p class="card-subtitle">Speels · direct · toegankelijk</p>
+                <p class="card-description">
+                  Een naam die al klinkt als gitaarspelen, met een vrolijk accent en letters vol energie.
+                </p>
+                <label class="select-label"
+                  ><input type="radio" name="favorite" value="tokkel" aria-label="Kies 03 — Tokkel" /><span
+                    class="default-label"
+                    >Dit is mijn favoriet</span
+                  ><span class="selected-label">Gekozen als favoriet</span></label
+                >
+              </div>
+            </article>
+            <article class="logo-card" id="snaarwerk" data-name="Snaarwerk" data-number="04" style="--canvas: #123b32">
+              <button class="image-stage" type="button" data-enlarge aria-label="Bekijk 04 — Snaarwerk vergroot">
+                <img
+                  src="{{LOGO_SNAARWERK}}"
+                  alt="Snaarwerk: zes geometrische lijnen vormen een S naast smalle crème letters op donkergroen."
+                /><span class="enlarge-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
+                    <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
+                ></span>
+              </button>
+              <div class="card-content">
+                <div class="card-heading">
+                  <span class="card-number">04</span>
+                  <h3>Snaarwerk</h3>
+                </div>
+                <p class="card-subtitle">Strak · volwassen · ambachtelijk</p>
+                <p class="card-description">
+                  Zes lijnen en een sterke lettervorm geven aandacht en vakmanschap een eigen teken.
+                </p>
+                <label class="select-label"
+                  ><input type="radio" name="favorite" value="snaarwerk" aria-label="Kies 04 — Snaarwerk" /><span
+                    class="default-label"
+                    >Dit is mijn favoriet</span
+                  ><span class="selected-label">Gekozen als favoriet</span></label
+                >
+              </div>
+            </article>
+            <article
+              class="logo-card"
+              id="signatuur"
+              data-name="Hamlet — signatuur"
+              data-number="05"
+              style="--canvas: #faf8f2"
+            >
+              <button
+                class="image-stage"
+                type="button"
+                data-enlarge
+                aria-label="Bekijk 05 — Hamlet, de signatuur, vergroot"
+              >
+                <img
+                  src="{{LOGO_SIGNATURE}}"
+                  alt="Hamlet als vloeiende zwarte signatuur, met een subtiele gouden lijn en de woorden Gitaarles en Flamenco."
+                /><span class="enlarge-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
+                    <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
+                ></span>
+              </button>
+              <div class="card-content">
+                <div class="card-heading">
+                  <span class="card-number">05</span>
+                  <h3>Hamlet — signatuur</h3>
+                </div>
+                <p class="card-subtitle">Persoonlijk · elegant · muzikaal</p>
+                <p class="card-description">
+                  Je naam als een herkenbare artiestenhandtekening, met een soepele lijn onder het geheel.
+                </p>
+                <label class="select-label"
+                  ><input
+                    type="radio"
+                    name="favorite"
+                    value="signatuur"
+                    aria-label="Kies 05 — Hamlet, de signatuur"
+                  /><span class="default-label">Dit is mijn favoriet</span
+                  ><span class="selected-label">Gekozen als favoriet</span></label
+                >
+              </div>
+            </article>
+            <article class="logo-card" id="pulso" data-name="Pulso" data-number="06" style="--canvas: #ffd9be">
+              <button class="image-stage" type="button" data-enlarge aria-label="Bekijk 06 — Pulso vergroot">
+                <img
+                  src="{{LOGO_PULSO}}"
+                  alt="Pulso: een abstracte hand maakt een tokkelbeweging, in aubergine en koraal op een abrikooskleurige achtergrond."
+                /><span class="enlarge-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
+                    <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
+                ></span>
+              </button>
+              <div class="card-content">
+                <div class="card-heading">
+                  <span class="card-number">06</span>
+                  <h3>Pulso</h3>
+                </div>
+                <p class="card-subtitle">Karaktervol · warm · ritmisch</p>
+                <p class="card-description">
+                  De hand en de aanslag op de snaren worden samen een expressief en herkenbaar beeldmerk.
+                </p>
+                <label class="select-label"
+                  ><input type="radio" name="favorite" value="pulso" aria-label="Kies 06 — Pulso" /><span
+                    class="default-label"
+                    >Dit is mijn favoriet</span
+                  ><span class="selected-label">Gekozen als favoriet</span></label
+                >
+              </div>
+            </article>
+            <article class="logo-card" id="aire" data-name="Aire" data-number="07" style="--canvas: #f1f4f3">
+              <button class="image-stage" type="button" data-enlarge aria-label="Bekijk 07 — Aire vergroot">
+                <img
+                  src="{{LOGO_AIRE}}"
+                  alt="Aire: ruime, open petrolblauwe letters met een vloeiende R en een kleine regel Gitaarles met Hamlet."
+                /><span class="enlarge-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
+                    <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
+                ></span>
+              </button>
+              <div class="card-content">
+                <div class="card-heading">
+                  <span class="card-number">07</span>
+                  <h3>Aire</h3>
+                </div>
+                <p class="card-subtitle">Open · rustig · verfijnd</p>
+                <p class="card-description">
+                  Veel ruimte en heldere letters, met één vloeiende beweging als muzikaal accent.
+                </p>
+                <label class="select-label"
+                  ><input type="radio" name="favorite" value="aire" aria-label="Kies 07 — Aire" /><span
+                    class="default-label"
+                    >Dit is mijn favoriet</span
+                  ><span class="selected-label">Gekozen als favoriet</span></label
+                >
+              </div>
+            </article>
+          </div>
+        </section>
+        <section class="reflection" aria-labelledby="reflection-heading">
+          <div>
+            <h2 id="reflection-heading">Iets van de ene.<br />Iets van de andere.</h2>
+            <p>
+              Je hoeft niet alles aan één voorstel mooi te vinden. Een naam, een kleur of een lettervorm combineren kan
+              ook.
+            </p>
+          </div>
+          <div class="reflection-note">
+            <label class="note-label" for="choice-note">Wat wil je meegeven? <span>(optioneel)</span></label
+            ><textarea
+              id="choice-note"
+              rows="3"
+              maxlength="1500"
+              placeholder="Bijvoorbeeld: de signatuur van 05, met de kleur van 02."
+            ></textarea>
+          </div>
+        </section>
+      </main>
+      <footer class="page-footer">
+        <span>Voor Hamlet, met aandacht voor jouw eigen geluid.</span
+        ><button type="button" id="print-page">Bewaar of print dit overzicht</button>
+      </footer>
+    </div>
+
+    <aside class="selection-bar" id="selection-bar" aria-label="Jouw gekozen logo" hidden>
+      <div class="selection-inner shell">
+        <div class="selection-summary">
+          <span class="selection-number" id="selected-number"></span>
+          <div><small>Jouw favoriet</small><strong id="selected-name"></strong></div>
+        </div>
+        <div class="selection-actions">
+          <p>Kopieer je keuze en stuur die zelf door.</p>
+          <button class="copy-button" id="copy-choice" type="button">
+            Kopieer mijn keuze
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <rect x="7" y="7" width="10" height="10" rx="2" />
+              <path d="M13 7V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3" />
+            </svg>
+          </button>
+        </div>
+        <p id="copy-status" role="status" hidden></p>
+        <div class="copy-fallback" id="copy-fallback" hidden>
+          <label for="copy-text">Selecteer deze tekst en kopieer hem om je keuze door te sturen.</label
+          ><textarea id="copy-text" readonly rows="2"></textarea>
+        </div>
+      </div>
+    </aside>
+
+    <dialog id="logo-dialog" aria-labelledby="dialog-name">
+      <div class="dialog-header">
+        <div class="dialog-title">
+          <span id="dialog-number"></span>
+          <h2 id="dialog-name"></h2>
+        </div>
+        <button class="dialog-close" type="button" aria-label="Sluit de vergroting">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="m5 5 10 10M15 5 5 15" />
+          </svg>
+        </button>
+      </div>
+      <div class="dialog-stage"><img id="dialog-image" alt="" /></div>
+      <div class="dialog-footer">
+        <p>Een richting om verder op te bouwen.</p>
+        <button class="dialog-select" type="button">Kies dit als favoriet</button>
+      </div>
+    </dialog>
+
+    <script>
+      (() => {
+        const cards = [...document.querySelectorAll('.logo-card')];
+        const bar = document.getElementById('selection-bar');
+        const selectedNumber = document.getElementById('selected-number');
+        const selectedName = document.getElementById('selected-name');
+        const note = document.getElementById('choice-note');
+        const copyButton = document.getElementById('copy-choice');
+        const status = document.getElementById('copy-status');
+        const fallback = document.getElementById('copy-fallback');
+        const copyText = document.getElementById('copy-text');
+        const dialog = document.getElementById('logo-dialog');
+        const dialogImage = document.getElementById('dialog-image');
+        const dialogStage = dialog.querySelector('.dialog-stage');
+        let selectedCard = null;
+        let openCard = null;
+        let opener = null;
+
+        function reserveBarSpace() {
+          document.body.style.setProperty(
+            '--bar-space',
+            `${bar.hidden ? 0 : Math.ceil(bar.getBoundingClientRect().height) + 24}px`
+          );
+        }
+
+        function message() {
+          if (!selectedCard) return '';
+          const thoughts = note.value.trim();
+          return `Mijn voorkeur is ${selectedCard.dataset.number} — ${selectedCard.dataset.name}.${thoughts ? '\n\n' + thoughts : ''}`;
+        }
+
+        function resetCopyFeedback() {
+          status.hidden = true;
+          status.textContent = '';
+          fallback.hidden = true;
+          copyText.value = '';
+          reserveBarSpace();
+        }
+
+        function selectCard(card, updateHash = true) {
+          selectedCard = card;
+          card.querySelector('input').checked = true;
+          selectedNumber.textContent = card.dataset.number;
+          selectedName.textContent = card.dataset.name;
+          document.body.dataset.choice = card.id;
+          bar.hidden = false;
+          resetCopyFeedback();
+          if (updateHash) {
+            try {
+              history.replaceState(null, '', '#' + card.id);
+            } catch {
+              /* Selection still works from a local file. */
+            }
+          }
+          reserveBarSpace();
+        }
+
+        function selectHash() {
+          const id = location.hash.slice(1);
+          const card = cards.find((item) => item.id === id);
+          if (card) selectCard(card, false);
+        }
+
+        for (const card of cards) {
+          card.querySelector('input').addEventListener('change', () => selectCard(card));
+          card.querySelector('[data-enlarge]').addEventListener('click', (event) => {
+            openCard = card;
+            opener = event.currentTarget;
+            const image = card.querySelector('img');
+            document.getElementById('dialog-number').textContent = card.dataset.number;
+            document.getElementById('dialog-name').textContent = card.dataset.name;
+            dialogImage.src = image.currentSrc || image.src;
+            dialogImage.alt = image.alt;
+            dialogStage.classList.toggle('original-stage', card.classList.contains('original'));
+            dialogStage.style.background = getComputedStyle(card).getPropertyValue('--canvas');
+            dialog.showModal();
+          });
+        }
+
+        dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
+        dialog.addEventListener('click', (event) => {
+          if (event.target !== dialog) return;
+          const rect = dialog.getBoundingClientRect();
+          if (
+            event.clientX < rect.left ||
+            event.clientX > rect.right ||
+            event.clientY < rect.top ||
+            event.clientY > rect.bottom
+          )
+            dialog.close();
+        });
+        dialog.addEventListener('close', () => {
+          if (opener) opener.focus({ preventScroll: true });
+        });
+        dialog.querySelector('.dialog-select').addEventListener('click', () => {
+          if (openCard) selectCard(openCard);
+          dialog.close();
+        });
+
+        note.addEventListener('input', resetCopyFeedback);
+        copyButton.addEventListener('click', async () => {
+          if (!selectedCard) return;
+          const text = message();
+          copyButton.disabled = true;
+          resetCopyFeedback();
+          try {
+            if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('Clipboard unavailable');
+            await navigator.clipboard.writeText(text);
+            status.textContent = 'Gekopieerd. Plak je keuze nu in je bericht.';
+            status.hidden = false;
+          } catch {
+            copyText.value = text;
+            fallback.hidden = false;
+            copyText.focus();
+            copyText.select();
+          } finally {
+            copyButton.disabled = false;
+            reserveBarSpace();
+          }
+        });
+        window.addEventListener('hashchange', selectHash);
+        window.addEventListener('resize', reserveBarSpace);
+        if ('ResizeObserver' in window) new ResizeObserver(reserveBarSpace).observe(bar);
+        document.getElementById('print-page').addEventListener('click', () => window.print());
+        selectHash();
+      })();
+    </script>
+  </body>
+</html>

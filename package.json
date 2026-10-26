@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "bun run build:logo-choice && astro build",
+    "build:logo-choice": "node scripts/build-logo-choice.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "check": "bun run check:astro && bun run check:eslint && bun run check:prettier",
