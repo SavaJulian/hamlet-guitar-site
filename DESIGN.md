@@ -73,6 +73,17 @@ components:
     height: '44px'
     borderRadius: '50%'
     padding: '0'
+  form-field:
+    backgroundColor: '#ead6a9'
+    textColor: '{colors.ink}'
+    borderColor: '#8e7544'
+    minHeight: '50px'
+    padding: '12px 13px'
+  form-submit:
+    backgroundColor: '{colors.ink}'
+    textColor: '{colors.paper}'
+    minHeight: '55px'
+    padding: '16px 22px'
   lesson-option:
     backgroundColor: '{colors.paper}'
     textColor: '{colors.ink}'
@@ -81,7 +92,7 @@ components:
 
 # Design System: Hamlet Guitar
 
-Current playback controls reconciled with source on 26 October 2026.
+Playback controls reconciled with source on 26 October 2026. Inquiry-form notes below describe the implemented form and confirmed provider activation; production delivery is verified separately.
 
 ## Overview
 
@@ -150,7 +161,7 @@ Lesson actions and images use straight edges. The speaker is the deliberate circ
 
 ### Buttons
 
-Ticket-like filled actions use the primary and dark variants recorded above, a 55px minimum height and a transparent 1px border. The arrow moves 5px on hover; color transitions last 250ms. Dark contact actions wrap their contents when necessary. Focus uses a 2px outline with 6px offset, gold on dark surfaces and dark ink in the contact section.
+Ticket-like filled actions use the primary and dark variants recorded above, a 55px minimum height and a transparent 1px border. The arrow moves 5px on hover; color transitions last 250ms. Primary “Plan je gratis les” actions and “Maak kennis met Hamlet” lead to `#contact`. The form has a distinct dark submit action described below. Focus uses a 2px outline with 6px offset, gold on dark surfaces and dark ink in the contact section.
 
 ### Links
 
@@ -167,6 +178,18 @@ The desktop navigation uses Manrope at 12px/500 with 32px gaps. The mobile menu 
 ### Questions
 
 Native details/summary rows use top and bottom rules. Questions use 13px/650 text with 24px vertical padding. The inline plus rotates 45 degrees when open. Answers remain in document flow; the final mobile answer size is 13px.
+
+### Inquiry form
+
+The form is implemented in `src/components/LessonForm.astro` inside the gold contact surface. It uses the privately confirmed recipient's activated opaque FormSubmit endpoint; no receiving email appears in public source or URLs. The privacy and `/bedankt` pages are implemented. Twenty-two local browser tests passed, including endpoint validation and intercepted POSTs; actual production delivery is verified separately.
+
+The desktop contact section uses `1fr 1.1fr` columns with a 44px row gap and 8% column gap. Offer and location occupy the left; the form occupies the right, spanning both rows. The section becomes one reading sequence below 760px. The form is at most 650px wide and uses its containing inline size to switch fields from one column to two at 460px; the message remains full width. Field gaps are 22px vertically and 20px horizontally.
+
+Labels are 13px/700 Manrope, with 11px secondary required/optional annotations. Inputs, select and textarea use 16px text, ink carets, pale gold `#ead6a9`, a 1px `#8e7544` border, square corners and 12px × 13px padding. Inputs and select are at least 50px tall; textarea is at least 102px and resizes vertically. Focus uses ink borders and a 2px outline at 2px offset, with `#f0e0bd` fill. Invalid required fields use `#722c31` borders and adjacent 12px error text connected by `aria-describedby`.
+
+The submit action reads “Vraag je gratis les aan”, with 13px/750 text, a 55px minimum height, ink fill and paper text. Disabled state uses `#635543` with a not-allowed cursor. A pending POST disables it, marks it busy and changes its label to “Je aanvraag wordt verstuurd…”. That state is not delivery confirmation; the `/bedankt` page follows the provider response. Below 600px the submit action spans the form width. Reduced motion removes field/button transitions.
+
+The request contains required name/email and optional phone, interest and message. Lesson links preselect the interest. The form explicitly says the lesson is not yet booked. A polite live status communicates validation and sending states; a privacy link and 44px-minimum telephone fallback follow. In-page validation focuses the first invalid required field. A valid activated form uses native POST rather than inventing an in-page success message. Build-time `PUBLIC_LESSON_FORM_ENDPOINT` must use the opaque FormSubmit identifier, keeping the confirmed private recipient out of public source and URLs. GitHub repository variable `LESSON_FORM_ENDPOINT` supplies the endpoint at build time; invalid exposed-email endpoints fail validation. If the endpoint is absent, the disabled fallback state remains available. Activation is confirmed; live delivery and deployment are checked separately.
 
 ### Performance controls
 
@@ -208,8 +231,8 @@ The brass wordmark pairs Bodoni lettering with the six-string H. Hover skews the
 
 Not canonized or repaired: utility labels as small as 8–10px (and smaller logo microtype) are not reusable reading defaults; the supporting 404 action's 2px radius and alternate hover differ from the home action. These are existing source exceptions outside this documentation-only pass. The 404 identity line and decorative vertical slogan are not endorsed as a reusable eyebrow pattern.
 
-Source evidence: `src/styles/hamlet.css`, `src/pages/index.astro`, `src/components/Brand.astro`, `src/components/Icon.astro`, `src/pages/privacy.astro`, and `src/pages/404.astro`; reconciled with `PRODUCT.md` and the home surface contract.
+Source evidence: `src/styles/hamlet.css`, `src/pages/index.astro`, `src/components/Brand.astro`, `src/components/Icon.astro`, `src/components/LessonForm.astro`, `src/pages/privacy.astro`, and `src/pages/404.astro`; reconciled with `PRODUCT.md` and the home surface contract.
 
 ## Introductory offer
 
-The user-confirmed line “Je eerste kennismakingsles is gratis.” appears after the hero description and before its action, in gold Manrope at 14px/700/1.6 (13px on mobile). The main action reads “Plan je gratis les”. The established gold contact section reinforces the offer with “Jouw eerste les. Helemaal gratis.” and direct phone/SMS routes. The approved hero headline remains unchanged.
+The user-confirmed line “Je eerste kennismakingsles is gratis.” appears after the hero description and before its action, in gold Manrope at 14px/700/1.6 (13px on mobile). The main action reads “Plan je gratis les”. The established gold contact section reinforces the offer with “Jouw eerste les. Helemaal gratis.” and an inquiry form. Telephone is retained as a fallback; the old primary SMS path is replaced. The approved hero headline remains unchanged.

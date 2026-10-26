@@ -21,17 +21,30 @@ import { withBase } from '../lib/site';
       <section>
         <h2>Wat de website doet</h2>
         <p>
-          Deze website gebruikt geen analytics, advertentiepixels of contactformulier dat je gegevens op een server
-          bewaart. De video en lettertypes worden samen met de website aangeboden.
+          Deze website gebruikt geen analytics of advertentiepixels. De video en lettertypes worden samen met de website
+          aangeboden. De formulierdienst wordt pas benaderd wanneer je het contactformulier verstuurt.
+        </p>
+      </section>
+      <section>
+        <h2>Wanneer je het formulier verstuurt</h2>
+        <p>
+          Je naam en e-mailadres, en de eventuele extra gegevens die je invult, worden naar FormSubmit verstuurd. Die
+          dienst verwerkt je aanvraag en stuurt deze per e-mail door naar de inbox voor lesaanvragen. De gegevens worden
+          gebruikt om je vraag over gitaarles te beantwoorden en een kennismakingsles af te spreken.
+        </p>
+        <p>
+          FormSubmit bewaart inzendingen volgens zijn <a href="https://formsubmit.co/documentation">documentatie</a> gedurende
+          30 dagen. FormSubmit gebruikt reCAPTCHA tegen spam en kan op zijn eigen pagina cookies gebruiken. Lees ook het <a
+            href="https://formsubmit.co/privacy.pdf">privacybeleid van FormSubmit (pdf)</a
+          >. De ontvangen e-mail blijft in de inbox voor lesaanvragen totdat deze daar wordt verwijderd.
         </p>
       </section>
       <section>
         <h2>Wanneer je contact opneemt</h2>
         <p>
-          Een telefoonlink opent je telefoonapp. Een sms-link opent je berichtenapp. Een link naar Google Maps of een
-          lesplatform brengt je naar die dienst. Vanaf dat moment geldt ook het privacybeleid van die dienst. Gegevens
-          die je aan Hamlet stuurt, gebruikt hij om je vraag over gitaarles te beantwoorden en eventuele lessen af te
-          spreken.
+          Een telefoonlink opent je telefoonapp. Een link naar Google Maps of een lesplatform brengt je naar die dienst.
+          Vanaf dat moment geldt ook het privacybeleid van die dienst. Gegevens die je aan Hamlet stuurt, gebruikt hij
+          om je vraag over gitaarles te beantwoorden en eventuele lessen af te spreken.
         </p>
       </section>
       <section>
@@ -104,6 +117,9 @@ import { withBase } from '../lib/site';
   p {
     line-height: 1.8;
     margin: 0;
+  }
+  p + p {
+    margin-top: 18px;
   }
   footer {
     margin-top: 64px;

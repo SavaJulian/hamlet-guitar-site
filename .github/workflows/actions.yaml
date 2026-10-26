@@ -23,6 +23,7 @@ jobs:
         env:
           SITE_URL: https://savajulian.github.io
           BASE_PATH: /hamlet-guitar-site
+          PUBLIC_LESSON_FORM_ENDPOINT: ${{ vars.LESSON_FORM_ENDPOINT }}
       - uses: actions/upload-artifact@v4
         with:
           name: hamlet-static-site

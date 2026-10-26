@@ -24,7 +24,7 @@ A real local teacher demonstrated through the user's supplied flamenco performan
 
 ## Capabilities and Constraints
 
-Responsive, accessible static website with an authentic hero performance excerpt and working inquiry routes. Playback attempts sound first and falls back to muted playback when the browser rejects audible autoplay; audible autoplay cannot be guaranteed. One circular speaker button controls sound, and the performance image is a keyboard- and touch-accessible pause/resume control. Reduced-motion preference leaves the hero poster visible until explicit playback. Offscreen and hidden-tab pauses preserve manual pause and mute choices. The former full-performance dialog and visible control bar are removed; the complete video file remains retained but unused by the interface. Real business details must be sourced. Do not invent availability, prices, street address, review counts or credentials. Full creative freedom including new logo explicitly authorized. Save to SavaJulian/hamlet-guitar-site.
+Responsive, accessible static website with an authentic hero performance excerpt and a verified telephone fallback. Primary lesson actions lead to an in-page inquiry form using an activated opaque FormSubmit endpoint. Provider activation and local test results do not by themselves establish real production delivery. Playback attempts sound first and falls back to muted playback when the browser rejects audible autoplay; audible autoplay cannot be guaranteed. One circular speaker button controls sound, and the performance image is a keyboard- and touch-accessible pause/resume control. Reduced-motion preference leaves the hero poster visible until explicit playback. Offscreen and hidden-tab pauses preserve manual pause and mute choices. The former full-performance dialog and visible control bar are removed; the complete video file remains retained but unused by the interface. Real business details must be sourced. Do not invent availability, prices, street address, review counts or credentials. Full creative freedom including new logo explicitly authorized. Save to SavaJulian/hamlet-guitar-site.
 
 ## Brand Commitments
 
@@ -44,8 +44,14 @@ Julian approved “Leer gitaar spelen. Op jouw tempo.” on 25 October 2026, rep
 
 The teacher-section image caption is “Techniek. Ritme. Expressie.” The accompanying conceptual image shows a guitar, practice notebook and pencil. The private-practice section uses a different, wider guitar-and-chair scene beneath “Een uur voor jezelf. Een geluid dat blijft.”
 
-The user-confirmed introductory offer is “Je eerste kennismakingsles is gratis.” It appears beside the hero action, in the contact heading and FAQ. Primary invitations read “Plan je gratis les”; the default and interest-specific SMS drafts ask for a gratis kennismakingsles. No deadline, limited availability or follow-up obligation is claimed.
+The user-confirmed introductory offer is “Je eerste kennismakingsles is gratis.” It appears beside the hero action, in the contact heading and FAQ. Primary invitations read “Plan je gratis les”. They point to `#contact`, as does “Maak kennis met Hamlet”; lesson choices preselect the form interest field. This replaces the previous primary phone/SMS flow while retaining a telephone fallback. No deadline, limited availability or follow-up obligation is claimed.
 
 Julian requested removing the distracting grain behind Hamlet in the hero. The real performance excerpt and its poster now use a cleaned near-black background composited onto pure black; the source recording and full performance remain unchanged.
 
 On 26 October 2026 Julian requested sound by default and removal of the prominent sound/pause/full-video bar. The current implementation uses the browser-permitted audible-first behavior and a single discreet speaker button, with playback controlled directly on the image.
+
+## Inquiry form — 26 October 2026
+
+`LessonForm.astro` collects required name and email plus optional telephone, interest and message. Submission requests a lesson time; it is not a completed booking. Native POST uses an opaque FormSubmit endpoint supplied through GitHub repository variable `LESSON_FORM_ENDPOINT` and build variable `PUBLIC_LESSON_FORM_ENDPOINT`. Local configuration lives in ignored `.env`. The endpoint validator rejects URLs that expose a receiving address.
+
+The recipient is confirmed privately and must never be written into this public repository, rendered HTML or public URLs. FormSubmit activation is confirmed. The privacy and `/bedankt` pages are implemented, and 22 local browser tests passed, including endpoint validation and locally intercepted POSTs. Deployment and real production inbox delivery are checked separately; they are not claimed complete in these notes.

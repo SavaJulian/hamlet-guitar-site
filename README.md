@@ -42,7 +42,24 @@ The teacher and practice sections use two generated conceptual mood images: `les
 
 Business details and source references are documented in `docs/sources.md`. Current prices and availability must be confirmed directly with Hamlet; the site does not invent them. The approved opening is “Leer gitaar spelen. Op jouw tempo.”
 
-The site has no analytics, tracking pixels, account system or server-side lead database. Its contact links open the chosen communication channel. Review the privacy page whenever adding an external form, analytics or a booking provider.
+The site has no analytics, tracking pixels, account system or server-side lead database. Form submissions use FormSubmit, and the verified telephone number remains available as a fallback. The receiving address is confirmed privately and remains absent from public source, HTML, documentation and URLs. The privacy page describes the provider flow, and `/bedankt` distinguishes a submitted request from a confirmed lesson.
+
+## Lesson inquiry form
+
+Every “Plan je gratis les” action and “Maak kennis met Hamlet” leads to `#contact`. `src/components/LessonForm.astro` sits in the gold contact section; lesson choices preselect `#lesson-interest`. The form requests name and email, with optional phone, experience/interest and a message. It is an inquiry to agree a lesson time, not a confirmed booking.
+
+The form uses native browser `POST` to an opaque FormSubmit endpoint. Recipient activation was confirmed on 26 October 2026. GitHub's repository variable `LESSON_FORM_ENDPOINT` supplies `PUBLIC_LESSON_FORM_ENDPOINT` during builds; local development uses the latter in ignored `.env`. `src/lib/lessonForm.ts` accepts only an anonymous HTTPS FormSubmit identifier and rejects addresses exposed in endpoint URLs without echoing the rejected value into logs. No receiving email belongs in this repository.
+
+The POST includes a subject, table template and a base-aware `_next` URL for `/bedankt/`. A loading message or thank-you page is not proof that the recipient's inbox received the request. [FormSubmit's documentation](https://formsubmit.co/documentation) describes the opaque identifier and a 30-day submission archive; the privacy page reflects that provider behavior.
+
+Twenty-two local browser tests passed, including endpoint validation and intercepted POSTs. Activation is confirmed; final configured checks, deployment and real production delivery are verified separately and are not claimed complete here.
+
+### Change the receiving inbox
+
+1. Confirm the new inbox privately with FormSubmit and obtain its activated opaque endpoint. Never commit the receiving email or use an email-address URL.
+2. Update the GitHub repository variable `LESSON_FORM_ENDPOINT`; update `PUBLIC_LESSON_FORM_ENDPOINT` in ignored local `.env` when needed.
+3. Rebuild and deploy so the static form receives the new endpoint. The existing `main` workflow publishes successful builds automatically.
+4. Verify a controlled submission, the `/bedankt/` return and receipt in the new inbox. Preserve the telephone fallback and review privacy information if the provider changes.
 
 ## Design and maintenance
 

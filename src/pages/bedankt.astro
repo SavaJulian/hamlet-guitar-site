@@ -1,0 +1,101 @@
+---
+import '@fontsource-variable/bodoni-moda';
+import '@fontsource-variable/bodoni-moda/wght-italic.css';
+import '@fontsource-variable/manrope';
+import '../styles/hamlet.css';
+import Brand from '../components/Brand.astro';
+import Icon from '../components/Icon.astro';
+import { withBase } from '../lib/site';
+---
+
+<!doctype html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#252025" />
+    <title>Bedankt voor je aanvraag — Hamlet</title>
+    <link rel="icon" href={withBase('/brand/hamlet-monogram.svg')} type="image/svg+xml" />
+  </head>
+  <body>
+    <div class="thank-you-page">
+      <header><Brand /></header>
+      <main>
+        <h1>Bedankt voor<br /><em>je aanvraag.</em></h1>
+        <p class="confirmation">
+          Je aanvraag is verstuurd. Het moment van je gratis kennismakingsles spreek je daarna rechtstreeks met Hamlet
+          af.
+        </p>
+        <p class="booking-note">Je aanvraag is nog geen bevestiging van een lesmoment.</p>
+        <a class="button button-gold" href={withBase('/')}>Terug naar Hamlet <Icon name="arrow" /></a>
+        <p class="direct-contact">Nog een vraag? Bel Hamlet op <a href="tel:+32483502220">0483 50 22 20</a>.</p>
+      </main>
+      <footer>Gitaarlessen Hamlet · Merksem, Antwerpen</footer>
+    </div>
+  </body>
+</html>
+
+<style>
+  .thank-you-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    width: min(840px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+  header {
+    padding: 38px 0;
+  }
+  main {
+    flex: 1;
+    padding: clamp(48px, 9vh, 100px) 0 76px;
+  }
+  h1 {
+    font-size: clamp(48px, 8vw, 82px);
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+    margin-bottom: 32px;
+  }
+  h1 em {
+    color: var(--gold);
+  }
+  .confirmation {
+    max-width: 48ch;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+  .booking-note {
+    color: var(--muted);
+    margin: 14px 0 32px;
+    font-size: 14px;
+  }
+  .direct-contact {
+    margin-top: 28px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .direct-contact a {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    white-space: nowrap;
+  }
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 25px 0;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  @media (max-width: 600px) {
+    header {
+      padding: 28px 0;
+    }
+    main {
+      padding-top: 45px;
+    }
+    .confirmation {
+      font-size: 15px;
+    }
+  }
+</style>

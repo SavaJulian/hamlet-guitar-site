@@ -22,7 +22,8 @@ export default defineConfig({
   devToolbar: { enabled: false },
   site,
   base,
-  trailingSlash: 'never',
+  // Match the directory URLs served by GitHub Pages and used by internal links.
+  trailingSlash: 'always',
   // Retained for compatibility with unused starter components; Hamlet loads its
   // own local font packages, without contacting a font CDN at runtime.
   fonts: [
