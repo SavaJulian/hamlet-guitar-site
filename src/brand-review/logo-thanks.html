@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#f5f2eb" />
+    <title>Спасибо, Гамлет</title>
+    <style>
+      @font-face {
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: 200 800;
+        font-display: swap;
+        src: url('{{FONT_MANROPE_CYRILLIC}}') format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: 200 800;
+        font-display: swap;
+        src: url('{{FONT_MANROPE}}') format('woff2');
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+          U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      :root {
+        color-scheme: light;
+        font-family: Manrope, Arial, sans-serif;
+        color: #25251f;
+        background: #f5f2eb;
+        --accent: #b84e30;
+        --muted: #736f65;
+        --line: #d8d3c7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100svh;
+        -webkit-font-smoothing: antialiased;
+      }
+      .shell {
+        width: min(960px, calc(100% - 64px));
+        margin-inline: auto;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding-block: 24px;
+        border-bottom: 1px solid var(--line);
+      }
+      .logo {
+        display: block;
+        width: 72px;
+        height: 72px;
+        object-fit: contain;
+      }
+      .brand {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .language-switch {
+        display: flex;
+        gap: 4px;
+        margin-left: auto;
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: 100px;
+      }
+      .language-switch button {
+        min-height: 40px;
+        padding: 8px 13px;
+        border: 0;
+        border-radius: 100px;
+        background: transparent;
+        color: #5e5c53;
+        font: inherit;
+        font-size: 12px;
+        font-weight: 650;
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      .language-switch button[aria-pressed='true'] {
+        color: #fffdf8;
+        background: #25251f;
+      }
+      .language-switch button:hover:not([aria-pressed='true']) {
+        background: #e9e4d9;
+      }
+      main {
+        max-width: 750px;
+        padding-block: clamp(52px, 10vh, 112px) 72px;
+      }
+      .mark {
+        width: 38px;
+        height: 38px;
+        margin-bottom: 28px;
+        color: var(--accent);
+      }
+      h1 {
+        margin: 0;
+        font-weight: 650;
+      }
+      h1 {
+        max-width: 650px;
+        font-size: clamp(40px, 7vw, 68px);
+        line-height: 1.08;
+        letter-spacing: -0.055em;
+        text-wrap: balance;
+      }
+      p {
+        max-width: 540px;
+        margin: 23px 0 0;
+        font-size: 16px;
+        line-height: 1.8;
+        color: #5e5c53;
+      }
+      .return {
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 42px;
+        padding-block: 10px;
+        color: var(--accent);
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.6;
+        text-decoration: none;
+      }
+      .return-label {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      .return:hover .return-label {
+        text-decoration-thickness: 2px;
+      }
+      :focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 6px;
+        border-radius: 2px;
+      }
+      ::selection {
+        color: #25251f;
+        background: #edbea9;
+      }
+      @media (max-width: 480px) {
+        .shell {
+          width: calc(100% - 40px);
+        }
+        header {
+          padding-block: 17px;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+        .logo {
+          width: 58px;
+          height: 58px;
+        }
+        p {
+          font-size: 15px;
+        }
+        .brand {
+          max-width: 70px;
+          font-size: 10px;
+          line-height: 1.7;
+          letter-spacing: 0.07em;
+        }
+        .language-switch button {
+          padding-inline: 9px;
+          font-size: 11px;
+        }
+      }
+      @media print {
+        :root {
+          background: white;
+          color: black;
+        }
+        .shell {
+          width: 100%;
+        }
+        main {
+          padding-block: 36px;
+        }
+        .language-switch {
+          display: none;
+        }
+        .return {
+          color: black;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header>
+        <img id="logo" class="logo" src="{{LOGO_ORIGINAL}}" alt="Гамлет" width="72" height="72" />
+        <span id="brand" class="brand">Гамлет · Логотип</span>
+        <div id="language-switch" class="language-switch" role="group" aria-label="Язык страницы">
+          <button id="language-ru" type="button" lang="ru" aria-pressed="true">Русский</button>
+          <button id="language-nl" type="button" lang="nl" aria-pressed="false">Nederlands</button>
+        </div>
+      </header>
+      <main>
+        <svg class="mark" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+          <circle cx="19" cy="19" r="18" stroke="currentColor" />
+          <path
+            d="m11 19 5.5 5.5L27 14"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <h1 id="heading">Спасибо за твой ответ.</h1>
+        <p id="message">Твой выбор и замечания отправлены Юлиану по электронной почте.</p>
+        <a id="return-link" class="return" href="{{REVIEW_URL}}">
+          <span aria-hidden="true">←</span>
+          <span id="return-label" class="return-label">Вернуться к логотипам</span>
+        </a>
+      </main>
+    </div>
+    <script>
+      const copy = {
+        ru: {
+          title: 'Спасибо, Гамлет',
+          brand: 'Гамлет · Логотип',
+          logo: 'Гамлет',
+          languageLabel: 'Язык страницы',
+          heading: 'Спасибо за твой ответ.',
+          message: 'Твой выбор и замечания отправлены Юлиану по электронной почте.',
+          returnLabel: 'Вернуться к логотипам',
+        },
+        nl: {
+          title: 'Bedankt, Hamlet',
+          brand: 'Hamlet · Logo',
+          logo: 'Hamlet',
+          languageLabel: 'Taal van de pagina',
+          heading: 'Bedankt voor je reactie.',
+          message: 'Je reactie is doorgestuurd naar Julian.',
+          returnLabel: 'Terug naar de logo’s',
+        },
+      };
+      const returnLink = document.getElementById('return-link');
+      const reviewUrl = returnLink.getAttribute('href');
+      function setLanguage(language) {
+        const text = copy[language];
+        document.documentElement.lang = language;
+        document.title = text.title;
+        document.getElementById('brand').textContent = text.brand;
+        document.getElementById('logo').alt = text.logo;
+        document.getElementById('language-switch').setAttribute('aria-label', text.languageLabel);
+        document.getElementById('heading').textContent = text.heading;
+        document.getElementById('message').textContent = text.message;
+        document.getElementById('return-label').textContent = text.returnLabel;
+        returnLink.href = language === 'nl' ? `${reviewUrl}?lang=nl` : reviewUrl;
+        for (const locale of ['ru', 'nl']) {
+          document.getElementById(`language-${locale}`).setAttribute('aria-pressed', String(locale === language));
+        }
+      }
+      document.getElementById('language-ru').addEventListener('click', () => setLanguage('ru'));
+      document.getElementById('language-nl').addEventListener('click', () => setLanguage('nl'));
+      setLanguage(new URLSearchParams(window.location.search).get('lang') === 'nl' ? 'nl' : 'ru');
+    </script>
+  </body>
+</html>

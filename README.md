@@ -71,7 +71,7 @@ Portable outlined SVG logos are in `public/brand/`: a light wordmark for dark su
 
 ## Logo selection page
 
-`/logo-keuze/` is a separate, unlinked selection page with the current logo and six naming/logo concepts. It has noindex metadata and contains its images, font, styles and interactions in one HTML file, so the same file can be forwarded and opened offline. A visitor can enlarge each logo, choose a favorite and copy the choice; nothing is submitted or sent automatically.
+`/logo-keuze/` is a separate, unlinked selection page with the current logo and six naming/logo concepts. Russian is the default, with a Dutch switch at the top; switching preserves the selected option and written notes. It has noindex metadata and embeds its images, Latin/Cyrillic fonts, styles and interactions in one HTML file for forwarding and offline viewing. Visitors can choose a logo or “none of these”, suggest their own name for new options, leave Dutch or Russian notes, and explicitly submit their response to Julian through the previously activated anonymous FormSubmit endpoint. Sending requires internet and uses the provider's verification and language-aware redirect to `/logo-keuze/bedankt/`. Copying the response remains an offline fallback. No response is sent automatically, and the receiving email is not exposed in the page.
 
 Edit `src/brand-review/logo-choice.html` and rebuild with `bun run build:logo-choice`. Concept previews are optimized WebP files in `src/assets/logo-concepts/`; the first three omit the location name at Julian's request. The main site continues to use its existing logo. The regular build refreshes `public/logo-keuze/index.html` before Astro copies it to the published site.
 

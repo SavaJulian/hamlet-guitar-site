@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nl-BE">
+<html lang="ru">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,9 +7,9 @@
     <meta name="theme-color" content="#f5f2eb" />
     <meta
       name="description"
-      content="Zeven logo's voor Hamlet. Bekijk de ontwerpen, kies je favoriet en geef mee wat bij jou past."
+      content="Семь вариантов логотипа для Hamlet. Выбери подходящий или предложи своё название и направление."
     />
-    <title>Welk logo past bij jou, Hamlet?</title>
+    <title>Hamlet, какой логотип тебе ближе?</title>
     <style>
       @font-face {
         font-family: Manrope;
@@ -17,6 +17,14 @@
         font-weight: 200 800;
         font-display: swap;
         src: url('{{FONT_MANROPE}}') format('woff2');
+      }
+      @font-face {
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: 200 800;
+        font-display: swap;
+        src: url('{{FONT_MANROPE_CYRILLIC}}') format('woff2');
+        unicode-range: U+0400-052F, U+2DE0-2DFF, U+A640-A69F;
       }
       :root {
         --paper: #f5f2eb;
@@ -77,6 +85,33 @@
       .shell {
         width: min(1280px, calc(100% - 80px));
         margin-inline: auto;
+      }
+      .language-switch {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 5px;
+        padding-top: 18px;
+      }
+      .language-switch button {
+        min-height: 38px;
+        padding: 8px 13px;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.4;
+      }
+      .language-switch button[aria-pressed='true'] {
+        border-color: var(--line);
+        background: var(--white);
+        color: var(--ink);
+        font-weight: 750;
+      }
+      .language-switch button:hover {
+        color: var(--ink);
+        background: var(--white);
       }
       .masthead {
         display: flex;
@@ -410,6 +445,114 @@
       }
       #choice-note::placeholder {
         color: #969084;
+      }
+      .no-match {
+        margin-top: 28px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 24px 28px;
+        background: var(--white);
+      }
+      .no-match:has(input:checked) {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px var(--accent);
+      }
+      .no-match .select-label {
+        border: 0;
+        padding: 0;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      .no-match p {
+        margin: 12px 0 0 28px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .reflection .language-help {
+        margin-top: 18px;
+        color: var(--ink);
+      }
+      .note-help {
+        margin-top: 12px !important;
+        max-width: none !important;
+      }
+      .feedback-submit {
+        width: 100%;
+        margin-top: 24px;
+        border: 0;
+        border-radius: 7px;
+        background: var(--accent);
+        color: white;
+        padding: 16px 22px;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+      .feedback-submit:hover {
+        background: #983f26;
+      }
+      .feedback-submit:disabled {
+        opacity: 0.65;
+        cursor: wait;
+      }
+      .feedback-status {
+        margin-top: 14px !important;
+        color: var(--accent) !important;
+        font-weight: 600;
+      }
+      .feedback-fallback {
+        margin-top: 22px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+      }
+      .feedback-fallback .copy-button {
+        border-color: var(--line);
+        font-size: 12px;
+      }
+      .feedback-fallback #copy-status {
+        color: var(--muted);
+        margin-top: 12px;
+      }
+      .feedback-fallback .copy-fallback {
+        border-color: var(--line);
+        margin-top: 14px;
+      }
+      .feedback-fallback .copy-fallback label {
+        color: var(--muted);
+      }
+      .selection-summary {
+        min-width: 0;
+      }
+      .selection-summary strong {
+        display: block;
+        max-width: 28ch;
+      }
+      .selection-actions a {
+        display: block;
+        text-decoration: none;
+        text-align: center;
+      }
+      .selection-bar[data-at-feedback] {
+        visibility: hidden;
+        pointer-events: none;
+      }
+      @media (max-width: 650px) {
+        .no-match {
+          padding: 22px;
+        }
+        .no-match .select-label {
+          font-size: 14px;
+        }
+        .selection-summary {
+          flex: 1;
+        }
+        .selection-summary strong {
+          font-size: 13px;
+        }
+        .selection-actions a {
+          max-width: 155px;
+        }
       }
       .page-footer {
         display: flex;
@@ -936,6 +1079,7 @@
         .card-subtitle {
           font-size: 8px;
         }
+        .language-switch,
         .enlarge-icon,
         .select-label,
         .reflection,
@@ -961,55 +1105,54 @@
   </head>
   <body>
     <div class="shell">
+      <nav class="language-switch" data-i18n-aria-label="languageSwitch" aria-label="Язык страницы">
+        <button type="button" id="language-ru" lang="ru" aria-pressed="true">Русский</button>
+        <button type="button" id="language-nl" lang="nl" aria-pressed="false">Nederlands</button>
+      </nav>
       <header class="masthead">
         <div class="masthead-brand">
           <svg class="masthead-mark" viewBox="0 0 28 34" fill="none" aria-hidden="true">
-            <path
-              d="M3 2v30M7 2v30M11 2v30M17 2v30M21 2v30M25 2v30M3 17h22"
-              stroke="currentColor"
-              stroke-width="1.2"
-            /></svg
-          ><span>Hamlet · een eigen gezicht</span>
+            <path d="M3 2v30M7 2v30M11 2v30M17 2v30M21 2v30M25 2v30M3 17h22" stroke="currentColor" stroke-width="1.2" />
+          </svg>
+          <span data-i18n="brandLine">Hamlet · твой собственный стиль</span>
         </div>
-        <span class="masthead-end">Logo-verkenning / 7 richtingen</span>
+        <span data-i18n="mastheadEnd" class="masthead-end">Логотип / 7 направлений</span>
       </header>
       <main>
         <section class="intro" aria-labelledby="page-title">
           <div>
-            <p class="eyebrow">Een keuze voor jouw muziek</p>
-            <h1 id="page-title">Welk logo past<br />bij jou, <span>Hamlet?</span></h1>
-            <p class="intro-copy">
-              Zeven richtingen, elk met een eigen karakter. Bekijk ze op je gemak, kies je favoriet of vertel welke
-              elementen je wilt combineren.
+            <p data-i18n="eyebrow" class="eyebrow">Визуальный образ твоей музыки</p>
+            <h1 id="page-title" data-i18n-html="pageTitle">Какой логотип<br />тебе ближе, <span>Hamlet?</span></h1>
+            <p data-i18n="intro" class="intro-copy">
+              Посмотри семь вариантов в спокойном темпе. Выбери понравившийся или «Ни один не подходит». Ниже можно
+              предложить своё название, описать пожелания и отправить ответ Юлиану.
             </p>
           </div>
           <aside class="choice-note">
-            <strong>Het mag nog helemaal jouw kant op.</strong>
-            <p>De naam kan nog veranderen. Kies vooral de uitstraling die bij je past.</p>
+            <strong data-i18n="choiceHeading">Всё ещё можно изменить под тебя.</strong>
+            <p data-i18n="choiceNote">
+              Название тоже может быть другим. Предложи своё — Юлиан создаст новые варианты логотипа с этим названием.
+            </p>
           </aside>
         </section>
-
         <div class="section-heading">
-          <h2>Het huidige logo</h2>
-          <span>Klik op een logo om het groter te bekijken</span>
+          <h2 data-i18n="currentLogo">Текущий логотип</h2>
+          <span data-i18n="enlargeHint">Нажми на логотип, чтобы рассмотреть его</span>
         </div>
-        <section aria-label="De zeven logo-opties">
+        <section data-i18n-aria-label="optionsLabel" aria-label="Семь вариантов логотипа">
           <article
             class="logo-card original"
             id="origineel"
             data-name="Hamlet — origineel"
+            data-name-key="originalName"
             data-number="01"
             style="--canvas: #f7f5ef"
           >
-            <button
-              class="image-stage"
-              type="button"
-              data-enlarge
-              aria-label="Bekijk 01 — Hamlet, het originele logo, vergroot"
-            >
+            <button class="image-stage" type="button" data-enlarge aria-label="Рассмотреть 01 — Hamlet — оригинал">
               <img
                 src="{{LOGO_ORIGINAL}}"
-                alt="Het originele Hamlet-logo: een H van zes snaren naast een krachtig woordmerk."
+                data-i18n-alt="originalAlt"
+                alt="Оригинальный логотип Hamlet: буква H из шести струн рядом с выразительным названием."
               /><span class="enlarge-icon" aria-hidden="true"
                 ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
                   <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
@@ -1020,24 +1163,27 @@
                 <span class="card-number">01</span>
                 <h3>Hamlet</h3>
               </div>
-              <p class="card-subtitle">Het originele website-logo</p>
-              <p class="card-description">
-                Helder en persoonlijk. De zes snaren vormen een H, met je naam stevig op de voorgrond.
+              <p data-i18n="originalSubtitle" class="card-subtitle">Оригинальный логотип сайта</p>
+              <p data-i18n="originalDescription" class="card-description">
+                Ясный и личный образ. Шесть струн складываются в букву H, а твоё имя выходит на первый план.
               </p>
               <label class="select-label"
                 ><input
                   type="radio"
                   name="favorite"
+                  form="logo-feedback"
+                  required
+                  aria-describedby="feedback-status"
                   value="origineel"
-                  aria-label="Kies 01 — Hamlet, het originele logo"
-                /><span class="default-label">Dit is mijn favoriet</span
-                ><span class="selected-label">Gekozen als favoriet</span></label
+                  aria-label="Выбрать 01 — Hamlet — оригинал"
+                /><span data-i18n="choose" class="default-label">Выбрать этот вариант</span
+                ><span data-i18n="chosen" class="selected-label">Выбрано</span></label
               >
             </div>
           </article>
           <div class="concept-divider">
-            <p>Zes nieuwe mogelijkheden</p>
-            <span>Van expressief tot ingetogen</span>
+            <p data-i18n="newOptions">Шесть новых вариантов</p>
+            <span data-i18n="newOptionsHint">От выразительного до сдержанного</span>
           </div>
           <div class="options">
             <article
@@ -1047,10 +1193,11 @@
               data-number="02"
               style="--canvas: #f7f0e1"
             >
-              <button class="image-stage" type="button" data-enlarge aria-label="Bekijk 02 — Casa Hamlet vergroot">
+              <button class="image-stage" type="button" data-enlarge aria-label="Рассмотреть 02 — Casa Hamlet">
                 <img
                   src="{{LOGO_CASA}}"
-                  alt="Casa Hamlet: een terracotta rozet en vloeiende, expressieve serifletters op crème."
+                  data-i18n-alt="casaAlt"
+                  alt="Casa Hamlet: терракотовая розетка и плавные выразительные буквы с засечками на кремовом фоне."
                 /><span class="enlarge-icon" aria-hidden="true"
                   ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
                     <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
@@ -1061,23 +1208,30 @@
                   <span class="card-number">02</span>
                   <h3>Casa Hamlet</h3>
                 </div>
-                <p class="card-subtitle">Warm · artistiek · expressief</p>
-                <p class="card-description">
-                  Een persoonlijk huis voor gitaar, met warme kleuren en de beweging van flamenco.
+                <p data-i18n="casaSubtitle" class="card-subtitle">Тёплый · артистичный · выразительный</p>
+                <p data-i18n="casaDescription" class="card-description">
+                  Свой дом для гитары: тёплые цвета и движение, вдохновлённое фламенко.
                 </p>
                 <label class="select-label"
-                  ><input type="radio" name="favorite" value="casa-hamlet" aria-label="Kies 02 — Casa Hamlet" /><span
-                    class="default-label"
-                    >Dit is mijn favoriet</span
-                  ><span class="selected-label">Gekozen als favoriet</span></label
+                  ><input
+                    type="radio"
+                    name="favorite"
+                    form="logo-feedback"
+                    required
+                    aria-describedby="feedback-status"
+                    value="casa-hamlet"
+                    aria-label="Выбрать 02 — Casa Hamlet"
+                  /><span data-i18n="choose" class="default-label">Выбрать этот вариант</span
+                  ><span data-i18n="chosen" class="selected-label">Выбрано</span></label
                 >
               </div>
             </article>
             <article class="logo-card" id="tokkel" data-name="Tokkel" data-number="03" style="--canvas: #f0f5ff">
-              <button class="image-stage" type="button" data-enlarge aria-label="Bekijk 03 — Tokkel vergroot">
+              <button class="image-stage" type="button" data-enlarge aria-label="Рассмотреть 03 — Tokkel">
                 <img
                   src="{{LOGO_TOKKEL}}"
-                  alt="Tokkel: stevige blauwe letters met een klankgat en snaren in de o en een oranje accent."
+                  data-i18n-alt="tokkelAlt"
+                  alt="Tokkel: крупные синие буквы, резонаторное отверстие и струны внутри буквы o, оранжевый акцент."
                 /><span class="enlarge-icon" aria-hidden="true"
                   ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
                     <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
@@ -1088,23 +1242,30 @@
                   <span class="card-number">03</span>
                   <h3>Tokkel</h3>
                 </div>
-                <p class="card-subtitle">Speels · direct · toegankelijk</p>
-                <p class="card-description">
-                  Een naam die al klinkt als gitaarspelen, met een vrolijk accent en letters vol energie.
+                <p data-i18n="tokkelSubtitle" class="card-subtitle">Игривый · простой · открытый</p>
+                <p data-i18n="tokkelDescription" class="card-description">
+                  Название, которое уже звучит как игра на гитаре, с ярким акцентом и энергичными буквами.
                 </p>
                 <label class="select-label"
-                  ><input type="radio" name="favorite" value="tokkel" aria-label="Kies 03 — Tokkel" /><span
-                    class="default-label"
-                    >Dit is mijn favoriet</span
-                  ><span class="selected-label">Gekozen als favoriet</span></label
+                  ><input
+                    type="radio"
+                    name="favorite"
+                    form="logo-feedback"
+                    required
+                    aria-describedby="feedback-status"
+                    value="tokkel"
+                    aria-label="Выбрать 03 — Tokkel"
+                  /><span data-i18n="choose" class="default-label">Выбрать этот вариант</span
+                  ><span data-i18n="chosen" class="selected-label">Выбрано</span></label
                 >
               </div>
             </article>
             <article class="logo-card" id="snaarwerk" data-name="Snaarwerk" data-number="04" style="--canvas: #123b32">
-              <button class="image-stage" type="button" data-enlarge aria-label="Bekijk 04 — Snaarwerk vergroot">
+              <button class="image-stage" type="button" data-enlarge aria-label="Рассмотреть 04 — Snaarwerk">
                 <img
                   src="{{LOGO_SNAARWERK}}"
-                  alt="Snaarwerk: zes geometrische lijnen vormen een S naast smalle crème letters op donkergroen."
+                  data-i18n-alt="snaarwerkAlt"
+                  alt="Snaarwerk: шесть геометрических линий образуют букву S рядом с узкими кремовыми буквами на тёмно-зелёном фоне."
                 /><span class="enlarge-icon" aria-hidden="true"
                   ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
                     <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
@@ -1115,15 +1276,21 @@
                   <span class="card-number">04</span>
                   <h3>Snaarwerk</h3>
                 </div>
-                <p class="card-subtitle">Strak · volwassen · ambachtelijk</p>
-                <p class="card-description">
-                  Zes lijnen en een sterke lettervorm geven aandacht en vakmanschap een eigen teken.
+                <p data-i18n="snaarwerkSubtitle" class="card-subtitle">Чёткий · зрелый · мастеровой</p>
+                <p data-i18n="snaarwerkDescription" class="card-description">
+                  Шесть линий и выразительная форма буквы превращают внимание к деталям и мастерство в узнаваемый знак.
                 </p>
                 <label class="select-label"
-                  ><input type="radio" name="favorite" value="snaarwerk" aria-label="Kies 04 — Snaarwerk" /><span
-                    class="default-label"
-                    >Dit is mijn favoriet</span
-                  ><span class="selected-label">Gekozen als favoriet</span></label
+                  ><input
+                    type="radio"
+                    name="favorite"
+                    form="logo-feedback"
+                    required
+                    aria-describedby="feedback-status"
+                    value="snaarwerk"
+                    aria-label="Выбрать 04 — Snaarwerk"
+                  /><span data-i18n="choose" class="default-label">Выбрать этот вариант</span
+                  ><span data-i18n="chosen" class="selected-label">Выбрано</span></label
                 >
               </div>
             </article>
@@ -1131,18 +1298,15 @@
               class="logo-card"
               id="signatuur"
               data-name="Hamlet — signatuur"
+              data-name-key="signatureName"
               data-number="05"
               style="--canvas: #faf8f2"
             >
-              <button
-                class="image-stage"
-                type="button"
-                data-enlarge
-                aria-label="Bekijk 05 — Hamlet, de signatuur, vergroot"
-              >
+              <button class="image-stage" type="button" data-enlarge aria-label="Рассмотреть 05 — Hamlet — подпись">
                 <img
                   src="{{LOGO_SIGNATURE}}"
-                  alt="Hamlet als vloeiende zwarte signatuur, met een subtiele gouden lijn en de woorden Gitaarles en Flamenco."
+                  data-i18n-alt="signatureAlt"
+                  alt="Hamlet в виде плавной чёрной подписи с тонкой золотой линией и надписью Gitaarles en Flamenco."
                 /><span class="enlarge-icon" aria-hidden="true"
                   ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
                     <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
@@ -1151,28 +1315,32 @@
               <div class="card-content">
                 <div class="card-heading">
                   <span class="card-number">05</span>
-                  <h3>Hamlet — signatuur</h3>
+                  <h3 data-i18n="signatureName">Hamlet — подпись</h3>
                 </div>
-                <p class="card-subtitle">Persoonlijk · elegant · muzikaal</p>
-                <p class="card-description">
-                  Je naam als een herkenbare artiestenhandtekening, met een soepele lijn onder het geheel.
+                <p data-i18n="signatureSubtitle" class="card-subtitle">Личный · элегантный · музыкальный</p>
+                <p data-i18n="signatureDescription" class="card-description">
+                  Твоё имя как узнаваемая подпись артиста, дополненная плавной линией.
                 </p>
                 <label class="select-label"
                   ><input
                     type="radio"
                     name="favorite"
+                    form="logo-feedback"
+                    required
+                    aria-describedby="feedback-status"
                     value="signatuur"
-                    aria-label="Kies 05 — Hamlet, de signatuur"
-                  /><span class="default-label">Dit is mijn favoriet</span
-                  ><span class="selected-label">Gekozen als favoriet</span></label
+                    aria-label="Выбрать 05 — Hamlet — подпись"
+                  /><span data-i18n="choose" class="default-label">Выбрать этот вариант</span
+                  ><span data-i18n="chosen" class="selected-label">Выбрано</span></label
                 >
               </div>
             </article>
             <article class="logo-card" id="pulso" data-name="Pulso" data-number="06" style="--canvas: #ffd9be">
-              <button class="image-stage" type="button" data-enlarge aria-label="Bekijk 06 — Pulso vergroot">
+              <button class="image-stage" type="button" data-enlarge aria-label="Рассмотреть 06 — Pulso">
                 <img
                   src="{{LOGO_PULSO}}"
-                  alt="Pulso: een abstracte hand maakt een tokkelbeweging, in aubergine en koraal op een abrikooskleurige achtergrond."
+                  data-i18n-alt="pulsoAlt"
+                  alt="Pulso: абстрактная рука играет на струнах; баклажановый и коралловый цвета на абрикосовом фоне."
                 /><span class="enlarge-icon" aria-hidden="true"
                   ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
                     <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
@@ -1183,23 +1351,30 @@
                   <span class="card-number">06</span>
                   <h3>Pulso</h3>
                 </div>
-                <p class="card-subtitle">Karaktervol · warm · ritmisch</p>
-                <p class="card-description">
-                  De hand en de aanslag op de snaren worden samen een expressief en herkenbaar beeldmerk.
+                <p data-i18n="pulsoSubtitle" class="card-subtitle">Характерный · тёплый · ритмичный</p>
+                <p data-i18n="pulsoDescription" class="card-description">
+                  Рука и движение по струнам соединяются в выразительный, узнаваемый символ.
                 </p>
                 <label class="select-label"
-                  ><input type="radio" name="favorite" value="pulso" aria-label="Kies 06 — Pulso" /><span
-                    class="default-label"
-                    >Dit is mijn favoriet</span
-                  ><span class="selected-label">Gekozen als favoriet</span></label
+                  ><input
+                    type="radio"
+                    name="favorite"
+                    form="logo-feedback"
+                    required
+                    aria-describedby="feedback-status"
+                    value="pulso"
+                    aria-label="Выбрать 06 — Pulso"
+                  /><span data-i18n="choose" class="default-label">Выбрать этот вариант</span
+                  ><span data-i18n="chosen" class="selected-label">Выбрано</span></label
                 >
               </div>
             </article>
             <article class="logo-card" id="aire" data-name="Aire" data-number="07" style="--canvas: #f1f4f3">
-              <button class="image-stage" type="button" data-enlarge aria-label="Bekijk 07 — Aire vergroot">
+              <button class="image-stage" type="button" data-enlarge aria-label="Рассмотреть 07 — Aire">
                 <img
                   src="{{LOGO_AIRE}}"
-                  alt="Aire: ruime, open petrolblauwe letters met een vloeiende R en een kleine regel Gitaarles met Hamlet."
+                  data-i18n-alt="aireAlt"
+                  alt="Aire: свободно расположенные сине-зелёные буквы с плавной R и небольшой строкой Gitaarles met Hamlet."
                 /><span class="enlarge-icon" aria-hidden="true"
                   ><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4">
                     <path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4M3 3l5 5m9-5-5 5M3 17l5-5m9 5-5-5" /></svg
@@ -1210,76 +1385,145 @@
                   <span class="card-number">07</span>
                   <h3>Aire</h3>
                 </div>
-                <p class="card-subtitle">Open · rustig · verfijnd</p>
-                <p class="card-description">
-                  Veel ruimte en heldere letters, met één vloeiende beweging als muzikaal accent.
+                <p data-i18n="aireSubtitle" class="card-subtitle">Открытый · спокойный · утончённый</p>
+                <p data-i18n="aireDescription" class="card-description">
+                  Много воздуха и ясные буквы, с одним плавным движением в качестве музыкального акцента.
                 </p>
                 <label class="select-label"
-                  ><input type="radio" name="favorite" value="aire" aria-label="Kies 07 — Aire" /><span
-                    class="default-label"
-                    >Dit is mijn favoriet</span
-                  ><span class="selected-label">Gekozen als favoriet</span></label
+                  ><input
+                    type="radio"
+                    name="favorite"
+                    form="logo-feedback"
+                    required
+                    aria-describedby="feedback-status"
+                    value="aire"
+                    aria-label="Выбрать 07 — Aire"
+                  /><span data-i18n="choose" class="default-label">Выбрать этот вариант</span
+                  ><span data-i18n="chosen" class="selected-label">Выбрано</span></label
                 >
               </div>
             </article>
           </div>
         </section>
-        <section class="reflection" aria-labelledby="reflection-heading">
+        <section
+          class="no-match"
+          id="geen"
+          data-name="Geen van deze opties"
+          data-name-key="noneName"
+          data-number="—"
+          data-i18n-aria-label="noneLabel"
+          aria-label="Нет подходящего логотипа"
+        >
+          <label class="select-label"
+            ><input
+              type="radio"
+              name="favorite"
+              form="logo-feedback"
+              required
+              aria-describedby="feedback-status"
+              value="geen"
+            /><span data-i18n="noneTitle">Ни один из вариантов мне не подходит.</span></label
+          >
+          <p data-i18n="noneDescription">
+            Это тоже нормально. Ниже можно предложить своё название или описать совсем другое направление.
+          </p>
+        </section>
+        <section class="reflection" id="reactie" tabindex="-1" aria-labelledby="reflection-heading">
           <div>
-            <h2 id="reflection-heading">Iets van de ene.<br />Iets van de andere.</h2>
-            <p>
-              Je hoeft niet alles aan één voorstel mooi te vinden. Een naam, een kleur of een lettervorm combineren kan
-              ook.
+            <h2 data-i18n="reflectionHeading" id="reflection-heading">Твой выбор и пожелания.</h2>
+            <p data-i18n="reflectionIntro">
+              Необязательно выбирать готовый вариант. Можно сочетать понравившиеся элементы или предложить новое
+              название для бренда и логотипа.
+            </p>
+            <p data-i18n="nameHelp" class="language-help">
+              Хочешь другое название? Напиши его в замечаниях — Юлиан создаст новые варианты логотипа с этим названием.
+            </p>
+            <p data-i18n="languageHelp" class="language-help">
+              Можно писать по-русски. Расскажи, что тебе нравится и что хотелось бы изменить: название, цвета, шрифт или
+              сам знак.
             </p>
           </div>
           <div class="reflection-note">
-            <label class="note-label" for="choice-note">Wat wil je meegeven? <span>(optioneel)</span></label
-            ><textarea
-              id="choice-note"
-              rows="3"
-              maxlength="1500"
-              placeholder="Bijvoorbeeld: de signatuur van 05, met de kleur van 02."
-            ></textarea>
+            <form
+              id="logo-feedback"
+              action="{{FEEDBACK_ENDPOINT}}"
+              method="post"
+              accept-charset="UTF-8"
+              data-i18n-aria-label="formLabel"
+              aria-label="Отправить выбор логотипа и пожелания"
+              aria-describedby="feedback-help feedback-status"
+            >
+              <input type="hidden" name="_subject" value="Hamlet — logo-keuze en opmerkingen" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_next" value="{{THANKS_URL}}" />
+              <input type="hidden" name="Logokeuze" id="feedback-choice" value="" />
+              <label data-i18n="noteLabel" class="note-label" for="choice-note">Твои замечания (необязательно)</label>
+              <textarea
+                id="choice-note"
+                name="Opmerkingen"
+                rows="5"
+                maxlength="5000"
+                aria-describedby="note-help"
+                data-i18n-placeholder="notePlaceholder"
+                placeholder="Например: хочу название «...». Сделай, пожалуйста, новые варианты с этим названием."
+              ></textarea>
+              <p data-i18n="noteHelp" class="note-help" id="note-help">
+                Предложи своё название или идею логотипа. Пиши на русском или нидерландском — как тебе удобнее.
+              </p>
+              <button data-i18n="send" class="feedback-submit" type="submit" id="send-feedback">
+                Отправить ответ Юлиану
+              </button>
+              <p data-i18n="feedbackHelp" class="note-help" id="feedback-help">
+                Твой выбор и замечания будут отправлены Юлиану по электронной почте. Для отправки нужен интернет.
+              </p>
+              <p class="feedback-status" id="feedback-status" role="status" aria-live="polite"></p>
+            </form>
+            <div class="feedback-fallback">
+              <button data-i18n="copy" class="copy-button" id="copy-choice" type="button">Или скопировать ответ</button>
+              <p id="copy-status" role="status" hidden></p>
+              <div class="copy-fallback" id="copy-fallback" hidden>
+                <label data-i18n="copyFallbackLabel" for="copy-text"
+                  >Скопируй этот текст и вставь его в сообщение.</label
+                ><textarea id="copy-text" readonly rows="3"></textarea>
+              </div>
+            </div>
           </div>
         </section>
       </main>
       <footer class="page-footer">
-        <span>Voor Hamlet, met aandacht voor jouw eigen geluid.</span
-        ><button type="button" id="print-page">Bewaar of print dit overzicht</button>
+        <span data-i18n="footer">Для Hamlet, с вниманием к твоему собственному звучанию.</span
+        ><button data-i18n="print" type="button" id="print-page">Сохранить или распечатать</button>
       </footer>
     </div>
-
-    <aside class="selection-bar" id="selection-bar" aria-label="Jouw gekozen logo" hidden>
+    <aside
+      class="selection-bar"
+      id="selection-bar"
+      data-i18n-aria-label="selectionLabel"
+      aria-label="Твой выбранный логотип"
+      hidden
+    >
       <div class="selection-inner shell">
         <div class="selection-summary">
           <span class="selection-number" id="selected-number"></span>
-          <div><small>Jouw favoriet</small><strong id="selected-name"></strong></div>
+          <div><small data-i18n="selectionHeading">Твой выбор</small><strong id="selected-name"></strong></div>
         </div>
         <div class="selection-actions">
-          <p>Kopieer je keuze en stuur die zelf door.</p>
-          <button class="copy-button" id="copy-choice" type="button">
-            Kopieer mijn keuze
-            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-              <rect x="7" y="7" width="10" height="10" rx="2" />
-              <path d="M13 7V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3" />
-            </svg>
-          </button>
-        </div>
-        <p id="copy-status" role="status" hidden></p>
-        <div class="copy-fallback" id="copy-fallback" hidden>
-          <label for="copy-text">Selecteer deze tekst en kopieer hem om je keuze door te sturen.</label
-          ><textarea id="copy-text" readonly rows="2"></textarea>
+          <a data-i18n="notesAndSend" class="copy-button" href="#reactie">Замечания и отправка</a>
         </div>
       </div>
     </aside>
-
     <dialog id="logo-dialog" aria-labelledby="dialog-name">
       <div class="dialog-header">
         <div class="dialog-title">
           <span id="dialog-number"></span>
           <h2 id="dialog-name"></h2>
         </div>
-        <button class="dialog-close" type="button" aria-label="Sluit de vergroting">
+        <button
+          class="dialog-close"
+          type="button"
+          data-i18n-aria-label="closeDialog"
+          aria-label="Закрыть увеличенное изображение"
+        >
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <path d="m5 5 10 10M15 5 5 15" />
           </svg>
@@ -1287,14 +1531,194 @@
       </div>
       <div class="dialog-stage"><img id="dialog-image" alt="" /></div>
       <div class="dialog-footer">
-        <p>Een richting om verder op te bouwen.</p>
-        <button class="dialog-select" type="button">Kies dit als favoriet</button>
+        <p data-i18n="dialogHint">Идея, которую можно развивать дальше.</p>
+        <button data-i18n="choose" class="dialog-select" type="button">Выбрать этот вариант</button>
       </div>
     </dialog>
-
     <script>
       (() => {
-        const cards = [...document.querySelectorAll('.logo-card')];
+        const translations = {
+          ru: {
+            documentTitle: 'Hamlet, какой логотип тебе ближе?',
+            description:
+              'Семь вариантов логотипа для Hamlet. Выбери подходящий или предложи своё название и направление.',
+            brandLine: 'Hamlet · твой собственный стиль',
+            mastheadEnd: 'Логотип / 7 направлений',
+            languageSwitch: 'Язык страницы',
+            eyebrow: 'Визуальный образ твоей музыки',
+            pageTitle: 'Какой логотип<br />тебе ближе, <span>Hamlet?</span>',
+            intro:
+              'Посмотри семь вариантов в спокойном темпе. Выбери понравившийся или «Ни один не подходит». Ниже можно предложить своё название, описать пожелания и отправить ответ Юлиану.',
+            choiceHeading: 'Всё ещё можно изменить под тебя.',
+            choiceNote:
+              'Название тоже может быть другим. Предложи своё — Юлиан создаст новые варианты логотипа с этим названием.',
+            currentLogo: 'Текущий логотип',
+            enlargeHint: 'Нажми на логотип, чтобы рассмотреть его',
+            optionsLabel: 'Семь вариантов логотипа',
+            newOptions: 'Шесть новых вариантов',
+            newOptionsHint: 'От выразительного до сдержанного',
+            choose: 'Выбрать этот вариант',
+            chosen: 'Выбрано',
+            noneTitle: 'Ни один из вариантов мне не подходит.',
+            noneName: 'Ни один не подходит',
+            noneLabel: 'Нет подходящего логотипа',
+            noneDescription:
+              'Это тоже нормально. Ниже можно предложить своё название или описать совсем другое направление.',
+            reflectionHeading: 'Твой выбор и пожелания.',
+            reflectionIntro:
+              'Необязательно выбирать готовый вариант. Можно сочетать понравившиеся элементы или предложить новое название для бренда и логотипа.',
+            nameHelp:
+              'Хочешь другое название? Напиши его в замечаниях — Юлиан создаст новые варианты логотипа с этим названием.',
+            languageHelp:
+              'Можно писать по-русски. Расскажи, что тебе нравится и что хотелось бы изменить: название, цвета, шрифт или сам знак.',
+            formLabel: 'Отправить выбор логотипа и пожелания',
+            noteLabel: 'Твои замечания (необязательно)',
+            notePlaceholder: 'Например: хочу название «...». Сделай, пожалуйста, новые варианты с этим названием.',
+            noteHelp: 'Предложи своё название или идею логотипа. Пиши на русском или нидерландском — как тебе удобнее.',
+            send: 'Отправить ответ Юлиану',
+            feedbackHelp:
+              'Твой выбор и замечания будут отправлены Юлиану по электронной почте. Для отправки нужен интернет.',
+            copy: 'Или скопировать ответ',
+            copyFallbackLabel: 'Скопируй этот текст и вставь его в сообщение.',
+            footer: 'Для Hamlet, с вниманием к твоему собственному звучанию.',
+            print: 'Сохранить или распечатать',
+            selectionLabel: 'Твой выбранный логотип',
+            selectionHeading: 'Твой выбор',
+            notesAndSend: 'Замечания и отправка',
+            closeDialog: 'Закрыть увеличенное изображение',
+            dialogHint: 'Идея, которую можно развивать дальше.',
+            selectRequired: 'Выбери логотип или «Ни один не подходит».',
+            copied: 'Скопировано. Вставь ответ в сообщение.',
+            copying: 'Копируем ответ…',
+            copyFailed: 'Не удалось скопировать автоматически. Скопируй текст ниже.',
+            offline: 'Нет интернета. Подключись к сети или скопируй ответ.',
+            sending: 'Отправляем ответ…',
+            verification: 'Пройди проверку на следующей странице.',
+            messageChoice: 'Мой выбор — {number} — {name}.',
+            messageNotes: 'Замечания:',
+            enlargeLabel: 'Рассмотреть {number} — {name}',
+            chooseLabel: 'Выбрать {number} — {name}',
+            originalName: 'Hamlet — оригинал',
+            signatureName: 'Hamlet — подпись',
+            originalSubtitle: 'Оригинальный логотип сайта',
+            originalDescription:
+              'Ясный и личный образ. Шесть струн складываются в букву H, а твоё имя выходит на первый план.',
+            originalAlt: 'Оригинальный логотип Hamlet: буква H из шести струн рядом с выразительным названием.',
+            casaSubtitle: 'Тёплый · артистичный · выразительный',
+            casaDescription: 'Свой дом для гитары: тёплые цвета и движение, вдохновлённое фламенко.',
+            casaAlt: 'Casa Hamlet: терракотовая розетка и плавные выразительные буквы с засечками на кремовом фоне.',
+            tokkelSubtitle: 'Игривый · простой · открытый',
+            tokkelDescription:
+              'Название, которое уже звучит как игра на гитаре, с ярким акцентом и энергичными буквами.',
+            tokkelAlt: 'Tokkel: крупные синие буквы, резонаторное отверстие и струны внутри буквы o, оранжевый акцент.',
+            snaarwerkSubtitle: 'Чёткий · зрелый · мастеровой',
+            snaarwerkDescription:
+              'Шесть линий и выразительная форма буквы превращают внимание к деталям и мастерство в узнаваемый знак.',
+            snaarwerkAlt:
+              'Snaarwerk: шесть геометрических линий образуют букву S рядом с узкими кремовыми буквами на тёмно-зелёном фоне.',
+            signatureSubtitle: 'Личный · элегантный · музыкальный',
+            signatureDescription: 'Твоё имя как узнаваемая подпись артиста, дополненная плавной линией.',
+            signatureAlt:
+              'Hamlet в виде плавной чёрной подписи с тонкой золотой линией и надписью Gitaarles en Flamenco.',
+            pulsoSubtitle: 'Характерный · тёплый · ритмичный',
+            pulsoDescription: 'Рука и движение по струнам соединяются в выразительный, узнаваемый символ.',
+            pulsoAlt: 'Pulso: абстрактная рука играет на струнах; баклажановый и коралловый цвета на абрикосовом фоне.',
+            aireSubtitle: 'Открытый · спокойный · утончённый',
+            aireDescription: 'Много воздуха и ясные буквы, с одним плавным движением в качестве музыкального акцента.',
+            aireAlt:
+              'Aire: свободно расположенные сине-зелёные буквы с плавной R и небольшой строкой Gitaarles met Hamlet.',
+          },
+          nl: {
+            documentTitle: 'Welk logo past bij jou, Hamlet?',
+            description: 'Zeven logo’s voor Hamlet. Kies je favoriet of stel je eigen naam en richting voor.',
+            brandLine: 'Hamlet · een eigen gezicht',
+            mastheadEnd: 'Logo-verkenning / 7 richtingen',
+            languageSwitch: 'Taal van de pagina',
+            eyebrow: 'Een keuze voor jouw muziek',
+            pageTitle: 'Welk logo past<br />bij jou, <span>Hamlet?</span>',
+            intro:
+              'Bekijk de zeven richtingen op je gemak. Kies je favoriet of “Geen van deze opties”. Hieronder kun je een eigen naam voorstellen, je wensen beschrijven en je antwoord naar Julian sturen.',
+            choiceHeading: 'Het mag nog helemaal jouw kant op.',
+            choiceNote:
+              'Ook de naam kan veranderen. Stel gerust een eigen naam voor — Julian maakt daar nieuwe logo-opties voor.',
+            currentLogo: 'Het huidige logo',
+            enlargeHint: 'Klik op een logo om het groter te bekijken',
+            optionsLabel: 'De zeven logo-opties',
+            newOptions: 'Zes nieuwe mogelijkheden',
+            newOptionsHint: 'Van expressief tot ingetogen',
+            choose: 'Dit is mijn favoriet',
+            chosen: 'Gekozen als favoriet',
+            noneTitle: 'Geen van deze logo’s past bij mij.',
+            noneName: 'Geen van deze opties',
+            noneLabel: 'Geen passend logo',
+            noneDescription:
+              'Dat mag ook. Stel hieronder gerust een eigen naam voor of beschrijf een heel andere richting.',
+            reflectionHeading: 'Jouw keuze en opmerkingen.',
+            reflectionIntro:
+              'Je hoeft geen bestaand voorstel te kiezen. Je kunt elementen combineren of een nieuwe naam voor je merk en logo voorstellen.',
+            nameHelp:
+              'Liever een andere naam? Schrijf die in je notities — Julian maakt nieuwe logo-opties rond die naam.',
+            languageHelp:
+              'Schrijf gerust in het Russisch. Vertel wat je mooi vindt en wat je wilt veranderen: de naam, kleuren, letters of het beeldmerk.',
+            formLabel: 'Logo-keuze en opmerkingen doorsturen',
+            noteLabel: 'Je notities (optioneel)',
+            notePlaceholder: 'Bijvoorbeeld: ik wil de naam “…”. Maak alsjeblieft nieuwe varianten met deze naam.',
+            noteHelp: 'Stel je eigen naam of logo-idee voor. Nederlands of Russisch: allebei goed.',
+            send: 'Verstuur mijn antwoord naar Julian',
+            feedbackHelp:
+              'Je keuze en notities worden per e-mail naar Julian gestuurd. Voor het versturen heb je internet nodig.',
+            copy: 'Of kopieer mijn antwoord',
+            copyFallbackLabel: 'Kopieer deze tekst en plak hem in je bericht.',
+            footer: 'Voor Hamlet, met aandacht voor jouw eigen geluid.',
+            print: 'Bewaar of print dit overzicht',
+            selectionLabel: 'Jouw gekozen logo',
+            selectionHeading: 'Jouw keuze',
+            notesAndSend: 'Notities & versturen',
+            closeDialog: 'Sluit de vergroting',
+            dialogHint: 'Een richting om verder op te bouwen.',
+            selectRequired: 'Kies een logo of “Geen van deze opties”.',
+            copied: 'Gekopieerd. Plak je antwoord in je bericht.',
+            copying: 'Je antwoord wordt gekopieerd…',
+            copyFailed: 'Automatisch kopiëren is niet gelukt. Kopieer de tekst hieronder.',
+            offline: 'Geen internetverbinding. Maak verbinding of kopieer je antwoord.',
+            sending: 'Je antwoord wordt verstuurd…',
+            verification: 'Rond de controle op de volgende pagina af.',
+            messageChoice: 'Mijn voorkeur is {number} — {name}.',
+            messageNotes: 'Opmerkingen:',
+            enlargeLabel: 'Bekijk {number} — {name} vergroot',
+            chooseLabel: 'Kies {number} — {name}',
+            originalName: 'Hamlet — origineel',
+            signatureName: 'Hamlet — signatuur',
+            originalSubtitle: 'Het originele website-logo',
+            originalDescription:
+              'Helder en persoonlijk. De zes snaren vormen een H, met je naam stevig op de voorgrond.',
+            originalAlt: 'Het originele Hamlet-logo: een H van zes snaren naast een krachtig woordmerk.',
+            casaSubtitle: 'Warm · artistiek · expressief',
+            casaDescription: 'Een persoonlijk huis voor gitaar, met warme kleuren en de beweging van flamenco.',
+            casaAlt: 'Casa Hamlet: een terracotta rozet en vloeiende, expressieve serifletters op crème.',
+            tokkelSubtitle: 'Speels · direct · toegankelijk',
+            tokkelDescription:
+              'Een naam die al klinkt als gitaarspelen, met een vrolijk accent en letters vol energie.',
+            tokkelAlt: 'Tokkel: stevige blauwe letters met een klankgat en snaren in de o en een oranje accent.',
+            snaarwerkSubtitle: 'Strak · volwassen · ambachtelijk',
+            snaarwerkDescription: 'Zes lijnen en een sterke lettervorm geven aandacht en vakmanschap een eigen teken.',
+            snaarwerkAlt: 'Snaarwerk: zes geometrische lijnen vormen een S naast smalle crème letters op donkergroen.',
+            signatureSubtitle: 'Persoonlijk · elegant · muzikaal',
+            signatureDescription:
+              'Je naam als een herkenbare artiestenhandtekening, met een soepele lijn onder het geheel.',
+            signatureAlt:
+              'Hamlet als vloeiende zwarte signatuur, met een subtiele gouden lijn en de woorden Gitaarles en Flamenco.',
+            pulsoSubtitle: 'Karaktervol · warm · ritmisch',
+            pulsoDescription: 'De hand en de aanslag op de snaren worden samen een expressief en herkenbaar beeldmerk.',
+            pulsoAlt:
+              'Pulso: een abstracte hand maakt een tokkelbeweging, in aubergine en koraal op een abrikooskleurige achtergrond.',
+            aireSubtitle: 'Open · rustig · verfijnd',
+            aireDescription: 'Veel ruimte en heldere letters, met één vloeiende beweging als muzikaal accent.',
+            aireAlt:
+              'Aire: ruime, open petrolblauwe letters met een vloeiende R en een kleine regel Gitaarles met Hamlet.',
+          },
+        };
+        const cards = [...document.querySelectorAll('.logo-card, .no-match')];
         const bar = document.getElementById('selection-bar');
         const selectedNumber = document.getElementById('selected-number');
         const selectedName = document.getElementById('selected-name');
@@ -1306,9 +1730,29 @@
         const dialog = document.getElementById('logo-dialog');
         const dialogImage = document.getElementById('dialog-image');
         const dialogStage = dialog.querySelector('.dialog-stage');
+        const feedback = document.getElementById('logo-feedback');
+        const feedbackChoice = document.getElementById('feedback-choice');
+        const feedbackStatus = document.getElementById('feedback-status');
+        const sendButton = document.getElementById('send-feedback');
+        const nextInput = feedback.querySelector('[name="_next"]');
+        const thanksUrl = nextInput.value;
+        feedback.noValidate = true;
+        let language = 'ru';
         let selectedCard = null;
         let openCard = null;
         let opener = null;
+        let feedbackStatusKey = '';
+        let copyStatusKey = '';
+        let sending = false;
+        let copying = false;
+
+        function t(key, values = {}) {
+          return translations[language][key].replace(/\{(\w+)\}/g, (_, name) => values[name] ?? '');
+        }
+
+        function cardName(card) {
+          return card.dataset.nameKey ? t(card.dataset.nameKey) : card.dataset.name;
+        }
 
         function reserveBarSpace() {
           document.body.style.setProperty(
@@ -1317,13 +1761,84 @@
           );
         }
 
+        function setFeedbackStatus(key = '') {
+          feedbackStatusKey = key;
+          feedbackStatus.textContent = key ? t(key) : '';
+        }
+
         function message() {
           if (!selectedCard) return '';
           const thoughts = note.value.trim();
-          return `Mijn voorkeur is ${selectedCard.dataset.number} — ${selectedCard.dataset.name}.${thoughts ? '\n\n' + thoughts : ''}`;
+          const choice =
+            selectedCard.id === 'geen'
+              ? t('noneTitle')
+              : t('messageChoice', { number: selectedCard.dataset.number, name: cardName(selectedCard) });
+          return `${choice}${thoughts ? '\n\n' + t('messageNotes') + '\n' + thoughts : ''}`;
+        }
+
+        function updateSelection() {
+          if (!selectedCard) return;
+          selectedNumber.textContent = selectedCard.dataset.number;
+          selectedName.textContent = cardName(selectedCard);
+          // Keep the submitted choice unambiguous for Julian in either interface language.
+          feedbackChoice.value =
+            selectedCard.id === 'geen'
+              ? 'Geen van deze logo’s past bij mij / Ни один из вариантов мне не подходит'
+              : `${selectedCard.dataset.number} — ${selectedCard.dataset.name}`;
+        }
+
+        function setLanguage(nextLanguage, updateUrl = true) {
+          language = nextLanguage === 'nl' ? 'nl' : 'ru';
+          document.documentElement.lang = language === 'nl' ? 'nl-BE' : 'ru';
+          document.title = t('documentTitle');
+          document.querySelector('meta[name="description"]').content = t('description');
+          document.querySelectorAll('[data-i18n]').forEach((element) => {
+            element.textContent = t(element.dataset.i18n);
+          });
+          document.querySelectorAll('[data-i18n-html]').forEach((element) => {
+            element.innerHTML = t(element.dataset.i18nHtml);
+          });
+          for (const attribute of ['aria-label', 'alt', 'placeholder']) {
+            document.querySelectorAll(`[data-i18n-${attribute}]`).forEach((element) => {
+              element.setAttribute(attribute, t(element.getAttribute(`data-i18n-${attribute}`)));
+            });
+          }
+          for (const locale of ['ru', 'nl']) {
+            document.getElementById(`language-${locale}`).setAttribute('aria-pressed', String(locale === language));
+          }
+          for (const card of cards) {
+            const values = { number: card.dataset.number, name: cardName(card) };
+            card.querySelector('[data-enlarge]')?.setAttribute('aria-label', t('enlargeLabel', values));
+            card
+              .querySelector('input')
+              .setAttribute('aria-label', card.id === 'geen' ? t('noneTitle') : t('chooseLabel', values));
+          }
+          nextInput.value = thanksUrl + (language === 'nl' ? (thanksUrl.includes('?') ? '&lang=nl' : '?lang=nl') : '');
+          updateSelection();
+          if (openCard) {
+            document.getElementById('dialog-name').textContent = cardName(openCard);
+            dialogImage.alt = openCard.querySelector('img').alt;
+          }
+          feedbackStatus.textContent = feedbackStatusKey ? t(feedbackStatusKey) : '';
+          status.textContent = copyStatusKey ? t(copyStatusKey) : '';
+          sendButton.textContent = t(sending ? 'sending' : 'send');
+          copyButton.textContent = t(copying ? 'copying' : 'copy');
+          if (!fallback.hidden) copyText.value = message();
+          if (updateUrl) {
+            try {
+              const url = new URL(location.href);
+              if (language === 'nl') url.searchParams.set('lang', 'nl');
+              else url.searchParams.delete('lang');
+              history.replaceState(null, '', url);
+            } catch {
+              /* The language switch also works when opened as a local file. */
+            }
+          }
+          reserveBarSpace();
         }
 
         function resetCopyFeedback() {
+          copyStatusKey = '';
           status.hidden = true;
           status.textContent = '';
           fallback.hidden = true;
@@ -1334,8 +1849,9 @@
         function selectCard(card, updateHash = true) {
           selectedCard = card;
           card.querySelector('input').checked = true;
-          selectedNumber.textContent = card.dataset.number;
-          selectedName.textContent = card.dataset.name;
+          updateSelection();
+          setFeedbackStatus();
+          cards.forEach((item) => item.querySelector('input').removeAttribute('aria-invalid'));
           document.body.dataset.choice = card.id;
           bar.hidden = false;
           resetCopyFeedback();
@@ -1355,14 +1871,17 @@
           if (card) selectCard(card, false);
         }
 
+        for (const locale of ['ru', 'nl']) {
+          document.getElementById(`language-${locale}`).addEventListener('click', () => setLanguage(locale));
+        }
         for (const card of cards) {
           card.querySelector('input').addEventListener('change', () => selectCard(card));
-          card.querySelector('[data-enlarge]').addEventListener('click', (event) => {
+          card.querySelector('[data-enlarge]')?.addEventListener('click', (event) => {
             openCard = card;
             opener = event.currentTarget;
             const image = card.querySelector('img');
             document.getElementById('dialog-number').textContent = card.dataset.number;
-            document.getElementById('dialog-name').textContent = card.dataset.name;
+            document.getElementById('dialog-name').textContent = cardName(card);
             dialogImage.src = image.currentSrc || image.src;
             dialogImage.alt = image.alt;
             dialogStage.classList.toggle('original-stage', card.classList.contains('original'));
@@ -1383,6 +1902,9 @@
           )
             dialog.close();
         });
+        dialog.addEventListener('cancel', () => {
+          // Let the browser close the dialog on Escape; the close handler restores focus.
+        });
         dialog.addEventListener('close', () => {
           if (opener) opener.focus({ preventScroll: true });
         });
@@ -1393,29 +1915,83 @@
 
         note.addEventListener('input', resetCopyFeedback);
         copyButton.addEventListener('click', async () => {
-          if (!selectedCard) return;
+          if (!selectedCard) {
+            setFeedbackStatus('selectRequired');
+            document.querySelector('#geen input').focus();
+            return;
+          }
           const text = message();
+          copying = true;
           copyButton.disabled = true;
+          copyButton.textContent = t('copying');
           resetCopyFeedback();
           try {
             if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('Clipboard unavailable');
             await navigator.clipboard.writeText(text);
-            status.textContent = 'Gekopieerd. Plak je keuze nu in je bericht.';
+            copyStatusKey = 'copied';
+            status.textContent = t(copyStatusKey);
             status.hidden = false;
           } catch {
-            copyText.value = text;
+            copyStatusKey = 'copyFailed';
+            status.textContent = t(copyStatusKey);
+            status.hidden = false;
+            copyText.value = message();
             fallback.hidden = false;
             copyText.focus();
             copyText.select();
           } finally {
+            copying = false;
             copyButton.disabled = false;
+            copyButton.textContent = t('copy');
             reserveBarSpace();
           }
         });
         window.addEventListener('hashchange', selectHash);
+        feedback.addEventListener('submit', (event) => {
+          if (!selectedCard) {
+            event.preventDefault();
+            setFeedbackStatus('selectRequired');
+            cards.forEach((card) => card.querySelector('input').setAttribute('aria-invalid', 'true'));
+            document.querySelector('#geen input').focus();
+            return;
+          }
+          if (!feedback.checkValidity()) {
+            event.preventDefault();
+            feedback.reportValidity();
+            return;
+          }
+          if (navigator.onLine === false) {
+            event.preventDefault();
+            setFeedbackStatus('offline');
+            return;
+          }
+          sending = true;
+          sendButton.disabled = true;
+          sendButton.setAttribute('aria-busy', 'true');
+          sendButton.textContent = t('sending');
+          setFeedbackStatus('verification');
+        });
+        window.addEventListener('pageshow', () => {
+          sending = false;
+          copying = false;
+          sendButton.disabled = false;
+          sendButton.removeAttribute('aria-busy');
+          sendButton.textContent = t('send');
+          copyButton.disabled = false;
+          copyButton.textContent = t('copy');
+          setFeedbackStatus();
+          const checked = document.querySelector('input[name="favorite"]:checked');
+          if (checked) selectCard(checked.closest('.logo-card, .no-match'), false);
+        });
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(([entry]) => bar.toggleAttribute('data-at-feedback', entry.isIntersecting)).observe(
+            document.getElementById('reactie')
+          );
+        }
         window.addEventListener('resize', reserveBarSpace);
         if ('ResizeObserver' in window) new ResizeObserver(reserveBarSpace).observe(bar);
         document.getElementById('print-page').addEventListener('click', () => window.print());
+        setLanguage(new URLSearchParams(location.search).get('lang'), false);
         selectHash();
       })();
     </script>
