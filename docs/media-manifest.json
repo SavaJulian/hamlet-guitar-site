@@ -29,7 +29,7 @@
     "encoding": "libx264 slow crf23 maxrate1650k bufsize3300k",
     "bytes": 34592230,
     "faststart_verified": true,
-    "purpose": "Complete authentic performance, lazy-loaded only on opening the full-video dialog."
+    "purpose": "Complete authentic performance retained as a media asset. As of 26 October 2026 it is not linked or loaded by the interface; the former full-video dialog has been removed."
   },
   "hero_video": {
     "file": "hamlet-hero.mp4",
@@ -40,7 +40,7 @@
     "bytes": 2291457,
     "audio": "AAC 128kbps",
     "web_delivery": "faststart",
-    "playback": "Muted autoplay loop with sound and pause/resume controls; reduced motion starts with poster and manual play.",
+    "playback": "As of 26 October 2026: attempt audible autoplay, retry muted on NotAllowedError. Single circular sound control; image tap/keyboard toggles play/pause with a paused/focus hint. Reduced motion starts on poster until explicit play. Offscreen/hidden-tab pauses preserve manual choices; errors expose a retry link.",
     "encoding_manifest": "docs/hero-video.json",
     "sha256": "dd0656e3f7fd0661ecae7fc3c298538e5f0c476f045e8c53b1ca0f28d693df27",
     "treatment": "Near-black RGB key composited over solid black; no generated subject frames. See encoding manifest."

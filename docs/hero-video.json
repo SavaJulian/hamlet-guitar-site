@@ -13,7 +13,7 @@
   "full_decode_verified": true,
   "content": "Actual continuous performance excerpt; the source edit contains camera/crop cuts. No source typography in selected interval. No frozen or generated frames.",
   "encoding": "libx264 slow crf22 maxrate1400k bufsize2800k; Rec.709 limited range; AAC128kbps with0.08s edge fades",
-  "playback_intent": "Muted autoplay loop by default, user may enable audio; manual pause and reduced-motion handling belong to website.",
+  "playback_intent": "As of 26 October 2026: audible-first autoplay loop with muted fallback on browser NotAllowedError. One circular speaker controls audio; transparent image button supports tap and keyboard pause/resume. Reduced motion shows poster until explicit playback. Offscreen/hidden-tab pauses preserve manual choices. No full-video modal or link.",
   "treatment": {
     "intent": "Remove distracting near-black backdrop grain and composite on solid black, preserving bright subject tones and the real performance.",
     "method": "FFmpeg colorkey black, similarity0.06, soft blend0.025, over generated solid black plate; source PTS rebased before composition. No global exposure or brightness reduction.",

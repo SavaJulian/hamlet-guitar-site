@@ -24,7 +24,7 @@ A real local teacher demonstrated through the user's supplied flamenco performan
 
 ## Capabilities and Constraints
 
-Responsive, accessible static website with a muted autoplay performance excerpt, manual sound and pause controls, a lazy-loaded full-performance dialog and working inquiry routes. Reduced-motion preference leaves the hero poster visible until playback is requested. Real business details must be sourced. Do not invent availability, prices, street address, review counts or credentials. Full creative freedom including new logo explicitly authorized. Save to SavaJulian/hamlet-guitar-site.
+Responsive, accessible static website with an authentic hero performance excerpt and working inquiry routes. Playback attempts sound first and falls back to muted playback when the browser rejects audible autoplay; audible autoplay cannot be guaranteed. One circular speaker button controls sound, and the performance image is a keyboard- and touch-accessible pause/resume control. Reduced-motion preference leaves the hero poster visible until explicit playback. Offscreen and hidden-tab pauses preserve manual pause and mute choices. The former full-performance dialog and visible control bar are removed; the complete video file remains retained but unused by the interface. Real business details must be sourced. Do not invent availability, prices, street address, review counts or credentials. Full creative freedom including new logo explicitly authorized. Save to SavaJulian/hamlet-guitar-site.
 
 ## Brand Commitments
 
@@ -47,3 +47,5 @@ The teacher-section image caption is “Techniek. Ritme. Expressie.” The accom
 The user-confirmed introductory offer is “Je eerste kennismakingsles is gratis.” It appears beside the hero action, in the contact heading and FAQ. Primary invitations read “Plan je gratis les”; the default and interest-specific SMS drafts ask for a gratis kennismakingsles. No deadline, limited availability or follow-up obligation is claimed.
 
 Julian requested removing the distracting grain behind Hamlet in the hero. The real performance excerpt and its poster now use a cleaned near-black background composited onto pure black; the source recording and full performance remain unchanged.
+
+On 26 October 2026 Julian requested sound by default and removal of the prominent sound/pause/full-video bar. The current implementation uses the browser-permitted audible-first behavior and a single discreet speaker button, with playback controlled directly on the image.

@@ -118,8 +118,6 @@ const schema = {
         <video
           id="hero-video"
           class="hero-image hero-video"
-          autoplay
-          muted
           loop
           playsinline
           preload="none"
@@ -129,6 +127,14 @@ const schema = {
           height="720"
           aria-label="Hamlet speelt flamencogitaar op de achtergrond"></video>
         <div class="hero-shade"></div>
+        <button
+          class="hero-playback"
+          id="hero-playback"
+          aria-controls="hero-video"
+          aria-label="Video afspelen"
+          title="Klik op het beeld om af te spelen of te pauzeren"
+          data-paused><span class="hero-playback-hint">Video afspelen</span></button
+        >
         <div class="hero-content">
           <h1 id="hero-heading">Leer gitaar spelen.<br /><em>Op jouw tempo.</em></h1>
           <p class="hero-intro">Gitaarles in Merksem, Antwerpen.</p>
@@ -139,23 +145,19 @@ const schema = {
           <a class="button button-gold" href={`tel:${phone}`}>Plan je gratis les <Icon name="arrow" /></a>
           <span class="hero-note">Bel Hamlet en spreek een moment af</span>
         </div>
-        <div class="hero-controls" role="group" aria-label="Bediening achtergrondvideo">
-          <button class="hero-sound" id="hero-sound" aria-controls="hero-video" aria-label="Geluid inschakelen">
-            <span data-sound-off><Icon name="sound-off" size={19} /></span>
-            <span data-sound-on hidden><Icon name="sound-on" size={19} /></span>
-            <span data-sound-label>Geluid aan</span>
-          </button>
-          <button class="hero-pause" id="hero-pause" aria-controls="hero-video" aria-label="Video pauzeren">
-            <span data-pause-icon><Icon name="pause" size={18} /></span>
-            <span data-resume-icon hidden><Icon name="play" size={18} /></span>
-          </button>
-          <button class="hero-full" data-play-video aria-haspopup="dialog"
-            >Volledige video <Icon name="arrow" size={16} /></button
-          >
-          <span class="hero-video-status" role="status" hidden
-            >De achtergrondvideo kon niet laden. Probeer de volledige video.</span
-          >
-        </div>
+        <button
+          class="hero-sound"
+          id="hero-sound"
+          aria-controls="hero-video"
+          aria-label="Geluid inschakelen"
+          title="Geluid inschakelen"
+        >
+          <span data-sound-off><Icon name="sound-off" size={19} /></span>
+          <span data-sound-on hidden><Icon name="sound-on" size={19} /></span>
+        </button>
+        <span class="hero-video-status" role="status" hidden>
+          De video kon niet laden. <a href={base}>Opnieuw proberen</a>.
+        </span>
         <div class="hero-side-note" aria-hidden="true">ZES SNAREN. JOUW VERHAAL.</div>
       </section>
       <div class="lesson-strip">
@@ -318,23 +320,6 @@ const schema = {
     <a class="mobile-call" href={`tel:${phone}`}
       ><Icon name="phone" size={18} /> Plan je gratis les <Icon name="arrow" size={18} /></a
     >
-    <dialog class="video-dialog" aria-labelledby="video-title">
-      <div class="video-dialog-header">
-        <h2 id="video-title">Hamlet speelt flamenco</h2><button class="close-video" aria-label="Video sluiten"
-          ><Icon name="close" size={24} /></button
-        >
-      </div><video
-        controls
-        playsinline
-        preload="none"
-        poster={asset('media/hamlet-performance.webp?v=black-background')}
-        data-src={asset('media/hamlet-flamenco.mp4')}
-        aria-label="Flamencogitaar door Hamlet, instrumentaal optreden van 2 minuten en 36 seconden"
-        ><track kind="captions" src={asset('media/performance.nl.vtt')} srclang="nl" label="Nederlands" /></video
-      ><p>Een instrumentaal optreden van Hamlet. Zet het geluid aan en luister mee.</p><p class="video-error" hidden>
-        De video kon niet laden. <a href={asset('media/hamlet-flamenco.mp4')}>Open de video rechtstreeks</a>.
-      </p>
-    </dialog>
     <script>
       const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
       const menu = document.querySelector<HTMLElement>('#mobile-nav');
@@ -356,50 +341,75 @@ const schema = {
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') closeMenu();
       });
-      const dialog = document.querySelector<HTMLDialogElement>('.video-dialog');
-      const video = dialog?.querySelector<HTMLVideoElement>('video');
       const heroVideo = document.querySelector<HTMLVideoElement>('#hero-video');
       const soundButton = document.querySelector<HTMLButtonElement>('#hero-sound');
-      const pauseButton = document.querySelector<HTMLButtonElement>('#hero-pause');
+      const playbackButton = document.querySelector<HTMLButtonElement>('#hero-playback');
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
       let userPaused = reducedMotion.matches;
-      let heroInView = true;
+      let heroInView = false;
+      let playRequest = 0;
+      let mediaFailed = false;
 
+      const shouldPlay = () => !userPaused && heroInView && !document.hidden && !mediaFailed;
       const syncHeroControls = () => {
-        if (!heroVideo || !soundButton || !pauseButton) return;
-        const muted = heroVideo.muted;
-        soundButton.setAttribute('aria-label', muted ? 'Geluid inschakelen' : 'Geluid uitschakelen');
-        const soundLabel = soundButton.querySelector<HTMLElement>('[data-sound-label]');
-        if (soundLabel) soundLabel.textContent = muted ? 'Geluid aan' : 'Geluid uit';
-        soundButton.querySelector<HTMLElement>('[data-sound-off]')?.toggleAttribute('hidden', !muted);
-        soundButton.querySelector<HTMLElement>('[data-sound-on]')?.toggleAttribute('hidden', muted);
-        pauseButton.setAttribute('aria-label', heroVideo.paused ? 'Video afspelen' : 'Video pauzeren');
-        pauseButton.querySelector<HTMLElement>('[data-pause-icon]')?.toggleAttribute('hidden', heroVideo.paused);
-        pauseButton.querySelector<HTMLElement>('[data-resume-icon]')?.toggleAttribute('hidden', !heroVideo.paused);
+        if (!heroVideo || !soundButton || !playbackButton) return;
+        const audible = !heroVideo.muted && !heroVideo.paused;
+        const soundLabel = audible ? 'Geluid uitschakelen' : 'Geluid inschakelen';
+        soundButton.setAttribute('aria-label', soundLabel);
+        soundButton.title = soundLabel;
+        soundButton.querySelector<HTMLElement>('[data-sound-off]')?.toggleAttribute('hidden', audible);
+        soundButton.querySelector<HTMLElement>('[data-sound-on]')?.toggleAttribute('hidden', !audible);
+        const playbackLabel = heroVideo.paused ? 'Video afspelen' : 'Video pauzeren';
+        playbackButton.setAttribute('aria-label', playbackLabel);
+        playbackButton.toggleAttribute('data-paused', heroVideo.paused);
+        const hint = playbackButton.querySelector<HTMLElement>('.hero-playback-hint');
+        if (hint) hint.textContent = playbackLabel;
       };
-      const playHero = () => {
-        if (!heroVideo) return;
+      const pauseHero = () => {
+        playRequest += 1;
+        heroVideo?.pause();
+        syncHeroControls();
+      };
+      const playHero = async () => {
+        if (!heroVideo || !shouldPlay()) return;
+        const request = ++playRequest;
         if (!heroVideo.src) heroVideo.src = heroVideo.dataset.src || '';
-        heroVideo.play().catch(syncHeroControls);
+        try {
+          await heroVideo.play();
+        } catch (error) {
+          if (request !== playRequest || !shouldPlay()) return;
+          // Browsers can deny audible autoplay. Keep the performance moving silently.
+          if (error instanceof DOMException && error.name === 'NotAllowedError' && !heroVideo.muted) {
+            heroVideo.muted = true;
+            try {
+              await heroVideo.play();
+            } catch {
+              // The image remains a keyboard- and touch-accessible play control.
+            }
+          }
+        }
+        if (request !== playRequest) return;
+        if (!shouldPlay()) heroVideo.pause();
+        syncHeroControls();
       };
       const updateHeroPlayback = () => {
-        if (!heroVideo) return;
-        if (userPaused || !heroInView || document.hidden || dialog?.open) heroVideo.pause();
-        else playHero();
+        if (shouldPlay()) void playHero();
+        else pauseHero();
       };
       if (heroVideo) {
-        heroVideo.muted = true;
+        heroVideo.muted = false;
         heroVideo.addEventListener('play', syncHeroControls);
         heroVideo.addEventListener('pause', syncHeroControls);
         heroVideo.addEventListener('volumechange', syncHeroControls);
         heroVideo.addEventListener('error', () => {
+          mediaFailed = true;
+          pauseHero();
           const status = document.querySelector<HTMLElement>('.hero-video-status');
           if (status) status.hidden = false;
           if (soundButton) soundButton.disabled = true;
-          if (pauseButton) pauseButton.disabled = true;
+          if (playbackButton) playbackButton.disabled = true;
         });
         syncHeroControls();
-        updateHeroPlayback();
         new IntersectionObserver(
           ([entry]) => {
             heroInView = entry.isIntersecting;
@@ -410,58 +420,23 @@ const schema = {
       }
       soundButton?.addEventListener('click', () => {
         if (!heroVideo) return;
-        heroVideo.muted = !heroVideo.muted;
-        if (!heroVideo.muted) {
+        if (!heroVideo.muted && !heroVideo.paused) heroVideo.muted = true;
+        else {
+          heroVideo.muted = false;
           userPaused = false;
-          playHero();
+          void playHero();
         }
         syncHeroControls();
       });
-      pauseButton?.addEventListener('click', () => {
+      playbackButton?.addEventListener('click', () => {
         if (!heroVideo) return;
         userPaused = !heroVideo.paused;
-        if (userPaused) heroVideo.pause();
-        else playHero();
-        syncHeroControls();
+        updateHeroPlayback();
       });
       document.addEventListener('visibilitychange', updateHeroPlayback);
       reducedMotion.addEventListener('change', () => {
         userPaused = reducedMotion.matches;
         updateHeroPlayback();
-      });
-      document.querySelectorAll('[data-play-video]').forEach((button) =>
-        button.addEventListener('click', () => {
-          if (!dialog || !video) return;
-          dialog.showModal();
-          heroVideo?.pause();
-          document.body.style.overflow = 'hidden';
-          if (!video.src) video.src = video.dataset.src || '';
-          video.play().catch(() => {
-            /* Native controls remain available if autoplay is blocked. */
-          });
-        })
-      );
-      dialog?.querySelector('.close-video')?.addEventListener('click', () => dialog.close());
-      dialog?.addEventListener('click', (event) => {
-        if (event.target === dialog) {
-          const rect = dialog.getBoundingClientRect();
-          if (
-            event.clientX < rect.left ||
-            event.clientX > rect.right ||
-            event.clientY < rect.top ||
-            event.clientY > rect.bottom
-          )
-            dialog.close();
-        }
-      });
-      dialog?.addEventListener('close', () => {
-        video?.pause();
-        document.body.style.overflow = '';
-        updateHeroPlayback();
-      });
-      video?.addEventListener('error', () => {
-        const error = dialog?.querySelector<HTMLElement>('.video-error');
-        if (error) error.hidden = false;
       });
       document.querySelectorAll<HTMLElement>('[data-interest]').forEach((link) =>
         link.addEventListener('click', () => {

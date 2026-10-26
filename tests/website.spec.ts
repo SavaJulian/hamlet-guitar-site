@@ -1,4 +1,15 @@
-import { expect, test, type Locator } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
+
+// Make native permission behavior explicit; blocked-policy tests below inject
+// the browser denial before delegating accepted attempts to this native player.
+test.use({
+  launchOptions: {
+    ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE
+      ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE }
+      : {}),
+    args: ['--autoplay-policy=no-user-gesture-required'],
+  },
+});
 
 async function expectPlaying(video: Locator) {
   await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.readyState)).toBeGreaterThanOrEqual(2);
@@ -103,35 +114,19 @@ test('contact links point to the verified phone and Google location', async ({ p
   await expect(page.locator('address')).toContainText('2170 Merksem');
 });
 
-test('performance loads only on demand, then pauses and releases scrolling on Escape', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 1000 });
-  const mediaRequests: string[] = [];
+test('hero no longer exposes the full-film dialog or the old control bar', async ({ page }) => {
+  const fullFilmRequests: string[] = [];
   page.on('request', (request) => {
-    if (new URL(request.url()).pathname.endsWith('/hamlet-flamenco.mp4')) mediaRequests.push(request.url());
+    if (new URL(request.url()).pathname.endsWith('/hamlet-flamenco.mp4')) fullFilmRequests.push(request.url());
   });
   await page.goto('/');
-  const video = page.locator('.video-dialog video');
-  await expect(video).not.toHaveAttribute('src');
-  expect(mediaRequests).toHaveLength(0);
-
-  const watch = page.getByRole('button', { name: 'Volledige video' });
-  await watch.click();
-  await expect(page.getByRole('dialog')).toBeVisible();
-  await expect.poll(() => mediaRequests.length).toBeGreaterThan(0);
-  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.readyState)).toBeGreaterThanOrEqual(1);
-  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.paused)).toBe(false);
-  expect(await page.evaluate(() => getComputedStyle(document.body).overflow)).toBe('hidden');
-  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeGreaterThan(0.1);
-  await page.screenshot({ path: '.impeccable/review/video-open.png' });
-
-  await page.keyboard.press('Escape');
-  await expect(page.getByRole('dialog')).toBeHidden();
-  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-  expect(await page.evaluate(() => getComputedStyle(document.body).overflow)).not.toBe('hidden');
-  await expect(watch).toBeFocused();
+  await expect(page.locator('.hero-controls, #hero-pause, .video-dialog, [data-play-video]')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Volledige video' })).toHaveCount(0);
+  await expect(page.locator('#hero-sound')).toBeVisible();
+  expect(fullFilmRequests).toEqual([]);
 });
 
-test('reduced motion keeps the hero as a poster until the visitor starts it', async ({ page }) => {
+test('reduced motion keeps the poster until keyboard activation starts the performance', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   const heroRequests: string[] = [];
   page.on('request', (request) => {
@@ -146,12 +141,51 @@ test('reduced motion keeps the hero as a poster until the visitor starts it', as
   expect(heroRequests).toHaveLength(0);
   expect(await hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
 
-  await start.click();
+  await start.focus();
+  await page.keyboard.press('Enter');
   await expectPlaying(hero);
   expect(heroRequests.length).toBeGreaterThan(0);
-  expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
-  await expect(page.getByRole('button', { name: 'Video pauzeren', exact: true })).toBeVisible();
+  expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
+  await expect(page.getByRole('button', { name: 'Video pauzeren', exact: true })).toBeFocused();
+  await page.keyboard.press('Space');
+  await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
+  await expect(page.getByRole('button', { name: 'Video afspelen', exact: true })).toBeFocused();
 });
+
+// Only the browser's permission decision is controlled. Accepted calls still use
+// native media playback, allowing us to verify that decoded frames advance.
+async function recordAutoplayPolicy(page: Page, blockAudibleBeforeGesture: boolean) {
+  await page.addInitScript((blocked) => {
+    const state = { attempts: [] as boolean[], rejected: 0, activated: false };
+    Object.assign(window, { __autoplayTest: state });
+    const nativePlay = HTMLMediaElement.prototype.play;
+    for (const eventName of ['pointerdown', 'keydown']) {
+      document.addEventListener(
+        eventName,
+        (event) => {
+          if (event.isTrusted) state.activated = true;
+        },
+        { capture: true }
+      );
+    }
+    HTMLMediaElement.prototype.play = function () {
+      state.attempts.push(this.muted);
+      if (blocked && !this.muted && !state.activated) {
+        state.rejected += 1;
+        return Promise.reject(new DOMException('Audible autoplay requires user activation.', 'NotAllowedError'));
+      }
+      return nativePlay.call(this);
+    };
+  }, blockAudibleBeforeGesture);
+}
+
+async function autoplayAttempts(page: Page) {
+  return page.evaluate(() => {
+    const state = (window as unknown as Window & { __autoplayTest: { attempts: boolean[]; rejected: number } })
+      .__autoplayTest;
+    return { attempts: state.attempts, rejected: state.rejected };
+  });
+}
 
 test.describe('hero playback when motion is allowed', () => {
   test.use({ reducedMotion: 'no-preference' });
@@ -160,79 +194,76 @@ test.describe('hero playback when motion is allowed', () => {
     ['mobile', 390],
     ['desktop', 1440],
   ] as const) {
-    test(`${device} hero autoplays silently and sound/pause controls work`, async ({ page }) => {
+    test(`${device} starts with sound when autoplay is permitted`, async ({ page }) => {
       await page.setViewportSize({ width, height: device === 'mobile' ? 844 : 1000 });
+      await recordAutoplayPolicy(page, false);
+      await page.goto('/');
+      const hero = page.locator('#hero-video');
+      await expectPlaying(hero);
+      expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
+      expect((await autoplayAttempts(page)).attempts[0]).toBe(false);
+      await expect(hero).toHaveAttribute('playsinline', '');
+      await expect(page.getByRole('button', { name: 'Geluid uitschakelen', exact: true })).toBeVisible();
+      await page.screenshot({ path: `.impeccable/review/hero-audio-allowed-${device}.png` });
+
+      await page.locator('#hero-sound').click();
+      expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
+      await expect(page.getByRole('button', { name: 'Geluid inschakelen', exact: true })).toBeVisible();
+      await expectPlaying(hero);
+      await page.locator('#hero-playback').click();
+      await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
+      await expect(page.getByRole('button', { name: 'Video afspelen', exact: true })).toBeVisible();
+      await page.locator('#hero-playback').click();
+      await expectPlaying(hero);
+      expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
+    });
+
+    test(`${device} falls back to muted playback when audible autoplay is blocked`, async ({ page }) => {
+      await page.setViewportSize({ width, height: device === 'mobile' ? 844 : 1000 });
+      await recordAutoplayPolicy(page, true);
       await page.goto('/');
       const hero = page.locator('#hero-video');
       await expectPlaying(hero);
       expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
-      await expect(hero).toHaveAttribute('playsinline', '');
-      await page.screenshot({ path: `.impeccable/review/hero-autoplay-${device}.png` });
+      const policy = await autoplayAttempts(page);
+      expect(policy.attempts[0]).toBe(false);
+      expect(policy.rejected).toBeGreaterThan(0);
+      expect(policy.attempts).toContain(true);
+      await expect(page.getByRole('button', { name: 'Geluid inschakelen', exact: true })).toBeVisible();
+      await page.screenshot({ path: `.impeccable/review/hero-audio-blocked-${device}.png` });
 
-      await page.getByRole('button', { name: 'Geluid inschakelen', exact: true }).click();
+      await page.locator('#hero-sound').click();
       await expect(page.getByRole('button', { name: 'Geluid uitschakelen', exact: true })).toBeVisible();
       expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
       await expectPlaying(hero);
-
-      await page.getByRole('button', { name: 'Video pauzeren', exact: true }).click();
-      await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-      await expect(page.getByRole('button', { name: 'Video afspelen', exact: true })).toBeVisible();
-      const pausedAt = await hero.evaluate((element: HTMLVideoElement) => element.currentTime);
-      await page.locator('.hero').screenshot({ path: `.impeccable/review/hero-video-${device}.png` });
-      expect(await hero.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeCloseTo(pausedAt, 2);
-
-      await page.getByRole('button', { name: 'Video afspelen', exact: true }).click();
-      await expectPlaying(hero);
-      await page.getByRole('button', { name: 'Geluid uitschakelen', exact: true }).click();
-      await expect(page.getByRole('button', { name: 'Geluid inschakelen', exact: true })).toBeVisible();
+      await page.locator('#hero-sound').click();
       expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
     });
   }
 
-  test('full performance pauses the audible hero and closing resumes only the hero', async ({ page }) => {
+  test('scrolling pauses playback and preserves manual sound and pause choices', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
+    await recordAutoplayPolicy(page, false);
     await page.goto('/');
     const hero = page.locator('#hero-video');
-    const performance = page.locator('.video-dialog video');
     await expectPlaying(hero);
-    await page.getByRole('button', { name: 'Geluid inschakelen', exact: true }).click();
     expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
-
-    await page.getByRole('button', { name: 'Volledige video' }).click();
-    await expectPlaying(performance);
-    await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-    expect(
-      await page
-        .locator('video')
-        .evaluateAll(
-          (elements) => elements.filter((element) => element instanceof HTMLVideoElement && !element.paused).length
-        )
-    ).toBe(1);
-
-    await page.keyboard.press('Escape');
-    await expect(page.getByRole('dialog')).toBeHidden();
-    await expectPlaying(hero);
-    expect(await performance.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-    expect(
-      await page
-        .locator('video')
-        .evaluateAll(
-          (elements) => elements.filter((element) => element instanceof HTMLVideoElement && !element.paused).length
-        )
-    ).toBe(1);
-  });
-
-  test('hero pauses outside the viewport and respects manual pause after scrolling or a dialog', async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 1000 });
-    await page.goto('/');
-    const hero = page.locator('#hero-video');
-    await expectPlaying(hero);
     await page.locator('#contact').scrollIntoViewIfNeeded();
     await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
     await page.getByRole('heading', { level: 1 }).scrollIntoViewIfNeeded();
     await expectPlaying(hero);
+    expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
 
-    await page.getByRole('button', { name: 'Video pauzeren', exact: true }).click();
+    await page.locator('#hero-sound').click();
+    expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
+    await page.locator('#contact').scrollIntoViewIfNeeded();
+    await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
+    await page.getByRole('heading', { level: 1 }).scrollIntoViewIfNeeded();
+    await expectPlaying(hero);
+    expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
+
+    await page.locator('#hero-playback').focus();
+    await page.keyboard.press('Space');
     await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
     const pausedAt = await hero.evaluate((element: HTMLVideoElement) => element.currentTime);
     await page.locator('#contact').scrollIntoViewIfNeeded();
@@ -240,17 +271,11 @@ test.describe('hero playback when motion is allowed', () => {
     await expect(page.getByRole('button', { name: 'Video afspelen', exact: true })).toBeVisible();
     expect(await hero.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeCloseTo(pausedAt, 2);
     expect(await hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-
-    await page.getByRole('button', { name: 'Volledige video' }).click();
-    await expectPlaying(page.locator('.video-dialog video'));
-    await page.keyboard.press('Escape');
-    await expect(page.getByRole('dialog')).toBeHidden();
-    expect(await hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-    await expect(page.getByRole('button', { name: 'Video afspelen', exact: true })).toBeVisible();
+    expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
   });
 });
 
-test('mobile hero failure keeps the heading clear and the full performance available', async ({ page }) => {
+test('mobile hero failure keeps the heading clear and the poster visible', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.route('**/hamlet-hero.mp4*', (route) =>
@@ -260,23 +285,16 @@ test('mobile hero failure keeps the heading clear and the full performance avail
 
   const status = page.getByRole('status');
   await expect(status).toBeVisible();
-  await expect(status).toContainText('De achtergrondvideo kon niet laden.');
-  await expect(status).toContainText('Probeer de volledige video.');
+  await expect(status).toContainText('De video kon niet laden.');
   await expect(page.locator('#hero-sound')).toBeDisabled();
-  await expect(page.locator('#hero-pause')).toBeDisabled();
+  await expect(page.locator('#hero-playback')).toBeDisabled();
+  await expect(page.locator('#hero-video')).toHaveAttribute('poster', /hamlet-performance\.webp\?v=black-background$/);
 
   const statusBox = await status.boundingBox();
   const headingBox = await page.getByRole('heading', { level: 1 }).boundingBox();
   expect(statusBox).not.toBeNull();
   expect(headingBox).not.toBeNull();
   if (!statusBox || !headingBox) throw new Error('The recovery message and page heading must both be rendered.');
-  expect(statusBox.y + statusBox.height).toBeLessThanOrEqual(headingBox.y);
-
-  const fullVideo = page.getByRole('button', { name: 'Volledige video' });
-  await expect(fullVideo).toBeEnabled();
-  await fullVideo.click();
-  await expect(page.getByRole('dialog')).toBeVisible();
-  await expectPlaying(page.locator('.video-dialog video'));
-  await page.keyboard.press('Escape');
-  await expect(page.getByRole('dialog')).toBeHidden();
+  const separated = statusBox.y + statusBox.height <= headingBox.y || headingBox.y + headingBox.height <= statusBox.y;
+  expect(separated).toBe(true);
 });

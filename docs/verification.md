@@ -1,4 +1,16 @@
-# Verification — 25 October 2026
+# Verification — 26 October 2026
+
+## Current playback refinement
+
+- Source now attempts audible autoplay and retries muted only after browser `NotAllowedError`. Automatic sound remains subject to browser policy.
+- The three-button media bar and full-performance modal/link are removed. One 44px round speaker remains; the image is a tap- and keyboard-accessible pause/resume control with a paused/focus hint.
+- Fifteen browser tests passed for the revised implementation, including allowed audible autoplay, blocked-audio muted fallback, keyboard playback and preservation of manual choices. Desktop and mobile playback captures were visually reviewed.
+- Reduced motion leaves the poster until explicit play. Offscreen/hidden-tab pauses preserve manual choices. Load errors disable controls and expose a base-aware retry link. The original full-video file remains retained but unused by the interface.
+- Type checking completed with zero errors, warnings or hints; ESLint, Prettier and the production GitHub Pages build passed. The design detector reported no primary findings in the changed UI files.
+
+## Historical verification — 25 October 2026
+
+The following results describe the earlier control bar and modal implementation. They are retained as history, not as the current playback contract.
 
 - Production Astro build emits only homepage, privacy and 404 routes.
 - Type checking: zero errors, warnings or hints.

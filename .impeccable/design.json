@@ -160,7 +160,7 @@
       {
         "name": "stage-ease",
         "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Dialog entrance, brand and button arrow motion."
+        "purpose": "Brand and button arrow motion."
       },
       {
         "name": "color-transition",
@@ -168,14 +168,9 @@
         "purpose": "Filled action color transitions."
       },
       {
-        "name": "dialog-entrance",
-        "value": "0.35s",
-        "purpose": "10px rise and opacity from 0.6 to 1; disabled for reduced motion."
-      },
-      {
         "name": "media-control-hover",
         "value": "0.2s",
-        "purpose": "Hero media control background hover; disabled for reduced motion."
+        "purpose": "Speaker border/background hover and playback hint opacity; disabled for reduced motion."
       }
     ],
     "breakpoints": [
@@ -199,7 +194,8 @@
         "name": "wide",
         "value": "1600px"
       }
-    ]
+    ],
+    "documentationUpdatedAt": "2026-10-26"
   },
   "components": [
     {
@@ -241,12 +237,12 @@
       "css": ".ds-lesson-option{\n  padding: 34px 34px 10px 0;\n  display: flex;\n  flex-direction: column;\n  position: relative;\n  border-right: 1px solid #bfb9bf;\n}\n.ds-lesson-option h3{\n  font-size: 40px;\n  line-height: 1.12;\n  margin-bottom: 22px;\n}\n.ds-lesson-option p{\n  font-size: 12px;\n  line-height: 1.8;\n  max-width: 290px;\n  margin-bottom: 26px;\n}\n.ds-option-link{\n  display: flex;\n  align-items: center;\n  gap: 20px;\n  font-size: 11px;\n  font-weight: 750;\n  margin-top: auto;\n}\n.ds-option-link svg{\n  transition: transform 0.3s;\n}\n.ds-lesson-option:hover .ds-option-link svg{\n  transform: translateX(8px);\n}\n.ds-lesson-option:hover h3{\n  color: #77603a;\n}\n.ds-lesson-option:focus-visible{\n  outline-color: var(--ink);\n  outline-offset: 4px;\n}.ds-lesson-option{font-family:var(--sans, \"Manrope Variable\", Arial, sans-serif);background:var(--paper,#f0eeea);color:var(--ink,#252025);text-decoration:none}.ds-lesson-option h3{font-family:var(--serif,\"Bodoni Moda Variable\",Georgia,serif);font-weight:450;letter-spacing:-.025em;margin-top:0}.ds-lesson-option:focus-visible{outline:2px solid var(--gold,#ddc185);outline-offset:6px;}"
     },
     {
-      "name": "Hero Media Controls",
+      "name": "Hero Sound Control",
       "kind": "custom",
       "refersTo": "media-control",
-      "description": "Rectangular sound toggle, pause/resume and full-video action. The authentic 12-second excerpt loops muted by default; reduced motion begins on its poster. Full performance loads on dialog activation. This specimen displays the default playing/muted state.",
-      "html": "<div class=\"ds-hero-controls\" role=\"group\" aria-label=\"Bediening achtergrondvideo\"><button class=\"ds-hero-sound\" aria-label=\"Geluid inschakelen\"><span><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 5 6 9H3v6h3l5 4V5ZM16 9l6 6M22 9l-6 6\"/></svg></span><span>Geluid aan</span></button><button class=\"ds-hero-pause\" aria-label=\"Video pauzeren\"><span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 5v14M16 5v14\"/></svg></span></button><button class=\"ds-hero-full\" aria-haspopup=\"dialog\">Volledige video <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12h16M13 5l7 7-7 7\"/></svg></button></div>",
-      "css": ".ds-hero-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }\n.ds-hero-controls button { min-height: 46px; border: 1px solid #857452; background: #252025e8; color: var(--gold, #ddc185); display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 15px; font-family: var(--sans, \"Manrope Variable\", Arial, sans-serif); font-size: 11px; line-height: 1.3; transition: background 0.2s; cursor: pointer; }\n.ds-hero-controls button:hover { background: #483949; }\n.ds-hero-controls button:disabled { opacity: 0.5; cursor: default; }\n.ds-hero-controls button > span { display: inline-flex; align-items: center; }\n.ds-hero-controls .ds-hero-pause { width: 46px; padding: 12px; }\n.ds-hero-controls .ds-hero-full { border-color: transparent; background: #252025c9; color: var(--paper, #f0eeea); }\n.ds-hero-controls button:focus-visible { outline: 2px solid var(--gold, #ddc185); outline-offset: 6px; }\n@media (max-width: 760px) { .ds-hero-controls { gap: 7px; } .ds-hero-controls button { font-size: 10px; padding: 10px; gap: 7px; min-height: 44px; } .ds-hero-controls .ds-hero-pause { width: 44px; padding: 10px; } .ds-hero-controls .ds-hero-full { padding: 10px 7px; } }\n@media (prefers-reduced-motion: reduce) { .ds-hero-controls button { transition: none; } }"
+      "description": "Single 44px circular speaker button with accessible name and tooltip, without a visible label. The hero tries audible autoplay and falls back to muted playback on NotAllowedError. Tapping or keyboard-activating the transparent image playback area pauses/resumes; its hint appears when paused or focused. Reduced motion begins on the poster. No full-performance modal or link remains. This specimen displays the audible playing state.",
+      "html": "<button class=\"ds-hero-sound\" aria-label=\"Geluid uitschakelen\" title=\"Geluid uitschakelen\"><span><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 5 6 9H3v6h3l5 4V5ZM15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14\"/></svg></span></button>",
+      "css": ".ds-hero-sound { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #ddc18566; border-radius: 50%; background: #0008; color: var(--gold, #ddc185); transition: border-color 0.2s, background 0.2s; cursor: pointer; }\n.ds-hero-sound:hover { border-color: var(--gold, #ddc185); background: #252025; }\n.ds-hero-sound > span { display: flex; }\n.ds-hero-sound:disabled { opacity: 0.4; cursor: default; }\n.ds-hero-sound:focus-visible { outline: 2px solid var(--gold, #ddc185); outline-offset: 6px; }\n@media (prefers-reduced-motion: reduce) { .ds-hero-sound { transition: none; } }"
     },
     {
       "name": "Question Row",
@@ -262,7 +258,7 @@
     "keyCharacteristics": [
       "Real performance footage, conceptual lesson imagery and an original six-string H.",
       "Bodoni Moda display with restrained italic emphasis.",
-      "Rectangular actions, fine rules and broad tonal sections."
+      "Rectangular lesson actions, one circular speaker control, fine rules and broad tonal sections."
     ],
     "rules": [
       {
@@ -285,7 +281,7 @@
       "Do use real Hamlet footage as performance proof and preserve the six-string H identity.",
       "Do distinguish conceptual section imagery from authentic footage in alt descriptions and provenance.",
       "Do preserve the serif/sans division and the established light-on-dark or dark-on-light pairings.",
-      "Do keep visible keyboard focus, native video controls and reduced-motion support.",
+      "Do keep visible keyboard focus, accessible image and sound controls, and reduced-motion support.",
       "Do adapt split layouts into a single reading sequence on small screens."
     ],
     "donts": [

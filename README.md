@@ -20,7 +20,7 @@ bun run test
 bun run preview
 ```
 
-For browser tests, install Chromium once with `bunx playwright install chromium`. The tests exercise navigation, responsive layouts, FAQ, contact destinations and on-demand video playback without sending messages or making calls.
+For browser tests, install Chromium once with `bunx playwright install chromium`. The tests exercise navigation, responsive layouts, FAQ, contact destinations and hero playback behavior without sending messages or making calls.
 
 The static output is `dist/`. GitHub Actions checks and builds every pull request. Successful builds on `main` publish automatically to [the public website](https://savajulian.github.io/hamlet-guitar-site/) through GitHub Pages.
 
@@ -36,7 +36,7 @@ For a future custom domain, update these build variables and the hosting configu
 
 ## Content and contact
 
-The supplied performance video and its poster are real evidence of Hamlet's playing. The hero uses a 12-second, 720p excerpt that loops muted by default, with visible sound, pause/resume and full-video controls. Reduced-motion visitors initially see the poster and can start playback manually. Playback pauses while the hero is off screen, the browser tab is hidden or the full-video dialog is open.
+The supplied performance video and its poster are real evidence of Hamlet's playing. As requested on 26 October 2026, the 12-second, 720p hero excerpt first attempts playback with sound. Browsers that reject audible autoplay trigger a muted fallback; automatic sound is not guaranteed. A single 44px circular speaker button controls sound, with an accessible name and tooltip but no visible text label. Click or tap the performance image, or focus its transparent playback button and use the keyboard, to pause or resume. A play/pause hint appears when paused or keyboard-focused. Reduced-motion visitors see the poster until they explicitly start playback, initially with sound. Playback pauses off screen and in a hidden tab while retaining manual pause and mute choices. A loading error disables the media controls and exposes a retry link.
 
 The teacher and practice sections use two generated conceptual mood images: `lesson-craft.webp` (1122 × 1402) and `practice-corner.webp` (1536 × 1024). Their alt text identifies them as atmosphere; they do not depict Hamlet teaching or his actual studio. Exact prompts are preserved in adjacent `.webp.json` sidecars. `docs/media-manifest.json` distinguishes these images from the authentic footage, and `docs/hero-video.json` records the excerpt's source and encoding.
 
@@ -54,4 +54,4 @@ Based on the MIT-licensed [AstroWind](https://github.com/arthelokyo/astrowind) s
 
 ## Brand assets
 
-Portable outlined SVG logos are in `public/brand/`: a brass logo, a dark-ink variant and a compact six-string H favicon. The full 2:36 performance remains a separate 720p MP4 with audio, loaded only when its dialog is opened. The original source is not modified.
+Portable outlined SVG logos are in `public/brand/`: a brass logo, a dark-ink variant and a compact six-string H favicon. The full 2:36 performance remains a separate 720p MP4 with audio in the media archive, but the current interface does not link to or load it. The previous full-video dialog and visible control bar were removed on 26 October 2026. The original source is not modified.

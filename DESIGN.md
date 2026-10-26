@@ -66,11 +66,13 @@ components:
   button-dark-hover:
     backgroundColor: '{colors.ink-hover}'
   media-control:
-    backgroundColor: '#252025e8'
+    backgroundColor: '#0008'
     textColor: '{colors.gold}'
-    borderColor: '#857452'
-    minHeight: '46px'
-    padding: '12px 15px'
+    borderColor: '#ddc18566'
+    width: '44px'
+    height: '44px'
+    borderRadius: '50%'
+    padding: '0'
   lesson-option:
     backgroundColor: '{colors.paper}'
     textColor: '{colors.ink}'
@@ -78,6 +80,8 @@ components:
 ---
 
 # Design System: Hamlet Guitar
+
+Current playback controls reconciled with source on 26 October 2026.
 
 ## Overview
 
@@ -91,7 +95,7 @@ High-contrast Bodoni Moda gives headings a musical cadence; Manrope keeps practi
 
 - Real performance footage, conceptual lesson imagery and an original six-string H.
 - Bodoni Moda display with restrained italic emphasis.
-- Rectangular actions, fine rules and broad tonal sections.
+- Rectangular lesson actions, one circular speaker control, fine rules and broad tonal sections.
 
 ## Colors
 
@@ -128,19 +132,19 @@ Mobile display is 52px, then 46px below 370px; section headlines are 43px. Lesso
 
 Broad sections alternate ink, paper, lavender and gold. Desktop section gutters use `max(5.1%, calc((100vw - 1294px) / 2))`; the header caps at 1440px and performance stage at 1920px. Split layouts use unequal tracks, while lesson options form three equal columns with rules. Main section padding is approximately 75–110px vertically; it is deliberately not a fabricated uniform spacing scale.
 
-At 1100px navigation and split-layout spacing tighten. At 760px navigation collapses to an expandable list, content stacks, section gutters become 7%, and a fixed call action uses the device safe-area inset. Lesson choices become horizontal title/copy rows within a vertical list. The stage video or poster occupies the upper mobile area, with its controls above the copy. A 761–900px correction reduces display size, and 1600px adds a larger stage. The final mobile line-break overrides are authoritative.
+At 1100px navigation and split-layout spacing tighten. At 760px navigation collapses to an expandable list, content stacks, section gutters become 7%, and a fixed call action uses the device safe-area inset. Lesson choices become horizontal title/copy rows within a vertical list. The stage video or poster occupies the upper mobile area, with one circular speaker control above the copy and a transparent tap/keyboard playback area covering the image. A 761–900px correction reduces display size, and 1600px adds a larger stage. The final mobile line-break overrides are authoritative.
 
 Privacy uses a centered 740px reading column with 24px minimum side space; the 404 page uses a 700px container. These are supporting-page adaptations.
 
 ## Elevation & Depth
 
-No box-shadow vocabulary is used. Depth comes from photographic cropping, dark image gradients, solid tonal bands and thin borders. The performance dialog uses a near-black translucent backdrop with 7px blur; it is centered by fixed positioning, zero inset and automatic margins.
+No box-shadow vocabulary is used. Depth comes from photographic cropping, dark image gradients, solid tonal bands and thin borders. The current performance has no dialog or modal backdrop.
 
 **The Ruled Surface Rule.** Separate lesson choices and questions with fine rules; use tonal contrast and imagery for depth.
 
 ## Shapes
 
-Main actions, media controls, images and the dialog use straight edges. Thin outlined SVGs use current color and rounded stroke ends; play and rating stars use fills. The six-string H is six vertical strokes crossed by a horizontal bar.
+Lesson actions and images use straight edges. The speaker is the deliberate circular exception: a 44px control with a 50% radius. Thin outlined SVGs use current color and rounded stroke ends; rating stars use fills. The six-string H is six vertical strokes crossed by a horizontal bar.
 
 ## Components
 
@@ -164,13 +168,17 @@ The desktop navigation uses Manrope at 12px/500 with 32px gaps. The mobile menu 
 
 Native details/summary rows use top and bottom rules. Questions use 13px/650 text with 24px vertical padding. The inline plus rotates 45 degrees when open. Answers remain in document flow; the final mobile answer size is 13px.
 
-### Performance controls and dialog
+### Performance controls
 
-The 12-second authentic hero excerpt loops muted by default. The control group provides a labeled sound toggle, a square pause/resume button and “Volledige video”. Controls use translucent smoked plum, brass text and a fine brass border; the full-video button uses warm paper text and a transparent border. Desktop controls have a 46px minimum height, 10px gaps and 11px text. At the mobile breakpoint they use a 44px minimum height, 7px gaps and 10px text. Hover changes the background to ink-hover over 200ms.
+The 12-second authentic hero excerpt attempts audible autoplay. If the browser rejects that play request with `NotAllowedError`, it retries muted; the design does not promise sound before a visitor interacts. Reduced-motion visitors receive the poster without a video request until explicit playback, which initially requests sound.
 
-The hero pauses outside the viewport, when the browser tab is hidden and while the full-performance dialog is open. Its source is assigned only when playback is requested; reduced-motion visitors initially receive the poster and manual play. Sound is enabled only through the sound control. A load failure reveals a status message and disables the hero controls; the full-video action remains available.
+The only persistent media control is a 44px circular speaker button. It uses `#0008`, gold icon strokes and a 1px `#ddc18566` border; hover changes the background to ink and border to gold over 200ms. The action is conveyed by its icon, accessible name and tooltip, with no visible label. It sits 32px from the stage bottom and 5.1% from the left on desktop. On mobile it sits 272px from the stage top and 7% from the left, moving to 246px below 370px. Disabled opacity is 0.4.
 
-The full 2:36 performance is assigned and loaded on opening the centered native dialog, with native video controls and a labeled close button. The dialog is at most 1100px or 94vw and becomes 96vw on mobile. Its entrance is a 10px rise with opacity over 350ms using `cubic-bezier(0.16, 1, 0.3, 1)`. Reduced motion removes transitions and animations and disables smooth scrolling.
+A transparent button covers the performance area: the left 62% on desktop, and the full-width top 340px on mobile (310px below 370px). Tapping or keyboard-activating it toggles playback. Its centered hint uses 12px gold text, a fine gold border and `#000c`; it is visible only when paused or keyboard-focused. Focus on the image uses an inward outline offset of -6px.
+
+Playback pauses outside the viewport or in a hidden tab and preserves manual pause and mute choices. A load failure disables both controls and reveals “De video kon niet laden. Opnieuw proberen”, linked to the current base path. The status sits above the speaker and clear of the heading. Reduced motion removes transitions and animations and disables smooth scrolling.
+
+The visible sound/pause/full-video bar and full-performance dialog were removed on 26 October 2026 at the user's request. The full 2:36 performance file is retained but is neither linked nor loaded by the current interface.
 
 ### Section imagery
 
@@ -189,7 +197,7 @@ The brass wordmark pairs Bodoni lettering with the six-string H. Hover skews the
 - **Do** use real Hamlet footage as performance proof and preserve the six-string H identity.
 - **Do** distinguish conceptual section imagery from authentic footage in alt descriptions and provenance.
 - **Do** preserve the serif/sans division and the established light-on-dark or dark-on-light pairings.
-- **Do** keep visible keyboard focus, native video controls and reduced-motion support.
+- **Do** keep visible keyboard focus, accessible image and sound controls, and reduced-motion support.
 - **Do** adapt split layouts into a single reading sequence on small screens.
 
 ### Don't:
