@@ -166,21 +166,6 @@ test('primary actions lead to the form on their own page', async ({ page }) => {
   await expect(page.getByRole('form', { name: forms.lesson.name })).toBeVisible();
 });
 
-test('lesson choices prefill the inquiry form without losing entered details', async ({ page }) => {
-  await page.goto('/gitaarles/');
-  await page.getByLabel('Je naam', { exact: false }).fill('Voorbeeld leerling');
-  const choices = page.locator('[data-interest]');
-  await expect(choices).toHaveCount(3);
-  for (const choice of await choices.all()) {
-    const interest = await choice.getAttribute('data-interest');
-    await expect(choice).toHaveAttribute('href', '#contact');
-    await choice.click();
-    await expect(page).toHaveURL(/#contact$/);
-    await expect(page.locator('#lesson-interest')).toHaveValue(interest || '');
-    await expect(page.getByLabel('Je naam', { exact: false })).toHaveValue('Voorbeeld leerling');
-  }
-});
-
 // The configured fixture only changes initial server markup. Submission still
 // uses the real form script and native browser POST, captured locally below.
 async function formFixture(page: Page, key: FormKey, ready: boolean) {
@@ -459,6 +444,19 @@ test('videos open in a dialog, and YouTube is only contacted after a click', asy
   await dialog.getByRole('button', { name: 'Video sluiten' }).click();
   await expect(dialog).toBeHidden();
   await expect(dialog.locator('iframe')).toHaveCount(0);
+});
+
+test('the lesson page leads with lesson videos and student reviews', async ({ page }) => {
+  await page.goto('/gitaarles/');
+  await expect(page.locator('#lessen')).toHaveCount(0);
+  const order = await page.locator('main > section').evaluateAll((sections) => sections.map((section) => section.id));
+  expect(order.slice(1, 3)).toEqual(['videos', 'reviews']);
+  const reviews = page.locator('#reviews figure');
+  await expect(reviews).toHaveCount(3);
+  await expect(reviews.nth(0)).toContainText('Artiom');
+  await expect(reviews.nth(1)).toContainText('Julian');
+  await expect(reviews.nth(2)).toContainText('Siel');
+  await expect(page.getByRole('img', { name: '5 van 5 sterren' })).toHaveCount(3);
 });
 
 test('the lesson page shows lesson videos that play in the dialog', async ({ page }) => {

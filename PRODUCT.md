@@ -25,6 +25,7 @@ Static Astro site built with Bun. Repository: `SavaJulian/hamlet-guitar-site`. H
 - The first kennismakingsles is free, confirmed by Julian. Its duration is unspecified; the sourced 60-minute duration applies to regular lessons.
 - Lesson rates, performance fees, the length of a performance, technical needs and the region Hamlet travels to are not confirmed. Do not state them.
 - Source references, including the attributed student review, are in `docs/sources.md`.
+- Julian supplied two more student reviews on 11 November 2026, his own and Artiom's, and stated that both rate Hamlet five stars. Siel's Apprentus review was also five stars.
 
 Do not invent credentials, lesson outcomes, prices, show dates, scarcity or availability.
 
