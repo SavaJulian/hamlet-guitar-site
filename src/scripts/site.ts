@@ -236,7 +236,9 @@ function initForms() {
     const validate = (field: HTMLInputElement) => {
       let message = '';
       if (!field.value.trim()) {
-        message = field.type === 'email' ? 'Vul je e-mailadres in.' : 'Vul je naam in.';
+        if (field.type === 'email') message = 'Vul je e-mailadres in.';
+        else if (field.type === 'tel') message = 'Vul je telefoonnummer in.';
+        else message = 'Vul je naam in.';
       } else if (field.type === 'email' && field.validity.typeMismatch) {
         message = 'Vul een geldig e-mailadres in, zoals naam@voorbeeld.be.';
       }

@@ -24,7 +24,7 @@ const ready = Boolean(action);
   {Object.entries(hiddenFields).map(([name, value]) => <input type="hidden" name={name} value={value} />)}
   <div class="form-fields">
     <div class="form-field form-field-wide">
-      <label for="booking-name">Je naam <span>(verplicht)</span></label>
+      <label for="booking-name">Je naam of bedrijfsnaam <span>(verplicht)</span></label>
       <input
         id="booking-name"
         name="naam"
@@ -51,26 +51,21 @@ const ready = Boolean(action);
       <p class="field-error" id="booking-email-error" hidden></p>
     </div>
     <div class="form-field">
-      <label for="booking-phone">Telefoonnummer <span>(optioneel)</span></label>
-      <input id="booking-phone" name="telefoon" type="tel" autocomplete="tel" maxlength="40" />
-    </div>
-    <div class="form-field">
-      <label for="booking-kind">Soort avond <span>(optioneel)</span></label>
-      <select id="booking-kind" name="soort_avond">
-        <option value="">Kies wat past</option>
-        <option>Café</option>
-        <option>Restaurant</option>
-        <option>Feest</option>
-        <option>Event</option>
-        <option>Iets anders</option>
-      </select>
-    </div>
-    <div class="form-field">
-      <label for="booking-date">Gewenste datum <span>(optioneel)</span></label>
-      <input id="booking-date" name="gewenste_datum" type="date" />
+      <label for="booking-phone">Telefoonnummer <span>(verplicht)</span></label>
+      <input
+        id="booking-phone"
+        name="telefoon"
+        type="tel"
+        autocomplete="tel"
+        inputmode="tel"
+        maxlength="40"
+        required
+        aria-describedby="booking-phone-error"
+      />
+      <p class="field-error" id="booking-phone-error" hidden></p>
     </div>
     <div class="form-field form-field-wide">
-      <label for="booking-message">Bericht <span>(optioneel)</span></label>
+      <label for="booking-message">Waar en wanneer? <span>(optioneel)</span></label>
       <textarea id="booking-message" name="bericht" rows="3" maxlength="1200"></textarea>
     </div>
   </div>
