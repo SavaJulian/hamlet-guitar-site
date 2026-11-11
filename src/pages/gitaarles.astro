@@ -18,6 +18,24 @@ const formFields = {
   ...(next ? { _next: next } : {}),
 };
 const canonical = absoluteUrl('/gitaarles/', Astro.site);
+const reviews = [
+  {
+    name: 'Artiom',
+    role: 'Leerling',
+    text: '“Sinds de lessen bij Hamlet luister ik anders naar flamenco. Ik hoor nu veel beter wat de gitaar met het ritme doet. En als je zo’n stukje dan zelf eindelijk goed speelt, geeft dat echt voldoening.”',
+  },
+  {
+    name: 'Julian',
+    role: 'Leerling',
+    text: '“Ik vond de flamencolessen bij Hamlet echt tof. Hij legt alles rustig uit en helpt je als je even vastzit. Merci Hamlet!”',
+  },
+  {
+    name: 'Siel',
+    role: 'Leerling via Apprentus · 2022',
+    text: '“Fantastische maar vooral gepassioneerde leerkracht!”',
+    source: 'https://www.apprentus.nl/priveles/antwerpen/muziek/flamenco/flamenco-guitar-beginners-to-professional-',
+  },
+];
 const videos: Video[] = [
   {
     kind: 'file',
@@ -60,29 +78,6 @@ const videos: Video[] = [
     meta: '53 seconden',
   },
 ];
-const lessons = [
-  {
-    level: 'Voor beginners',
-    title: 'Je eerste akkoorden.',
-    text: 'Een fijne houding, een helder geluid en stap voor stap de basis onder je vingers.',
-    go: 'Ik wil beginnen',
-    interest: 'Ik begin net',
-  },
-  {
-    level: 'Voor wie verder wil',
-    title: 'Meer gevoel. Meer vrijheid.',
-    text: 'Werk aan je techniek, ritme en expressie. Geef wat je al speelt een nieuwe dimensie.',
-    go: 'Ik wil verder groeien',
-    interest: 'Ik speel al gitaar',
-  },
-  {
-    level: 'Hamlet’s specialiteit',
-    title: 'De ziel van flamenco.',
-    text: 'Ontdek Spaanse gitaar: het ritme, de aanslag en de bijzondere kracht van flamenco.',
-    go: 'Ik wil dit leren',
-    interest: 'Ik wil flamenco leren',
-  },
-];
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -123,7 +118,7 @@ const schema = {
         </p>
         <div class="hero-actions" style="--i:3">
           <a class="btn" href="#contact" data-primary-action data-strum>Plan je gratis les <Icon name="arrow" /></a>
-          <a class="text-link" href="#lessen">Ontdek de lessen</a>
+          <a class="text-link" href="#videos">Kijk mee in een les</a>
         </div>
       </div>
       <div class="hero-art">
@@ -138,41 +133,58 @@ const schema = {
     </div>
   </section>
 
-  <section class="section" id="lessen" aria-labelledby="lessons-heading">
-    <div class="shell">
-      <div class="section-head" data-reveal>
-        <h2 id="lessons-heading">Begin waar jij bent.</h2>
-        <p>Jouw muziek. Jouw vertrekpunt.</p>
-      </div>
-      <div class="lesson-rows">
-        {
-          lessons.map((lesson, index) => (
-            <a class="lesson-row" href="#contact" data-interest={lesson.interest} data-reveal style={`--i:${index}`}>
-              <span class="eyebrow">{lesson.level}</span>
-              <div>
-                <h3>{lesson.title}</h3>
-                <p>{lesson.text}</p>
-              </div>
-              <span class="row-go">
-                <span>{lesson.go}</span>
-                <i>
-                  <Icon name="arrow" size={22} />
-                </i>
-              </span>
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="videos" aria-labelledby="videos-heading" style="padding-top:0">
+  <section class="section" id="videos" aria-labelledby="videos-heading">
     <div class="shell">
       <div class="section-head" data-reveal>
         <h2 id="videos-heading">Kijk mee in een les</h2>
         <p>Drie lessen, van een eerste begin tot samen spelen.</p>
       </div>
       <VideoGallery videos={videos} />
+    </div>
+  </section>
+
+  <section class="section" id="reviews" aria-labelledby="reviews-heading" style="padding-top:0">
+    <div class="shell">
+      <div class="section-head" data-reveal>
+        <h2 id="reviews-heading">Wat leerlingen zeggen</h2>
+      </div>
+      <div class="review-grid">
+        {
+          reviews.map((review, index) => (
+            <figure class="quote-card quote-card-mist" data-reveal style={`--i:${index}`}>
+              <div>
+                <span class="stars" role="img" aria-label="5 van 5 sterren">
+                  {Array.from({ length: 5 }, () => (
+                    <Icon name="star" size={18} />
+                  ))}
+                </span>
+                <blockquote>{review.text}</blockquote>
+              </div>
+              <figcaption>
+                <span class="quote-initial" aria-hidden="true">
+                  {review.name[0]}
+                </span>
+                <span>
+                  <strong>{review.name}</strong>
+                  {review.role}
+                </span>
+                {review.source && (
+                  <a
+                    class="text-link"
+                    id="review-source"
+                    href={review.source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Lees de ervaring van ${review.name} op Apprentus`}
+                  >
+                    Bron <Icon name="arrow" size={16} />
+                  </a>
+                )}
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -191,38 +203,6 @@ const schema = {
         </p>
         <a class="text-link" href="#contact">Maak kennis met Hamlet <Icon name="arrow" size={18} /></a>
       </div>
-      <figure class="quote-card" data-reveal style="--i:1">
-        <blockquote>“Fantastische maar vooral gepassioneerde leerkracht!”</blockquote>
-        <figcaption>
-          <span class="quote-initial" aria-hidden="true">S</span>
-          <span><strong>Siel</strong>Leerling via Apprentus · 2022</span>
-          <a
-            class="text-link"
-            id="review-source"
-            href="https://www.apprentus.nl/priveles/antwerpen/muziek/flamenco/flamenco-guitar-beginners-to-professional-"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Lees de ervaring van Siel op Apprentus">Bron <Icon name="arrow" size={16} /></a
-          >
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="practice-heading">
-    <div class="shell split">
-      <div class="stack" data-reveal>
-        <p class="eyebrow">Ruimte om te leren</p>
-        <h2 id="practice-heading">Een uur voor jezelf. En je gitaar.</h2>
-        <p>
-          Proberen, vragen stellen en opnieuw spelen. Met oefeningen voor thuis neem je de muziek mee, ook nadat de les
-          voorbij is.
-        </p>
-        <div class="facts">
-          <div><strong>60 min.</strong><span>per reguliere les</span></div>
-          <div><strong>Jouw tempo</strong><span>persoonlijke begeleiding</span></div>
-        </div>
-      </div>
       <div class="pill-photo" data-reveal style="--i:1">
         <div>
           <img
@@ -233,6 +213,23 @@ const schema = {
             loading="lazy"
             decoding="async"
           />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="practice-heading">
+    <div class="shell">
+      <div class="stack" data-reveal>
+        <p class="eyebrow">Ruimte om te leren</p>
+        <h2 id="practice-heading">Een uur voor jezelf. En je gitaar.</h2>
+        <p>
+          Proberen, vragen stellen en opnieuw spelen. Met oefeningen voor thuis neem je de muziek mee, ook nadat de les
+          voorbij is.
+        </p>
+        <div class="facts">
+          <div><strong>60 min.</strong><span>per reguliere les</span></div>
+          <div><strong>Jouw tempo</strong><span>persoonlijke begeleiding</span></div>
         </div>
       </div>
     </div>
