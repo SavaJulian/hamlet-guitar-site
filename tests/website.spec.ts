@@ -465,7 +465,7 @@ test('the lesson page shows lesson videos that play in the dialog', async ({ pag
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/gitaarles/');
   const tiles = page.locator('a[data-video]');
-  await expect(tiles).toHaveCount(2);
+  await expect(tiles).toHaveCount(5);
   await tiles.first().click();
   const dialog = page.locator('#video-dialog');
   await expect(dialog).toBeVisible();

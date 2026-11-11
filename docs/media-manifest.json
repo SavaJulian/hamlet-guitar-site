@@ -159,6 +159,34 @@
       "video-les-julian-2.webp": {
         "bytes": 29790,
         "sha256": "b9d1802b8bcd15fe5cafe03a68715bc7fac430e3d85e754f8c9ac23b8a2ec600"
+      },
+      "drive_folder_2026_11_11": {
+        "source": "Three further WhatsApp videos from Julian's Drive folder \"hamlet gitaarles\". Julian named the lessons (Artiom; Pablo, a child) and confirmed Pablo may appear with his first name.",
+        "encoding": "libx264 slow crf25 (les-artiom-2: crf27, maxrate 900k), AAC 112k, faststart, metadata stripped",
+        "les-artiom-1.mp4": {
+          "bytes": 2429977,
+          "sha256": "9f565393dfcd3e2071f912e540b1a7d5e86a17422a8022c08ed1a54fd71f9ecf"
+        },
+        "les-artiom-2.mp4": {
+          "bytes": 18827663,
+          "sha256": "d1282d10e8fb272b8bef6b427687e6a6ee5ed8802cff05c4c794ef588e3f8613"
+        },
+        "les-pablo.mp4": {
+          "bytes": 4857298,
+          "sha256": "1ac1598c1d3a6b9167ba295356006393e97e56084b9665e2d56ce43a986a9f10"
+        },
+        "video-les-artiom-1.webp": {
+          "bytes": 31716,
+          "sha256": "32e4e8a7ea3da52c8766e738c708f70c8086719c414846609f17847f7d013a88"
+        },
+        "video-les-artiom-2.webp": {
+          "bytes": 42260,
+          "sha256": "93ec1446eaf164e2ef9f489aeda834f7b25787cd29bb02c283dfd1182e4c5d92"
+        },
+        "video-les-pablo.webp": {
+          "bytes": 8836,
+          "sha256": "3788461e575e30fb36a3197739e419eda57b0c29c9bfe1398f84fa909e7700d6"
+        }
       }
     }
   }
