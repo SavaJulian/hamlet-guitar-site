@@ -9,6 +9,8 @@ A Dutch-language local website for Hamlet, a flamenco guitarist and guitar teach
 - **Home (`/`), live music.** For café and restaurant owners and people organising a party or event. Its one job is a request to book an evening of live flamenco guitar.
 - **Gitaarles (`/gitaarles/`).** For beginners and existing players nearby, and the landing page for advertising traffic. Its one job is a request for the free first lesson.
 
+- **Over Hamlet (`/over-hamlet/`).** His story, written around confirmed facts only: 43 years playing, 30 years teaching, Spanish guitar and flamenco, live performances, lessons in Merksem. The flamenco styles named come from his own lesson listing (`docs/sources.md`). It contains no biography that has not been confirmed.
+
 A Russian version is expected later; every font must cover Cyrillic.
 
 ## Platform

@@ -212,12 +212,12 @@ function initVideos() {
   });
 }
 
-/** The floating action shows only while no primary action or form is on screen. */
+/** The floating action shows only while no other primary button is on screen. */
 function initFloatingAction() {
   const action = document.querySelector<HTMLElement>('.float-cta');
   if (!action || !('IntersectionObserver' in window)) return;
   const visible = new Set<Element>();
-  const targets = document.querySelectorAll('[data-primary-action], [data-form-section]');
+  const targets = document.querySelectorAll('[data-primary-action], form[data-inquiry] button[type="submit"]');
   const observer = new IntersectionObserver((entries) => {
     for (const entry of entries) {
       if (entry.isIntersecting) visible.add(entry.target);
