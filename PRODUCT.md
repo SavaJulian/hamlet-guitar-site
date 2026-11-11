@@ -9,6 +9,8 @@ A Dutch-language local website for Hamlet, a flamenco guitarist and guitar teach
 - **Home (`/`), live music.** For café and restaurant owners and people organising a party or event. Its one job is a request to book an evening of live flamenco guitar.
 - **Gitaarles (`/gitaarles/`).** For beginners and existing players nearby, and the landing page for advertising traffic. Its one job is a request for the free first lesson.
 
+- **Over Hamlet (`/over-hamlet/`).** His story, written around confirmed facts only: 43 years playing, 30 years teaching, Spanish guitar and flamenco, live performances, lessons in Merksem. The flamenco styles named come from his own lesson listing (`docs/sources.md`). It contains no biography that has not been confirmed.
+
 A Russian version is expected later; every font must cover Cyrillic.
 
 ## Platform
@@ -21,7 +23,7 @@ Static Astro site built with Bun. Repository: `SavaJulian/hamlet-guitar-site`. H
 - Public telephone: +32 483 50 22 20.
 - Hamlet performs live flamenco guitar; Julian asked on 11 November 2026 for café and restaurant evenings, shows and events to be the centre of the homepage.
 - Lessons for beginners and advanced players, including Spanish guitar and flamenco.
-- Hamlet has 24 years of experience, confirmed by Julian on 26 October 2026. This does not establish 24 years of teaching, a career start year or qualifications; do not increment the figure automatically.
+- Hamlet has played guitar for 43 years and taught for 30 years, as corrected by Julian on 11 November 2026 (the earlier figure of 24 years was wrong). The homepage says "43 jaar gitarist"; the lesson page says "30 jaar leservaring". Do not increment the figures automatically.
 - The first kennismakingsles is free, confirmed by Julian. Its duration is unspecified; the sourced 60-minute duration applies to regular lessons.
 - Lesson rates, performance fees, the length of a performance, technical needs and the region Hamlet travels to are not confirmed. Do not state them.
 - Source references, including the attributed student review, are in `docs/sources.md`.

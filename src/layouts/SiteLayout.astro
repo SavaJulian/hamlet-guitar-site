@@ -10,7 +10,7 @@ interface Props {
   title: string;
   description: string;
   path: string;
-  current?: 'live' | 'les';
+  current?: 'live' | 'les' | 'over';
   action: { href: string; label: string };
   ogTitle?: string;
   schema?: Record<string, unknown>;
@@ -23,6 +23,7 @@ const phone = '+32483502220';
 const nav = [
   { key: 'live', href: withBase('/'), label: 'Live muziek' },
   { key: 'les', href: withBase('/gitaarles/'), label: 'Gitaarles' },
+  { key: 'over', href: withBase('/over-hamlet/'), label: 'Over Hamlet' },
 ];
 ---
 

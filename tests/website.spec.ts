@@ -4,6 +4,7 @@ import { lessonFormEndpoint } from '../src/lib/lessonForm';
 const pages = [
   { path: '/', heading: 'Live flamencogitaar.' },
   { path: '/gitaarles/', heading: 'Leer gitaar spelen. Op jouw tempo.' },
+  { path: '/over-hamlet/', heading: 'Zes snaren. Drieënveertig jaar.' },
 ];
 const forms = {
   booking: {
@@ -139,7 +140,13 @@ for (const { path, target, label } of [
       .evaluate((element) => element.scrollIntoView({ block: 'start' }));
     await expect(shortcut).toBeInViewport();
 
-    await page.locator(`${target} form`).scrollIntoViewIfNeeded();
+    // It stays until the form's own button is on screen, not merely the form.
+    await page
+      .locator(`${target} form input`)
+      .first()
+      .evaluate((element) => element.scrollIntoView({ block: 'start' }));
+    await expect(shortcut).toBeInViewport();
+    await page.locator(`${target} form button[type="submit"]`).scrollIntoViewIfNeeded();
     await expect(shortcut).not.toBeInViewport();
   });
 }
@@ -399,6 +406,7 @@ test('contact links point to the verified phone and Google location', async ({ p
       await expect(link).toHaveAttribute('href', 'tel:+32483502220');
     }
   }
+  await page.goto('/gitaarles/');
   const route = page.getByRole('link', { name: 'Plan je route' });
   const maps = new URL((await route.getAttribute('href')) || '');
   expect(maps.hostname).toBe('www.google.com');
@@ -494,6 +502,16 @@ test.describe('when motion is allowed', () => {
     const resting = await stringShapes(page);
     await expect.poll(() => stringShapes(page), { timeout: 4000 }).not.toEqual(resting);
     await expect.poll(() => stringShapes(page), { timeout: 12_000 }).toEqual(resting);
+  });
+
+  test('on a phone, scrolling strums the strings', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    const resting = await stringShapes(page);
+    await expect.poll(() => stringShapes(page), { timeout: 12_000 }).not.toEqual(resting);
+    await expect.poll(() => stringShapes(page), { timeout: 12_000 }).toEqual(resting);
+    await page.mouse.wheel(0, 120);
+    await expect.poll(() => stringShapes(page), { timeout: 4000 }).not.toEqual(resting);
   });
 
   test('sections below the fold rise into view when scrolled to', async ({ page }) => {

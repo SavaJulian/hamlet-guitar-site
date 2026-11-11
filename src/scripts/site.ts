@@ -6,10 +6,24 @@ function initMenu() {
   const button = document.querySelector<HTMLButtonElement>('.menu-toggle');
   const menu = document.querySelector<HTMLElement>('#mobile-nav');
   if (!button || !menu) return;
+  let closing = 0;
   const setOpen = (open: boolean) => {
-    menu.hidden = !open;
+    window.clearTimeout(closing);
     button.setAttribute('aria-expanded', String(open));
     button.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+    menu.toggleAttribute('data-closing', !open && !menu.hidden);
+    if (open) {
+      menu.hidden = false;
+      return;
+    }
+    // Let the panel fold away before it leaves the page; instant under reduced motion.
+    closing = window.setTimeout(
+      () => {
+        menu.hidden = true;
+        menu.removeAttribute('data-closing');
+      },
+      reducedMotion.matches ? 0 : 220
+    );
   };
   button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'));
   menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
@@ -142,6 +156,26 @@ function initStrings() {
       );
       observer.observe(root);
     }
+    // On phones there is no pointer to pluck with, so scrolling strums instead.
+    let lastScrollStrum = 0;
+    let lastScrollY = window.scrollY;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (window.innerWidth > 820 || reducedMotion.matches) return;
+        const now = performance.now();
+        const moved = Math.abs(window.scrollY - lastScrollY);
+        if (now - lastScrollStrum < 420 || moved < 6) return;
+        const box = root.getBoundingClientRect();
+        if (box.bottom < 0 || box.top > window.innerHeight) return;
+        lastScrollStrum = now;
+        const down = window.scrollY > lastScrollY;
+        lastScrollY = window.scrollY;
+        const strength = Math.min(1, 0.45 + moved / 160) * (down ? 1 : -1);
+        strum(strength, width * (0.3 + Math.random() * 0.4));
+      },
+      { passive: true }
+    );
     document.querySelectorAll<HTMLElement>('[data-strum]').forEach((trigger) => {
       trigger.addEventListener('pointerenter', () => {
         if (strings.every((string) => string.amplitude === 0)) strum(0.55);
@@ -198,12 +232,12 @@ function initVideos() {
   });
 }
 
-/** The floating action shows only while no primary action or form is on screen. */
+/** The floating action shows only while no other primary button is on screen. */
 function initFloatingAction() {
   const action = document.querySelector<HTMLElement>('.float-cta');
   if (!action || !('IntersectionObserver' in window)) return;
   const visible = new Set<Element>();
-  const targets = document.querySelectorAll('[data-primary-action], [data-form-section]');
+  const targets = document.querySelectorAll('[data-primary-action], form[data-inquiry] button[type="submit"]');
   const observer = new IntersectionObserver((entries) => {
     for (const entry of entries) {
       if (entry.isIntersecting) visible.add(entry.target);

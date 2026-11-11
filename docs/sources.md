@@ -72,3 +72,5 @@ Offer placement follows the single-next-step principle in the local Sabri Market
 ## User-confirmed experience — 26 October 2026
 
 Julian explicitly requested: “include he has 24 years of experience”. This user-provided fact supports publishing “24 jaar ervaring” for Hamlet. It does not establish that all 24 years were spent teaching, a career start year or specific qualifications. Keep the stated figure until the user supplies an update; do not increment it automatically.
+
+Correction, 11 November 2026: Julian stated that Hamlet has played guitar for 43 years and taught for 30 years. These replace the 24-year figure on the site.

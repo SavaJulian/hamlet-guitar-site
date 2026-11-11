@@ -1,0 +1,134 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/Icon.astro';
+import Rosette from '../components/Rosette.astro';
+import Strings from '../components/Strings.astro';
+import { absoluteUrl, withBase } from '../lib/site';
+
+const canonical = absoluteUrl('/over-hamlet/', Astro.site);
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Hamlet',
+  jobTitle: 'Flamencogitarist en gitaarleraar',
+  description:
+    'Hamlet speelt al 43 jaar gitaar en geeft 30 jaar gitaarles. Hij is gespecialiseerd in Spaanse gitaar en flamenco en treedt live op in Antwerpen.',
+  knowsAbout: ['Flamenco', 'Spaanse gitaar', 'Flamencogitaar', 'Gitaarles'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Bredabaan 479',
+    postalCode: '2170',
+    addressLocality: 'Antwerpen',
+    addressCountry: 'BE',
+  },
+  ...(canonical ? { url: canonical, image: absoluteUrl('/media/hamlet-portret.webp', Astro.site) } : {}),
+};
+---
+
+<SiteLayout
+  title="Over Hamlet | Flamencogitarist en gitaarleraar in Merksem, Antwerpen"
+  ogTitle="Over Hamlet — 43 jaar gitaar, 30 jaar gitaarles"
+  description="Maak kennis met Hamlet, flamencogitarist en gitaarleraar in Merksem, Antwerpen. Hij speelt al 43 jaar Spaanse gitaar en flamenco, geeft 30 jaar les en treedt live op."
+  path="/over-hamlet/"
+  current="over"
+  action={{ href: withBase('/#boeken'), label: 'Boek een avond' }}
+  schema={schema}
+>
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="shell hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow" style="--i:0">Over Hamlet · flamencogitarist in Antwerpen</p>
+        <h1 id="hero-heading" style="--i:1">Zes snaren. Drieënveertig jaar.</h1>
+        <p class="lede" style="--i:2">
+          Hamlet speelt al 43 jaar gitaar. Dertig daarvan geeft hij ook les. Spaanse gitaar en flamenco zijn zijn thuis:
+          muziek die je niet alleen hoort, maar voelt.
+        </p>
+      </div>
+      <div class="hero-art">
+        <Rosette alt="Hamlet speelt flamencogitaar" eager />
+      </div>
+      <div class="hero-strings"><Strings strum="load" /></div>
+    </div>
+    <div class="shell hero-facts">
+      <span><b>43 jaar</b> gitarist</span>
+      <span><b>30 jaar</b> gitaarleraar</span>
+      <span><b>Merksem</b> in Antwerpen</span>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="story-heading">
+    <div class="shell story">
+      <div class="story-block" data-reveal>
+        <h2 id="story-heading">Een leven met de gitaar</h2>
+        <p>
+          Wie 43 jaar met hetzelfde instrument leeft, denkt er niet meer over na. Voor Hamlet is de gitaar geen
+          werktuig, maar een taal. Je hoort het aan zijn rechterhand: de aanslag, het ritme dat blijft doorlopen, de
+          stilte net voor een akkoord valt.
+        </p>
+        <p>
+          Dat is wat hij op een podium brengt en wat hij in zijn lessen doorgeeft. Geen trucjes, wel een klank waar je
+          jaren aan werkt en die je daarna nooit meer kwijtraakt.
+        </p>
+      </div>
+
+      <div class="story-block" data-reveal>
+        <h2>Flamenco, ritme dat je voelt</h2>
+        <p>
+          Flamenco is Hamlet’s specialiteit, van de traditionele stijlen tot een moderne benadering. Soleá, bulerías,
+          alegrías, tientos, rumba: elke stijl heeft zijn eigen maat en zijn eigen karakter. In flamenco draagt de
+          gitaar het ritme en de melodie tegelijk, en precies dat maakt de Spaanse gitaar zo levend.
+        </p>
+        <p class="pull">“De gitaar is zijn taal. Je hoort het wanneer hij speelt.”</p>
+      </div>
+
+      <figure class="stage-photo" data-reveal>
+        <img
+          src={withBase('/media/hamlet-podiumlicht.webp')}
+          width="1280"
+          height="720"
+          alt="Sfeerbeeld: Hamlet speelt gitaar in het licht van een podiumspot"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+
+      <div class="story-block" data-reveal>
+        <h2>Live flamencogitaar in Antwerpen</h2>
+        <p>
+          Hamlet treedt op: op het podium, in cafés en restaurants, op feesten en events. Eén gitarist, één gitaar, en
+          muziek die een avond kleur geeft. Wil je live flamencogitaar in jouw zaak of op jouw feest in Antwerpen? Dan
+          spreekt hij de avond rechtstreeks met je af.
+        </p>
+        <a class="text-link" href={withBase('/#boeken')}>Boek een avond live muziek <Icon name="arrow" size={18} /></a>
+      </div>
+
+      <div class="story-block" data-reveal>
+        <h2>Dertig jaar gitaarleraar</h2>
+        <p>
+          Al 30 jaar geeft Hamlet gitaarles, aan beginners en aan gevorderden. In zijn lessen in Merksem draait het om
+          jouw spel: een goede houding, een helder geluid, en stap voor stap verder. “Hij legt alles rustig uit en helpt
+          je als je even vastzit”, zegt zijn leerling Julian.
+        </p>
+        <p>
+          Je eerste kennismakingsles is gratis. Zo ontdek je zonder verplichting of gitaarles bij Hamlet bij je past.
+        </p>
+        <a class="text-link" href={withBase('/gitaarles/')}
+          >Ontdek de gitaarlessen in Merksem <Icon name="arrow" size={18} /></a
+        >
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-dark" aria-labelledby="about-band-heading">
+    <div class="shell">
+      <div>
+        <h2 id="about-band-heading">Hoor het zelf.</h2>
+        <p>Boek een avond live flamencogitaar, of kom langs voor een gratis eerste les.</p>
+      </div>
+      <div class="band-actions">
+        <a class="btn" href={withBase('/#boeken')} data-primary-action>Boek een avond <Icon name="arrow" /></a>
+        <a class="btn btn-light" href={withBase('/gitaarles/#contact')}>Plan je gratis les <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+</SiteLayout>
