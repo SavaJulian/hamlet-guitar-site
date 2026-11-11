@@ -39,6 +39,7 @@ Do not invent credentials, lesson outcomes, prices, show dates, scarcity or avai
 
 - The photo of Hamlet comes from his show poster, supplied by Julian. The poster's lettering is not site copy. `hamlet-portret.webp` is a crop in which the poster text beside and above his head was painted out of the red backdrop; Hamlet himself is untouched. `hamlet-handen.webp` is a plain crop.
 - Three performance videos supplied by Julian: one YouTube video (“Rumba Philip John Lee Played By Hamlet”) and two recordings from his Drive folder, re-encoded for the web. See `docs/media-manifest.json`.
+- `hamlet-podiumlicht.webp`, beside the booking form, is a frame from an AI-generated clip in Julian's Higgsfield library. It is an atmosphere image (“Sfeerbeeld” in its alt text), not a photograph of a real performance.
 - Earlier assets (`hamlet-hero.mp4`, `hamlet-flamenco.mp4`, `hamlet-performance.webp`, the two conceptual “Sfeerbeeld” images) remain in `public/media/` but are not used by any page.
 
 ## Interaction requirements

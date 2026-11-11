@@ -525,11 +525,6 @@ svg {
   width: 100%;
   height: auto;
 }
-.stage-photo figcaption {
-  padding: 12px 18px 14px;
-  font-size: 15px;
-  font-weight: 600;
-}
 
 /* Videos */
 .video-grid {
