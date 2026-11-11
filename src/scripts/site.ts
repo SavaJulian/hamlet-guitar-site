@@ -156,6 +156,26 @@ function initStrings() {
       );
       observer.observe(root);
     }
+    // On phones there is no pointer to pluck with, so scrolling strums instead.
+    let lastScrollStrum = 0;
+    let lastScrollY = window.scrollY;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (window.innerWidth > 820 || reducedMotion.matches) return;
+        const now = performance.now();
+        const moved = Math.abs(window.scrollY - lastScrollY);
+        if (now - lastScrollStrum < 420 || moved < 6) return;
+        const box = root.getBoundingClientRect();
+        if (box.bottom < 0 || box.top > window.innerHeight) return;
+        lastScrollStrum = now;
+        const down = window.scrollY > lastScrollY;
+        lastScrollY = window.scrollY;
+        const strength = Math.min(1, 0.45 + moved / 160) * (down ? 1 : -1);
+        strum(strength, width * (0.3 + Math.random() * 0.4));
+      },
+      { passive: true }
+    );
     document.querySelectorAll<HTMLElement>('[data-strum]').forEach((trigger) => {
       trigger.addEventListener('pointerenter', () => {
         if (strings.every((string) => string.amplitude === 0)) strum(0.55);

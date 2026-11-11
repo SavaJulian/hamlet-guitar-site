@@ -504,6 +504,16 @@ test.describe('when motion is allowed', () => {
     await expect.poll(() => stringShapes(page), { timeout: 12_000 }).toEqual(resting);
   });
 
+  test('on a phone, scrolling strums the strings', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    const resting = await stringShapes(page);
+    await expect.poll(() => stringShapes(page), { timeout: 12_000 }).not.toEqual(resting);
+    await expect.poll(() => stringShapes(page), { timeout: 12_000 }).toEqual(resting);
+    await page.mouse.wheel(0, 120);
+    await expect.poll(() => stringShapes(page), { timeout: 4000 }).not.toEqual(resting);
+  });
+
   test('sections below the fold rise into view when scrolled to', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     for (const { path } of pages) {
