@@ -31,7 +31,7 @@ Do not invent credentials, lesson outcomes, prices, show dates, scarcity or avai
 ## Content and identity
 
 - Approved lesson headline and action: “Leer gitaar spelen. Op jouw tempo.” and “Plan je gratis les”. “Maak kennis met Hamlet” also leads to the lesson form.
-- The homepage headline “Live flamencogitaar in cafés en restaurants.”, its supporting copy, “Boek een avond” and the video captions “Live op het podium” and “Van dichtbij” are proposals awaiting Julian's approval.
+- The homepage headline “Live flamencogitaar.”, its supporting copy, “Boek een avond” and the video captions “Live op het podium” and “Van dichtbij” are proposals awaiting Julian's approval.
 - Julian decided on 11 November 2026: no show agenda on the site, and no FAQ on either page for now (possibly later).
 - The identity keeps the six-string H with a lowercase “hamlet.” wordmark in Unbounded. A separate logo selection is still running at `/logo-keuze/`.
 
@@ -50,7 +50,7 @@ Do not invent credentials, lesson outcomes, prices, show dates, scarcity or avai
 
 ## Inquiry and privacy
 
-Both forms collect required name and email. The booking form adds optional telephone, kind of evening, preferred date and message; the lesson form adds optional telephone, interest and message. Each is a request, not a confirmed booking or lesson. The telephone remains a fallback.
+The booking form collects required name or business name, email and telephone, plus an optional note on where and when. The lesson form collects required name and email, plus optional telephone, interest and message. Each is a request, not a confirmed booking or lesson. The telephone remains a fallback.
 
 Both use a native POST to the same activated opaque FormSubmit endpoint, through repository variable `LESSON_FORM_ENDPOINT` and build variable `PUBLIC_LESSON_FORM_ENDPOINT`, with different subjects and thank-you pages (`/bedankt-boeking/`, `/bedankt/`). Local configuration stays in ignored `.env`. The endpoint validator rejects addresses exposed in URLs. The receiving address must remain absent from public source, HTML, documentation and URLs.
 

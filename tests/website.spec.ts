@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { lessonFormEndpoint } from '../src/lib/lessonForm';
 
 const pages = [
-  { path: '/', heading: 'Live flamencogitaar in cafés en restaurants.' },
+  { path: '/', heading: 'Live flamencogitaar.' },
   { path: '/gitaarles/', heading: 'Leer gitaar spelen. Op jouw tempo.' },
 ];
 const forms = {
@@ -85,7 +85,7 @@ test('live music is the homepage and guitar lessons are a second page of the sam
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Leer gitaar spelen. Op jouw tempo.');
   await expect(navigation.getByRole('link', { name: 'Gitaarles' })).toHaveAttribute('aria-current', 'page');
   await page.getByRole('link', { name: 'Hamlet, naar de startpagina' }).first().click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Live flamencogitaar in cafés en restaurants.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Live flamencogitaar.');
   await page.getByRole('link', { name: 'Naar de gitaarlessen' }).click();
   await expect(page).toHaveURL(/\/gitaarles\/$/);
 });
@@ -243,6 +243,7 @@ for (const key of Object.keys(forms) as FormKey[]) {
     await expect(form.getByRole('status')).toContainText('Verzenden is nog niet ingeschakeld');
     await form.getByLabel('Je naam', { exact: false }).fill('Voorbeeld aanvrager');
     await form.getByLabel('E-mailadres', { exact: false }).fill('aanvrager@example.invalid');
+    await form.getByLabel('Telefoonnummer', { exact: false }).fill('+32 400 00 00 00');
     await form.evaluate((element: HTMLFormElement) => element.requestSubmit());
     await expect(form.getByRole('status')).toHaveText(
       'Verzenden is nog niet ingeschakeld. Je kunt Hamlet wel rechtstreeks bellen.'
@@ -262,9 +263,21 @@ for (const key of Object.keys(forms) as FormKey[]) {
     await expect(email).toHaveAttribute('required', '');
     await expect(email).toHaveAttribute('type', 'email');
     await expect(phone).toHaveAttribute('type', 'tel');
-    await expect(phone).not.toHaveAttribute('required');
+    // Venues are called back, so the booking form needs a number; lessons do not.
+    if (key === 'booking') await expect(phone).toHaveAttribute('required', '');
+    else await expect(phone).not.toHaveAttribute('required');
     await expect(form).toHaveAccessibleDescription(/nog niet geboekt|nog geen bevestigde boeking/);
 
+    if (key === 'booking') {
+      await expect(form.getByLabel('Je naam of bedrijfsnaam', { exact: false })).toBeVisible();
+      await expect(form.locator('select, input[type="date"]')).toHaveCount(0);
+      await fullName.fill('Voorbeeld zaak');
+      await email.fill('zaak@example.invalid');
+      await form.getByRole('button', { name: submit }).click();
+      await expect(phone).toBeFocused();
+      await expect(phone).toHaveAccessibleDescription('Vul je telefoonnummer in.');
+      expect(submissions).toHaveLength(0);
+    }
     await fullName.fill('   ');
     await email.fill('geen-geldig-adres');
     await phone.fill('+32 400 00 00 00');
@@ -338,9 +351,8 @@ test('valid booking request posts the evening details under its own subject', as
   const form = page.getByRole('form', { name: forms.booking.name });
   await form.getByLabel('Je naam', { exact: false }).fill('  Voorbeeld zaakvoerder  ');
   await form.getByLabel('E-mailadres', { exact: false }).fill('zaak@example.invalid');
-  await form.getByLabel('Soort avond', { exact: false }).selectOption('Restaurant');
-  await form.getByLabel('Gewenste datum', { exact: false }).fill('2027-03-12');
-  await form.getByLabel('Bericht', { exact: false }).fill('Een avond voor veertig gasten.');
+  await form.getByLabel('Telefoonnummer', { exact: false }).fill('+32 400 00 00 00');
+  await form.getByLabel('Waar en wanneer?', { exact: false }).fill('Een avond voor veertig gasten, 12 maart.');
   await form.getByRole('button', { name: 'Boek een avond' }).click();
   await expect(page.getByRole('heading', { name: 'Lokale testontvangst' })).toBeVisible();
   expect(submissions).toHaveLength(1);
@@ -351,10 +363,8 @@ test('valid booking request posts the evening details under its own subject', as
     ...next,
     naam: 'Voorbeeld zaakvoerder',
     email: 'zaak@example.invalid',
-    telefoon: '',
-    soort_avond: 'Restaurant',
-    gewenste_datum: '2027-03-12',
-    bericht: 'Een avond voor veertig gasten.',
+    telefoon: '+32 400 00 00 00',
+    bericht: 'Een avond voor veertig gasten, 12 maart.',
   });
 });
 
@@ -391,7 +401,7 @@ test('privacy and thank-you pages explain form handling without contacting the p
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
   await expect(page.getByRole('main')).toContainText('Je aanvraag is nog geen bevestigde boeking.');
   await page.getByRole('link', { name: 'Terug naar Hamlet', exact: true }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Live flamencogitaar in cafés en restaurants.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Live flamencogitaar.');
   expect(providerRequests).toHaveLength(0);
 });
 

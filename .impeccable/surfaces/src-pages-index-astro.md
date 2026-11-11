@@ -16,7 +16,7 @@ This retained record describes the Klankgat direction chosen by Julian on 11 Nov
 
 Both pages use off-white `#fbfbf9`, ebony `#1b1b1f` and one orange, `#f28a1b`, from the top of Hamlet's guitar. Unbounded carries headings and the wordmark; Onest carries the rest. The six-string H remains.
 
-The homepage is about live music: “Live flamencogitaar in cafés en restaurants.” beside Hamlet's photo in a soundhole, six strings beneath, three performance videos, a short booking form and a band that points to the lessons. `/gitaarles/` keeps “Leer gitaar spelen. Op jouw tempo.” with the free lesson invitation, three lesson rows, the teacher with an attributed quote, a practice section and the lesson form with the location. There is no show agenda and no FAQ.
+The homepage is about live music: “Live flamencogitaar.” beside Hamlet's photo in a soundhole, six strings beneath, three performance videos, a short booking form and a band that points to the lessons. `/gitaarles/` keeps “Leer gitaar spelen. Op jouw tempo.” with the free lesson invitation, three lesson rows, the teacher with an attributed quote, a practice section and the lesson form with the location. There is no show agenda and no FAQ.
 
 Every primary action targets the form on its own page; lesson rows preselect interest. A floating action appears on small screens while neither the hero action nor the form is visible.
 
