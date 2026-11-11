@@ -1,0 +1,28 @@
+---
+/** A photo seen through the soundhole, inside the rings of a guitar rosette. */
+import { withBase } from '../lib/site';
+interface Props {
+  alt: string;
+  eager?: boolean;
+}
+const { alt, eager = false } = Astro.props;
+---
+
+<div class="rosette">
+  <span class="rosette-ring"></span>
+  <svg class="rosette-dots" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <circle cx="50" cy="50" r="49.27"></circle>
+  </svg>
+  <span class="rosette-ring rosette-ring-inner"></span>
+  <div class="rosette-photo">
+    <img
+      src={withBase('/media/hamlet-portret.webp')}
+      width="690"
+      height="690"
+      alt={alt}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+      decoding="async"
+    />
+  </div>
+</div>

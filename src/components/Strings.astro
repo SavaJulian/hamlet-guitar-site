@@ -1,0 +1,27 @@
+---
+/** Six strings from bass to treble. `src/scripts/site.ts` makes them ring. */
+interface Props {
+  strum?: 'load' | 'view';
+}
+const { strum } = Astro.props;
+const strings = [
+  { y: 3, width: 4 },
+  { y: 19, width: 3 },
+  { y: 35, width: 3 },
+  { y: 50.5, width: 2 },
+  { y: 65, width: 1 },
+  { y: 79, width: 1 },
+];
+---
+
+<div
+  class="strings"
+  data-strings
+  data-strum-on-load={strum === 'load' ? '' : undefined}
+  data-strum-on-view={strum === 'view' ? '' : undefined}
+  aria-hidden="true"
+>
+  <svg viewBox="0 0 1000 84" preserveAspectRatio="none" focusable="false">
+    {strings.map(({ y, width }) => <path d={`M0 ${y} Q500 ${y} 1000 ${y}`} data-y={y} stroke-width={width} />)}
+  </svg>
+</div>

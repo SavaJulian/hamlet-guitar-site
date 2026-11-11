@@ -1,18 +1,29 @@
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { lessonFormEndpoint } from '../src/lib/lessonForm';
 
-// Make native permission behavior explicit; blocked-policy tests below inject
-// the browser denial before delegating accepted attempts to this native player.
-test.use({
-  launchOptions: {
-    ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE
-      ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE }
-      : {}),
-    args: ['--autoplay-policy=no-user-gesture-required'],
+const pages = [
+  { path: '/', heading: 'Live flamencogitaar in cafés en restaurants.' },
+  { path: '/gitaarles/', heading: 'Leer gitaar spelen. Op jouw tempo.' },
+];
+const forms = {
+  booking: {
+    path: '/',
+    id: 'boekingsformulier',
+    statusId: 'booking-form-status',
+    name: 'Een avond live muziek aanvragen',
+    submit: 'Boek een avond',
   },
-});
+  lesson: {
+    path: '/gitaarles/',
+    id: 'kennismakingsformulier',
+    statusId: 'lesson-form-status',
+    name: 'Gratis kennismakingsles aanvragen',
+    submit: 'Vraag je gratis les aan',
+  },
+};
+type FormKey = keyof typeof forms;
 
-test('lesson form endpoint keeps receiving emails out of published actions', () => {
+test('form endpoint keeps receiving emails out of published actions', () => {
   const anonymous = 'https://formsubmit.co/test-endpoint_token-0001';
   expect(lessonFormEndpoint(anonymous)).toBe(anonymous);
   expect(lessonFormEndpoint(`  ${anonymous}/  `)).toBe(`${anonymous}/`);
@@ -35,42 +46,59 @@ test('lesson form endpoint keeps receiving emails out of published actions', () 
   for (const endpoint of rejected) expect(() => lessonFormEndpoint(endpoint)).toThrow();
 });
 
-async function expectPlaying(video: Locator) {
-  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.readyState)).toBeGreaterThanOrEqual(2);
-  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.paused)).toBe(false);
-  const startedAt = await video.evaluate((element: HTMLVideoElement) => element.currentTime);
-  await expect
-    .poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime))
-    .toBeGreaterThan(startedAt + 0.1);
+for (const { path, heading } of pages) {
+  for (const width of [390, 768, 1440]) {
+    test(`${path} is usable without overflow or broken images at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      const errors: string[] = [];
+      page.on('pageerror', (error) => errors.push(error.message));
+      const response = await page.goto(path);
+      expect(response?.status()).toBe(200);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(heading);
+
+      // Exercise lazy loading through the complete page rather than only inspecting the hero.
+      const images = page.locator('main img');
+      expect(await images.count()).toBeGreaterThan(1);
+      for (const image of await images.all()) {
+        await image.scrollIntoViewIfNeeded();
+        await expect
+          .poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0))
+          .toBe(true);
+      }
+      const dimensions = await page.evaluate(() => ({
+        pageWidth: document.documentElement.scrollWidth,
+        viewport: document.documentElement.clientWidth,
+      }));
+      expect(dimensions.pageWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
+      expect(errors).toEqual([]);
+    });
+  }
 }
 
-for (const width of [390, 768, 1440]) {
-  test(`homepage is usable without overflow or broken images at ${width}px`, async ({ page }) => {
-    await page.setViewportSize({ width, height: 900 });
-    const errors: string[] = [];
-    page.on('pageerror', (error) => errors.push(error.message));
-    const response = await page.goto('/');
-    expect(response?.status()).toBe(200);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Leer gitaar spelen\..*Op jouw tempo\./);
+test('live music is the homepage and guitar lessons are a second page of the same site', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  const navigation = page.getByRole('navigation', { name: 'Hoofdnavigatie' });
+  await expect(navigation.getByRole('link', { name: 'Live muziek' })).toHaveAttribute('aria-current', 'page');
+  await navigation.getByRole('link', { name: 'Gitaarles' }).click();
+  await expect(page).toHaveURL(/\/gitaarles\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Leer gitaar spelen. Op jouw tempo.');
+  await expect(navigation.getByRole('link', { name: 'Gitaarles' })).toHaveAttribute('aria-current', 'page');
+  await page.getByRole('link', { name: 'Hamlet, naar de startpagina' }).first().click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Live flamencogitaar in cafés en restaurants.');
+  await page.getByRole('link', { name: 'Naar de gitaarlessen' }).click();
+  await expect(page).toHaveURL(/\/gitaarles\/$/);
+});
 
-    // Exercise lazy loading through the complete page rather than only inspecting the hero.
-    const images = page.locator('main img');
-    for (const image of await images.all()) {
-      await image.scrollIntoViewIfNeeded();
-      await expect
-        .poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0))
-        .toBe(true);
-    }
-    const dimensions = await page.evaluate(() => ({
-      pageWidth: document.documentElement.scrollWidth,
-      viewport: document.documentElement.clientWidth,
-    }));
-    expect(dimensions.pageWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
-    expect(errors).toEqual([]);
-  });
-}
+test('neither page shows a show agenda or a list of frequently asked questions', async ({ page }) => {
+  for (const { path } of pages) {
+    await page.goto(path);
+    await expect(page.locator('details')).toHaveCount(0);
+    await expect(page.getByRole('main')).not.toContainText(/agenda|veelgestelde vragen/i);
+  }
+});
 
-test('mobile navigation opens, closes on a section selection, and responds to Escape', async ({ page }) => {
+test('mobile navigation opens, leads to the lesson page, and responds to Escape', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   const navigation = page.getByRole('navigation', { name: 'Mobiele navigatie' });
@@ -81,59 +109,82 @@ test('mobile navigation opens, closes on a section selection, and responds to Es
   await page.getByRole('button', { name: 'Menu openen', exact: true }).click();
   await expect(toggle).toHaveAttribute('aria-expanded', 'true');
   await expect(navigation).toBeVisible();
-  await page.screenshot({ path: '.impeccable/review/mobile-menu.png' });
-  await navigation.getByRole('link', { name: 'De lessen', exact: true }).click();
-  await expect(page).toHaveURL(/#lessen$/);
-  await expect(navigation).toBeHidden();
-  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
-
-  await toggle.click();
-  await expect(navigation).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(navigation).toBeHidden();
   await expect(toggle).toHaveAccessibleName('Menu openen');
+  await expect(toggle).toBeFocused();
+
+  await toggle.click();
+  await navigation.getByRole('link', { name: 'Gitaarles' }).click();
+  await expect(page).toHaveURL(/\/gitaarles\/$/);
+  await expect(page.getByRole('navigation', { name: 'Mobiele navigatie' })).toBeHidden();
 });
 
-test('mobile lesson shortcut stays out of the hero and contact form', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+for (const { path, target, label } of [
+  { path: '/', target: '#boeken', label: 'Boek een avond' },
+  { path: '/gitaarles/', target: '#contact', label: 'Plan je gratis les' },
+]) {
+  test(`mobile shortcut on ${path} stays out of the hero and the form`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(path);
+    const shortcut = page.locator('.float-cta');
+    await expect(shortcut).toHaveAttribute('href', target);
+    await expect(shortcut).toContainText(label);
+    await expect(page.locator('[data-primary-action]')).toBeInViewport();
+    await expect(shortcut).not.toBeInViewport();
+
+    await page
+      .locator('main > section')
+      .nth(1)
+      .evaluate((element) => element.scrollIntoView({ block: 'start' }));
+    await expect(shortcut).toBeInViewport();
+
+    await page.locator(`${target} form`).scrollIntoViewIfNeeded();
+    await expect(shortcut).not.toBeInViewport();
+  });
+}
+
+test('primary actions lead to the form on their own page', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/');
-  const shortcut = page.locator('.mobile-call');
-  await expect(page.locator('.hero-actions .button')).toBeInViewport();
-  await expect(shortcut).toBeHidden();
+  const booking = page.getByRole('link', { name: 'Boek een avond', includeHidden: true });
+  expect(await booking.count()).toBeGreaterThanOrEqual(3);
+  for (const action of await booking.all()) await expect(action).toHaveAttribute('href', '#boeken');
+  await page.locator('.hero-actions').getByRole('link', { name: 'Boek een avond' }).click();
+  await expect(page).toHaveURL(/#boeken$/);
+  await expect(page.getByRole('form', { name: forms.booking.name })).toBeVisible();
 
-  await page.locator('#lessen').evaluate((element) => element.scrollIntoView({ block: 'start' }));
-  await expect(shortcut).toBeVisible();
-  await expect(shortcut).toBeInViewport();
-  await expect(shortcut).toHaveAttribute('href', '#contact');
-
-  await page.locator('.contact-form-area').scrollIntoViewIfNeeded();
-  await expect(shortcut).toBeHidden();
-  const formBounds = await page.locator('.contact-form-area').boundingBox();
-  const locationBounds = await page.locator('.contact-location').boundingBox();
-  expect(formBounds).not.toBeNull();
-  expect(locationBounds).not.toBeNull();
-  expect(formBounds!.y + formBounds!.height).toBeLessThanOrEqual(locationBounds!.y);
+  await page.goto('/gitaarles/');
+  const lesson = page.getByRole('link', {
+    name: /^(Plan je gratis les|Maak kennis met Hamlet)$/,
+    includeHidden: true,
+  });
+  expect(await lesson.count()).toBeGreaterThanOrEqual(4);
+  for (const action of await lesson.all()) await expect(action).toHaveAttribute('href', '#contact');
+  await page.getByRole('link', { name: 'Maak kennis met Hamlet', exact: true }).click();
+  await expect(page).toHaveURL(/#contact$/);
+  await expect(page.getByRole('form', { name: forms.lesson.name })).toBeVisible();
 });
 
-test('FAQ answers open and close with the keyboard', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
-  const question = page.locator('summary').filter({ hasText: 'Kan ik beginnen zonder ervaring?' });
-  const answer = question.locator('..').locator('p');
-  await expect(answer).toBeHidden();
-  await question.focus();
-  await page.keyboard.press('Enter');
-  await expect(answer).toBeVisible();
-  await expect(answer).toContainText('beginners én gevorderden');
-  await page.locator('#vragen').evaluate((element) => element.scrollIntoView({ block: 'start' }));
-  await page.screenshot({ path: '.impeccable/review/faq-open.png' });
-  await page.keyboard.press('Enter');
-  await expect(answer).toBeHidden();
+test('lesson choices prefill the inquiry form without losing entered details', async ({ page }) => {
+  await page.goto('/gitaarles/');
+  await page.getByLabel('Je naam', { exact: false }).fill('Voorbeeld leerling');
+  const choices = page.locator('[data-interest]');
+  await expect(choices).toHaveCount(3);
+  for (const choice of await choices.all()) {
+    const interest = await choice.getAttribute('data-interest');
+    await expect(choice).toHaveAttribute('href', '#contact');
+    await choice.click();
+    await expect(page).toHaveURL(/#contact$/);
+    await expect(page.locator('#lesson-interest')).toHaveValue(interest || '');
+    await expect(page.getByLabel('Je naam', { exact: false })).toHaveValue('Voorbeeld leerling');
+  }
 });
 
 // The configured fixture only changes initial server markup. Submission still
 // uses the real form script and native browser POST, captured locally below.
-async function lessonFormFixture(page: Page, ready: boolean) {
+async function formFixture(page: Page, key: FormKey, ready: boolean) {
+  const { id, statusId } = forms[key];
   const submissions: {
     url: string;
     method: string;
@@ -160,7 +211,7 @@ async function lessonFormFixture(page: Page, ready: boolean) {
     if (request.isNavigationRequest() && request.method() === 'GET') {
       const response = await route.fetch();
       const html = await response.text();
-      const body = html.replace(/<form\b(?=[^>]*\bid="kennismakingsformulier")[^>]*>[\s\S]*?<\/form>/, (form) => {
+      const body = html.replace(new RegExp(`<form\\b(?=[^>]*\\bid="${id}")[^>]*>[\\s\\S]*?</form>`), (form) => {
         let configured = form
           .replace(/\saction="[^"]*"/, '')
           .replace(/data-ready="(?:true|false)"/, `data-ready="${ready}"`);
@@ -168,7 +219,7 @@ async function lessonFormFixture(page: Page, ready: boolean) {
         if (ready) configured = configured.replace('<form', '<form action="/__form-test"');
         else configured = configured.replace(/(<button\b[^>]*\btype="submit")/, '$1 disabled');
         const status = ready ? '' : 'Dit formulier staat klaar als voorbeeld. Verzenden is nog niet ingeschakeld.';
-        configured = configured.replace(/(<p[^>]+id="lesson-form-status"[^>]*>)[\s\S]*?(<\/p>)/, `$1${status}$2`);
+        configured = configured.replace(new RegExp(`(<p[^>]+id="${statusId}"[^>]*>)[\\s\\S]*?(</p>)`), `$1${status}$2`);
         return configured;
       });
       await route.fulfill({ response, body });
@@ -179,108 +230,77 @@ async function lessonFormFixture(page: Page, ready: boolean) {
   return submissions;
 }
 
-test('lesson choices prefill the inquiry form without losing entered details', async ({ page }) => {
-  await page.goto('/');
-  await page.getByLabel('Je naam', { exact: false }).fill('Voorbeeld leerling');
-  const choices = page.locator('[data-interest]');
-  await expect(choices).toHaveCount(3);
-  for (const choice of await choices.all()) {
-    const interest = await choice.getAttribute('data-interest');
-    await expect(choice).toHaveAttribute('href', '#contact');
-    await choice.click();
-    await expect(page).toHaveURL(/#contact$/);
-    await expect(page.locator('#lesson-interest')).toHaveValue(interest || '');
-    await expect(page.getByLabel('Je naam', { exact: false })).toHaveValue('Voorbeeld leerling');
-  }
-});
+for (const key of Object.keys(forms) as FormKey[]) {
+  const { path, name, submit } = forms[key];
 
-test('free lesson and introduction calls to action lead to the contact form', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto('/');
-  const actions = page.getByRole('link', {
-    name: /^(Plan je gratis les|Maak kennis met Hamlet)$/,
-    includeHidden: true,
+  test(`an unconfigured ${key} form cannot submit or claim a successful request`, async ({ page }) => {
+    const submissions = await formFixture(page, key, false);
+    await page.goto(path);
+    const form = page.getByRole('form', { name });
+    await expect(form).toHaveAttribute('data-ready', 'false');
+    await expect(form).not.toHaveAttribute('action');
+    await expect(form.getByRole('button', { name: submit })).toBeDisabled();
+    await expect(form.getByRole('status')).toContainText('Verzenden is nog niet ingeschakeld');
+    await form.getByLabel('Je naam', { exact: false }).fill('Voorbeeld aanvrager');
+    await form.getByLabel('E-mailadres', { exact: false }).fill('aanvrager@example.invalid');
+    await form.evaluate((element: HTMLFormElement) => element.requestSubmit());
+    await expect(form.getByRole('status')).toHaveText(
+      'Verzenden is nog niet ingeschakeld. Je kunt Hamlet wel rechtstreeks bellen.'
+    );
+    await expect(form.getByLabel('Je naam', { exact: false })).toHaveValue('Voorbeeld aanvrager');
+    expect(submissions).toHaveLength(0);
   });
-  expect(await actions.count()).toBeGreaterThanOrEqual(4);
-  for (const action of await actions.all()) await expect(action).toHaveAttribute('href', '#contact');
-  await page.getByRole('link', { name: 'Maak kennis met Hamlet', exact: true }).click();
-  await expect(page).toHaveURL(/#contact$/);
-  await expect(page.getByRole('form', { name: 'Gratis kennismakingsles aanvragen' })).toBeVisible();
-});
 
-test('an unconfigured form cannot submit or claim a successful request', async ({ page }) => {
-  const submissions = await lessonFormFixture(page, false);
-  await page.goto('/');
-  const form = page.getByRole('form', { name: 'Gratis kennismakingsles aanvragen' });
-  await expect(form).toHaveAttribute('data-ready', 'false');
-  await expect(form).not.toHaveAttribute('action');
-  await expect(form.getByRole('button', { name: 'Vraag je gratis les aan' })).toBeDisabled();
-  await expect(form.getByRole('status')).toContainText('Verzenden is nog niet ingeschakeld');
-  await page.getByLabel('Je naam', { exact: false }).fill('Voorbeeld leerling');
-  await page.getByLabel('E-mailadres', { exact: false }).fill('leerling@example.invalid');
-  await form.evaluate((element: HTMLFormElement) => element.requestSubmit());
-  await expect(form.getByRole('status')).toHaveText(
-    'Verzenden is nog niet ingeschakeld. Je kunt Hamlet wel rechtstreeks bellen.'
-  );
-  await expect(page.getByLabel('Je naam', { exact: false })).toHaveValue('Voorbeeld leerling');
-  expect(submissions).toHaveLength(0);
-});
+  test(`${key} form validates required fields and keeps entered values`, async ({ page }) => {
+    const submissions = await formFixture(page, key, true);
+    await page.goto(path);
+    const form = page.getByRole('form', { name });
+    const fullName = form.getByLabel('Je naam', { exact: false });
+    const email = form.getByLabel('E-mailadres', { exact: false });
+    const phone = form.getByLabel('Telefoonnummer', { exact: false });
+    await expect(fullName).toHaveAttribute('required', '');
+    await expect(email).toHaveAttribute('required', '');
+    await expect(email).toHaveAttribute('type', 'email');
+    await expect(phone).toHaveAttribute('type', 'tel');
+    await expect(phone).not.toHaveAttribute('required');
+    await expect(form).toHaveAccessibleDescription(/nog niet geboekt|nog geen bevestigde boeking/);
 
-test('inquiry form labels, required validation and errors preserve entered values', async ({ page }) => {
-  const submissions = await lessonFormFixture(page, true);
-  await page.goto('/');
-  const form = page.getByRole('form', { name: 'Gratis kennismakingsles aanvragen' });
-  const name = page.getByLabel('Je naam', { exact: false });
-  const email = page.getByLabel('E-mailadres', { exact: false });
-  const phone = page.getByLabel('Telefoonnummer', { exact: false });
-  const interest = page.getByLabel('Waar sta je nu?', { exact: false });
-  const message = page.getByLabel('Wat wil je graag leren?', { exact: false });
-  await expect(name).toHaveAttribute('required', '');
-  await expect(email).toHaveAttribute('required', '');
-  await expect(email).toHaveAttribute('type', 'email');
-  await expect(phone).toHaveAttribute('type', 'tel');
-  for (const field of [phone, interest, message]) await expect(field).not.toHaveAttribute('required');
-  await expect(form).toHaveAccessibleDescription(/Je les is nog niet geboekt/);
-
-  await name.fill('   ');
-  await email.fill('geen-geldig-adres');
-  await phone.fill('+32 400 00 00 00');
-  await interest.selectOption('Ik wil flamenco leren');
-  await message.fill('Ik wil graag de basis van flamenco leren.');
-  await form.getByRole('button', { name: 'Vraag je gratis les aan' }).click();
-  await expect(name).toBeFocused();
-  await expect(name).toHaveAttribute('aria-invalid', 'true');
-  await expect(name).toHaveAccessibleDescription('Vul je naam in.');
-  await expect(email).toHaveAttribute('aria-invalid', 'true');
-  await expect(email).toHaveAccessibleDescription('Vul een geldig e-mailadres in, zoals naam@voorbeeld.be.');
-  await expect(form.getByRole('status')).toHaveText(
-    'Controleer de gemarkeerde velden voordat je je aanvraag verstuurt.'
-  );
-  await expect(name).toHaveValue('   ');
-  await expect(email).toHaveValue('geen-geldig-adres');
-  await expect(phone).toHaveValue('+32 400 00 00 00');
-  await expect(interest).toHaveValue('Ik wil flamenco leren');
-  await expect(message).toHaveValue('Ik wil graag de basis van flamenco leren.');
-  await name.fill('Voorbeeld leerling');
-  await expect(name).not.toHaveAttribute('aria-invalid');
-  await form.getByRole('button', { name: 'Vraag je gratis les aan' }).click();
-  await expect(email).toBeFocused();
-  await email.fill('');
-  await expect(email).toHaveAccessibleDescription('Vul je e-mailadres in.');
-  await email.fill('leerling@example.invalid');
-  await expect(email).not.toHaveAttribute('aria-invalid');
-  expect(submissions).toHaveLength(0);
-});
+    await fullName.fill('   ');
+    await email.fill('geen-geldig-adres');
+    await phone.fill('+32 400 00 00 00');
+    await form.getByRole('button', { name: submit }).click();
+    await expect(fullName).toBeFocused();
+    await expect(fullName).toHaveAttribute('aria-invalid', 'true');
+    await expect(fullName).toHaveAccessibleDescription('Vul je naam in.');
+    await expect(email).toHaveAttribute('aria-invalid', 'true');
+    await expect(email).toHaveAccessibleDescription('Vul een geldig e-mailadres in, zoals naam@voorbeeld.be.');
+    await expect(form.getByRole('status')).toHaveText(
+      'Controleer de gemarkeerde velden voordat je je aanvraag verstuurt.'
+    );
+    await expect(fullName).toHaveValue('   ');
+    await expect(email).toHaveValue('geen-geldig-adres');
+    await expect(phone).toHaveValue('+32 400 00 00 00');
+    await fullName.fill('Voorbeeld aanvrager');
+    await expect(fullName).not.toHaveAttribute('aria-invalid');
+    await form.getByRole('button', { name: submit }).click();
+    await expect(email).toBeFocused();
+    await email.fill('');
+    await expect(email).toHaveAccessibleDescription('Vul je e-mailadres in.');
+    await email.fill('aanvrager@example.invalid');
+    await expect(email).not.toHaveAttribute('aria-invalid');
+    expect(submissions).toHaveLength(0);
+  });
+}
 
 for (const includeOptional of [false, true]) {
-  test(`valid inquiry uses a native POST with ${includeOptional ? 'all fields' : 'only required details'}`, async ({
+  test(`valid lesson inquiry uses a native POST with ${includeOptional ? 'all fields' : 'only required details'}`, async ({
     page,
   }) => {
-    const submissions = await lessonFormFixture(page, true);
-    await page.goto('/');
+    const submissions = await formFixture(page, 'lesson', true);
+    await page.goto('/gitaarles/');
     const canonical = page.locator('link[rel="canonical"]');
     const next = (await canonical.count())
-      ? { _next: new URL('bedankt/', (await canonical.getAttribute('href')) || '').href }
+      ? { _next: new URL('../bedankt/', (await canonical.getAttribute('href')) || '').href }
       : {};
     await page.getByLabel('Je naam', { exact: false }).fill('  Voorbeeld leerling  ');
     await page.getByLabel('E-mailadres', { exact: false }).fill('leerling@example.invalid');
@@ -308,41 +328,81 @@ for (const includeOptional of [false, true]) {
   });
 }
 
+test('valid booking request posts the evening details under its own subject', async ({ page }) => {
+  const submissions = await formFixture(page, 'booking', true);
+  await page.goto('/');
+  const canonical = page.locator('link[rel="canonical"]');
+  const next = (await canonical.count())
+    ? { _next: new URL('bedankt-boeking/', (await canonical.getAttribute('href')) || '').href }
+    : {};
+  const form = page.getByRole('form', { name: forms.booking.name });
+  await form.getByLabel('Je naam', { exact: false }).fill('  Voorbeeld zaakvoerder  ');
+  await form.getByLabel('E-mailadres', { exact: false }).fill('zaak@example.invalid');
+  await form.getByLabel('Soort avond', { exact: false }).selectOption('Restaurant');
+  await form.getByLabel('Gewenste datum', { exact: false }).fill('2027-03-12');
+  await form.getByLabel('Bericht', { exact: false }).fill('Een avond voor veertig gasten.');
+  await form.getByRole('button', { name: 'Boek een avond' }).click();
+  await expect(page.getByRole('heading', { name: 'Lokale testontvangst' })).toBeVisible();
+  expect(submissions).toHaveLength(1);
+  expect(submissions[0].navigation).toBe(true);
+  expect(Object.fromEntries(new URLSearchParams(submissions[0].body))).toEqual({
+    _subject: 'Hamlet — aanvraag avond live muziek',
+    _template: 'table',
+    ...next,
+    naam: 'Voorbeeld zaakvoerder',
+    email: 'zaak@example.invalid',
+    telefoon: '',
+    soort_avond: 'Restaurant',
+    gewenste_datum: '2027-03-12',
+    bericht: 'Een avond voor veertig gasten.',
+  });
+});
+
 test('privacy and thank-you pages explain form handling without contacting the provider', async ({ page }) => {
   const providerRequests: string[] = [];
   page.on('request', (request) => {
     if (new URL(request.url()).hostname === 'formsubmit.co') providerRequests.push(request.url());
   });
-  await page.goto('/');
+  await page.goto('/gitaarles/');
   await page
-    .getByRole('form', { name: 'Gratis kennismakingsles aanvragen' })
+    .getByRole('form', { name: forms.lesson.name })
     .getByRole('link', { name: 'Lees het privacybeleid.' })
     .click();
   await expect(page).toHaveURL(/\/privacy\/?$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Privacy.');
-  await expect(page.getByRole('heading', { name: 'Wanneer je het formulier verstuurt' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Wanneer je een formulier verstuurt' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Wanneer je een video van YouTube afspeelt' })).toBeVisible();
   await expect(page.getByRole('main')).toContainText('naar FormSubmit verstuurd');
   await expect(page.getByRole('link', { name: 'privacybeleid van FormSubmit (pdf)' })).toHaveAttribute(
     'href',
     'https://formsubmit.co/privacy.pdf'
   );
 
-  const response = await page.goto('/bedankt/');
+  let response = await page.goto('/bedankt/');
   expect(response?.status()).toBe(200);
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Bedankt voor.*je aanvraag\./);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Bedankt voor je aanvraag.');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
   await expect(page.getByRole('main')).toContainText('Je aanvraag is nog geen bevestiging van een lesmoment.');
+  await page.getByRole('link', { name: 'Terug naar de gitaarlessen' }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Leer gitaar spelen. Op jouw tempo.');
+
+  response = await page.goto('/bedankt-boeking/');
+  expect(response?.status()).toBe(200);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
+  await expect(page.getByRole('main')).toContainText('Je aanvraag is nog geen bevestigde boeking.');
   await page.getByRole('link', { name: 'Terug naar Hamlet', exact: true }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Leer gitaar spelen\..*Op jouw tempo\./);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Live flamencogitaar in cafés en restaurants.');
   expect(providerRequests).toHaveLength(0);
 });
 
 test('contact links point to the verified phone and Google location', async ({ page }) => {
-  await page.goto('/');
-  const telephoneLinks = page.locator('a[href^="tel:"]');
-  expect(await telephoneLinks.count()).toBeGreaterThan(0);
-  for (const link of await telephoneLinks.all()) {
-    await expect(link).toHaveAttribute('href', 'tel:+32483502220');
+  for (const { path } of pages) {
+    await page.goto(path);
+    const telephoneLinks = page.locator('a[href^="tel:"]');
+    expect(await telephoneLinks.count()).toBeGreaterThan(0);
+    for (const link of await telephoneLinks.all()) {
+      await expect(link).toHaveAttribute('href', 'tel:+32483502220');
+    }
   }
   const route = page.getByRole('link', { name: 'Plan je route' });
   const maps = new URL((await route.getAttribute('href')) || '');
@@ -353,187 +413,80 @@ test('contact links point to the verified phone and Google location', async ({ p
   await expect(page.locator('address')).toContainText('2170 Merksem');
 });
 
-test('hero no longer exposes the full-film dialog or the old control bar', async ({ page }) => {
-  const fullFilmRequests: string[] = [];
-  page.on('request', (request) => {
-    if (new URL(request.url()).pathname.endsWith('/hamlet-flamenco.mp4')) fullFilmRequests.push(request.url());
+test('videos open in a dialog, and YouTube is only contacted after a click', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const youtubeRequests: string[] = [];
+  await page.route(/youtube(-nocookie)?\.com|ytimg\.com/, async (route) => {
+    youtubeRequests.push(route.request().url());
+    await route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>YouTube-test</title>' });
   });
   await page.goto('/');
-  await expect(page.locator('.hero-controls, #hero-pause, .video-dialog, [data-play-video]')).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'Volledige video' })).toHaveCount(0);
-  await expect(page.locator('#hero-sound')).toBeVisible();
-  expect(fullFilmRequests).toEqual([]);
+  const tiles = page.locator('a[data-video]');
+  await expect(tiles).toHaveCount(3);
+  const dialog = page.locator('#video-dialog');
+  await expect(dialog).toBeHidden();
+
+  const stage = tiles.nth(1);
+  await expect(stage).toHaveAttribute('href', /\/media\/hamlet-podium\.mp4$/);
+  await stage.click();
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toHaveAccessibleName('Live op het podium');
+  const video = dialog.locator('video');
+  await expect(video).toHaveAttribute('src', /\/media\/hamlet-podium\.mp4$/);
+  await expect(video).toHaveAttribute('controls', '');
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await expect(dialog.locator('video')).toHaveCount(0);
+  await expect(stage).toBeFocused();
+  expect(youtubeRequests).toHaveLength(0);
+
+  await tiles.first().click();
+  await expect(dialog.locator('iframe')).toHaveAttribute(
+    'src',
+    'https://www.youtube-nocookie.com/embed/MEcC6SS83Bc?autoplay=1&rel=0'
+  );
+  await expect.poll(() => youtubeRequests.length).toBeGreaterThan(0);
+  await dialog.getByRole('button', { name: 'Video sluiten' }).click();
+  await expect(dialog).toBeHidden();
+  await expect(dialog.locator('iframe')).toHaveCount(0);
 });
 
-test('reduced motion keeps the poster until keyboard activation starts the performance', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  const heroRequests: string[] = [];
-  page.on('request', (request) => {
-    if (new URL(request.url()).pathname.endsWith('/hamlet-hero.mp4')) heroRequests.push(request.url());
-  });
+const stringShapes = (page: Page) =>
+  page.locator('[data-strings] path').evaluateAll((paths) => paths.map((path) => path.getAttribute('d')));
+
+test('reduced motion keeps the strings still and every section visible', async ({ page }) => {
   await page.goto('/');
-  const hero = page.locator('#hero-video');
-  const start = page.getByRole('button', { name: 'Video afspelen', exact: true });
-  await expect(start).toBeVisible();
-  await expect(hero).not.toHaveAttribute('src');
-  await expect(hero).toHaveAttribute('poster', /hamlet-performance\.webp\?v=black-background$/);
-  expect(heroRequests).toHaveLength(0);
-  expect(await hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-
-  await start.focus();
-  await page.keyboard.press('Enter');
-  await expectPlaying(hero);
-  expect(heroRequests.length).toBeGreaterThan(0);
-  expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
-  await expect(page.getByRole('button', { name: 'Video pauzeren', exact: true })).toBeFocused();
-  await page.keyboard.press('Space');
-  await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-  await expect(page.getByRole('button', { name: 'Video afspelen', exact: true })).toBeFocused();
+  const resting = await stringShapes(page);
+  expect(resting).toHaveLength(6);
+  await page.waitForTimeout(1500);
+  expect(await stringShapes(page)).toEqual(resting);
+  for (const item of await page.locator('[data-reveal]').all()) await expect(item).toHaveCSS('opacity', '1');
 });
 
-// Only the browser's permission decision is controlled. Accepted calls still use
-// native media playback, allowing us to verify that decoded frames advance.
-async function recordAutoplayPolicy(page: Page, blockAudibleBeforeGesture: boolean) {
-  await page.addInitScript((blocked) => {
-    const state = { attempts: [] as boolean[], rejected: 0, activated: false };
-    Object.assign(window, { __autoplayTest: state });
-    const nativePlay = HTMLMediaElement.prototype.play;
-    for (const eventName of ['pointerdown', 'keydown']) {
-      document.addEventListener(
-        eventName,
-        (event) => {
-          if (event.isTrusted) state.activated = true;
-        },
-        { capture: true }
-      );
-    }
-    HTMLMediaElement.prototype.play = function () {
-      state.attempts.push(this.muted);
-      if (blocked && !this.muted && !state.activated) {
-        state.rejected += 1;
-        return Promise.reject(new DOMException('Audible autoplay requires user activation.', 'NotAllowedError'));
-      }
-      return nativePlay.call(this);
-    };
-  }, blockAudibleBeforeGesture);
-}
-
-async function autoplayAttempts(page: Page) {
-  return page.evaluate(() => {
-    const state = (window as unknown as Window & { __autoplayTest: { attempts: boolean[]; rejected: number } })
-      .__autoplayTest;
-    return { attempts: state.attempts, rejected: state.rejected };
-  });
-}
-
-test.describe('hero playback when motion is allowed', () => {
+test.describe('when motion is allowed', () => {
   test.use({ reducedMotion: 'no-preference' });
 
-  for (const [device, width] of [
-    ['mobile', 390],
-    ['desktop', 1440],
-  ] as const) {
-    test(`${device} starts with sound when autoplay is permitted`, async ({ page }) => {
-      await page.setViewportSize({ width, height: device === 'mobile' ? 844 : 1000 });
-      await recordAutoplayPolicy(page, false);
-      await page.goto('/');
-      const hero = page.locator('#hero-video');
-      await expectPlaying(hero);
-      expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
-      expect((await autoplayAttempts(page)).attempts[0]).toBe(false);
-      await expect(hero).toHaveAttribute('playsinline', '');
-      await expect(page.getByRole('button', { name: 'Geluid uitschakelen', exact: true })).toBeVisible();
-      await page.screenshot({ path: `.impeccable/review/hero-audio-allowed-${device}.png` });
-
-      await page.locator('#hero-sound').click();
-      expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
-      await expect(page.getByRole('button', { name: 'Geluid inschakelen', exact: true })).toBeVisible();
-      await expectPlaying(hero);
-      await page.locator('#hero-playback').click();
-      await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-      await expect(page.getByRole('button', { name: 'Video afspelen', exact: true })).toBeVisible();
-      await page.locator('#hero-playback').click();
-      await expectPlaying(hero);
-      expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
-    });
-
-    test(`${device} falls back to muted playback when audible autoplay is blocked`, async ({ page }) => {
-      await page.setViewportSize({ width, height: device === 'mobile' ? 844 : 1000 });
-      await recordAutoplayPolicy(page, true);
-      await page.goto('/');
-      const hero = page.locator('#hero-video');
-      await expectPlaying(hero);
-      expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
-      const policy = await autoplayAttempts(page);
-      expect(policy.attempts[0]).toBe(false);
-      expect(policy.rejected).toBeGreaterThan(0);
-      expect(policy.attempts).toContain(true);
-      await expect(page.getByRole('button', { name: 'Geluid inschakelen', exact: true })).toBeVisible();
-      await page.screenshot({ path: `.impeccable/review/hero-audio-blocked-${device}.png` });
-
-      await page.locator('#hero-sound').click();
-      await expect(page.getByRole('button', { name: 'Geluid uitschakelen', exact: true })).toBeVisible();
-      expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
-      await expectPlaying(hero);
-      await page.locator('#hero-sound').click();
-      expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
-    });
-  }
-
-  test('scrolling pauses playback and preserves manual sound and pause choices', async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 1000 });
-    await recordAutoplayPolicy(page, false);
+  test('the strings are strummed on arrival and ring out again', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/');
-    const hero = page.locator('#hero-video');
-    await expectPlaying(hero);
-    expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
-    await page.locator('#contact').scrollIntoViewIfNeeded();
-    await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-    await page.getByRole('heading', { level: 1 }).scrollIntoViewIfNeeded();
-    await expectPlaying(hero);
-    expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
-
-    await page.locator('#hero-sound').click();
-    expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
-    await page.locator('#contact').scrollIntoViewIfNeeded();
-    await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-    await page.getByRole('heading', { level: 1 }).scrollIntoViewIfNeeded();
-    await expectPlaying(hero);
-    expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
-
-    await page.locator('#hero-playback').focus();
-    await page.keyboard.press('Space');
-    await expect.poll(() => hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-    const pausedAt = await hero.evaluate((element: HTMLVideoElement) => element.currentTime);
-    await page.locator('#contact').scrollIntoViewIfNeeded();
-    await page.getByRole('heading', { level: 1 }).scrollIntoViewIfNeeded();
-    await expect(page.getByRole('button', { name: 'Video afspelen', exact: true })).toBeVisible();
-    expect(await hero.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeCloseTo(pausedAt, 2);
-    expect(await hero.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
-    expect(await hero.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
+    const resting = await stringShapes(page);
+    await expect.poll(() => stringShapes(page), { timeout: 4000 }).not.toEqual(resting);
+    await expect.poll(() => stringShapes(page), { timeout: 12_000 }).toEqual(resting);
   });
-});
 
-test('mobile hero failure keeps the heading clear and the poster visible', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await page.route('**/hamlet-hero.mp4*', (route) =>
-    route.fulfill({ status: 404, contentType: 'text/plain', body: 'Video not found' })
-  );
-  await page.goto('/');
-
-  const status = page.locator('.hero-video-status');
-  await expect(status).toBeVisible();
-  await expect(status).toContainText('De video kon niet laden.');
-  await expect(page.locator('#hero-sound')).toBeDisabled();
-  await expect(page.locator('#hero-playback')).toBeDisabled();
-  await expect(page.locator('#hero-video')).toHaveAttribute('poster', /hamlet-performance\.webp\?v=black-background$/);
-
-  const statusBox = await status.boundingBox();
-  const headingBox = await page.getByRole('heading', { level: 1 }).boundingBox();
-  expect(statusBox).not.toBeNull();
-  expect(headingBox).not.toBeNull();
-  if (!statusBox || !headingBox) throw new Error('The recovery message and page heading must both be rendered.');
-  const separated = statusBox.y + statusBox.height <= headingBox.y || headingBox.y + headingBox.height <= statusBox.y;
-  expect(separated).toBe(true);
+  test('sections below the fold rise into view when scrolled to', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    for (const { path } of pages) {
+      await page.goto(path);
+      const items = page.locator('[data-reveal]');
+      expect(await items.count()).toBeGreaterThan(3);
+      const last = items.last();
+      await expect(last).toHaveCSS('opacity', '0');
+      for (const item of await items.all()) {
+        await item.scrollIntoViewIfNeeded();
+        await expect(item).toHaveClass(/is-in/);
+        await expect(item).toHaveCSS('opacity', '1');
+      }
+    }
+  });
 });

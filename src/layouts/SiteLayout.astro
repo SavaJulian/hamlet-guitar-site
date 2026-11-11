@@ -1,0 +1,105 @@
+---
+import '@fontsource-variable/unbounded';
+import '@fontsource-variable/onest';
+import '../styles/klankgat.css';
+import Brand from '../components/Brand.astro';
+import Icon from '../components/Icon.astro';
+import { absoluteUrl, withBase } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  current?: 'live' | 'les';
+  action: { href: string; label: string };
+  ogTitle?: string;
+  schema?: Record<string, unknown>;
+}
+
+const { title, description, path, current, action, ogTitle = title, schema } = Astro.props;
+const canonical = absoluteUrl(path, Astro.site);
+const image = absoluteUrl('/media/hamlet-portret.webp', Astro.site) ?? withBase('/media/hamlet-portret.webp');
+const phone = '+32483502220';
+const nav = [
+  { key: 'live', href: withBase('/'), label: 'Live muziek' },
+  { key: 'les', href: withBase('/gitaarles/'), label: 'Gitaarles' },
+];
+---
+
+<!doctype html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fbfbf9" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href={withBase('/brand/hamlet-monogram.svg')} type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="nl_BE" />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    {schema && <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Ga naar de inhoud</a>
+    <header class="site-header">
+      <div class="shell">
+        <Brand />
+        <nav class="site-nav" aria-label="Hoofdnavigatie">
+          {
+            nav.map((item) => (
+              <a href={item.href} aria-current={item.key === current ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+        <a class="btn btn-dark btn-small header-cta" href={action.href}>{action.label}</a>
+        <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu openen"
+          ><span></span><span></span></button
+        >
+      </div>
+      <nav id="mobile-nav" class="mobile-nav" aria-label="Mobiele navigatie" hidden>
+        {
+          nav.map((item) => (
+            <a href={item.href} aria-current={item.key === current ? 'page' : undefined}>
+              {item.label}
+              <Icon name="arrow" size={18} />
+            </a>
+          ))
+        }
+        <a href={action.href}>{action.label} <Icon name="arrow" size={18} /></a>
+      </nav>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="shell">
+        <div class="footer-top">
+          <Brand />
+          <p>Zes snaren. Eindeloos veel mogelijkheden.</p>
+          <nav class="footer-nav" aria-label="Voetnavigatie">
+            {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+            <a href={`tel:${phone}`}>0483 50 22 20</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>© {new Date().getFullYear()} Hamlet · Merksem, Antwerpen</span>
+          <a href={withBase('/privacy/')}>Privacy</a>
+        </div>
+      </div>
+    </footer>
+    <a class="btn float-cta" href={action.href}>{action.label} <Icon name="arrow" size={18} /></a>
+    <script>
+      import '../scripts/site';
+    </script>
+  </body>
+</html>

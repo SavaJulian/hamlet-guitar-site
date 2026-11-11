@@ -1,0 +1,93 @@
+---
+import Icon from './Icon.astro';
+import { withBase } from '../lib/site';
+
+interface Props {
+  action?: string;
+  hiddenFields?: Record<string, string>;
+}
+
+const { action, hiddenFields = {} } = Astro.props;
+const ready = Boolean(action);
+---
+
+<form
+  id="boekingsformulier"
+  class="inquiry-form"
+  action={action}
+  method="post"
+  data-inquiry
+  data-ready={String(ready)}
+  aria-label="Een avond live muziek aanvragen"
+  aria-describedby="booking-form-note"
+>
+  {Object.entries(hiddenFields).map(([name, value]) => <input type="hidden" name={name} value={value} />)}
+  <div class="form-fields">
+    <div class="form-field form-field-wide">
+      <label for="booking-name">Je naam <span>(verplicht)</span></label>
+      <input
+        id="booking-name"
+        name="naam"
+        type="text"
+        autocomplete="name"
+        maxlength="120"
+        required
+        aria-describedby="booking-name-error"
+      />
+      <p class="field-error" id="booking-name-error" hidden></p>
+    </div>
+    <div class="form-field">
+      <label for="booking-email">E-mailadres <span>(verplicht)</span></label>
+      <input
+        id="booking-email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        inputmode="email"
+        maxlength="254"
+        required
+        aria-describedby="booking-email-error"
+      />
+      <p class="field-error" id="booking-email-error" hidden></p>
+    </div>
+    <div class="form-field">
+      <label for="booking-phone">Telefoonnummer <span>(optioneel)</span></label>
+      <input id="booking-phone" name="telefoon" type="tel" autocomplete="tel" maxlength="40" />
+    </div>
+    <div class="form-field">
+      <label for="booking-kind">Soort avond <span>(optioneel)</span></label>
+      <select id="booking-kind" name="soort_avond">
+        <option value="">Kies wat past</option>
+        <option>Café</option>
+        <option>Restaurant</option>
+        <option>Feest</option>
+        <option>Event</option>
+        <option>Iets anders</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label for="booking-date">Gewenste datum <span>(optioneel)</span></label>
+      <input id="booking-date" name="gewenste_datum" type="date" />
+    </div>
+    <div class="form-field form-field-wide">
+      <label for="booking-message">Bericht <span>(optioneel)</span></label>
+      <textarea id="booking-message" name="bericht" rows="3" maxlength="1200"></textarea>
+    </div>
+  </div>
+  <p class="form-note" id="booking-form-note">
+    Dit is een aanvraag, nog geen bevestigde boeking. Hamlet neemt contact met je op om de avond af te spreken.
+  </p>
+  <button class="btn form-submit" type="submit" disabled={!ready}>
+    <span>Boek een avond</span><Icon name="arrow" />
+  </button>
+  <p class="form-status" id="booking-form-status" role="status" aria-live="polite">
+    {!ready && 'Dit formulier staat klaar als voorbeeld. Verzenden is nog niet ingeschakeld.'}
+  </p>
+  <p class="form-privacy">
+    Hamlet gebruikt je gegevens om je aanvraag te beantwoorden. <a href={withBase('/privacy/')}
+      >Lees het privacybeleid.</a
+    >
+  </p>
+  <a class="form-phone" href="tel:+32483502220">Liever bellen? <span>0483 50 22 20</span></a>
+  <noscript><p class="form-note">Je kunt Hamlet ook rechtstreeks bellen om een avond af te spreken.</p></noscript>
+</form>

@@ -1,0 +1,17 @@
+---
+import SimpleLayout from '../layouts/SimpleLayout.astro';
+import Icon from '../components/Icon.astro';
+import { withBase } from '../lib/site';
+---
+
+<SimpleLayout title="Bedankt voor je aanvraag — Hamlet">
+  <div class="stack">
+    <h1>Bedankt voor je aanvraag.</h1>
+    <p class="lede confirmation">
+      Je aanvraag voor een avond live muziek is verstuurd. Hamlet neemt contact met je op om de avond af te spreken.
+    </p>
+    <p class="note booking-note">Je aanvraag is nog geen bevestigde boeking.</p>
+    <a class="btn" href={withBase('/')}>Terug naar Hamlet <Icon name="arrow" /></a>
+    <p class="direct-contact">Nog een vraag? Bel Hamlet op <a href="tel:+32483502220">0483 50 22 20</a>.</p>
+  </div>
+</SimpleLayout>

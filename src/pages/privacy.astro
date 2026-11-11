@@ -1,151 +1,66 @@
 ---
-import '@fontsource-variable/manrope';
+import SimpleLayout from '../layouts/SimpleLayout.astro';
 import { withBase } from '../lib/site';
 ---
 
-<!doctype html>
-<html lang="nl-BE">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Hoe deze website omgaat met privacy en contactgegevens." />
-    <meta name="robots" content="noindex, follow" />
-    <meta name="theme-color" content="#f7f5ef" />
-    <title>Privacy — Hamlet</title>
-  </head>
-  <body>
-    <main>
-      <a class="back" href={withBase('/')}>Terug naar Hamlet</a>
-      <h1>Privacy.</h1>
-      <p class="intro">Je kunt deze website bekijken zonder account en zonder trackingcookies.</p>
-      <section>
-        <h2>Wat de website doet</h2>
-        <p>
-          Deze website gebruikt geen analytics of advertentiepixels. De video en lettertypes worden samen met de website
-          aangeboden. De formulierdienst wordt pas benaderd wanneer je het contactformulier verstuurt.
-        </p>
-      </section>
-      <section>
-        <h2>Wanneer je het formulier verstuurt</h2>
-        <p>
-          Je naam en e-mailadres, en de eventuele extra gegevens die je invult, worden naar FormSubmit verstuurd. Die
-          dienst verwerkt je aanvraag en stuurt deze per e-mail door naar de inbox voor lesaanvragen. De gegevens worden
-          gebruikt om je vraag over gitaarles te beantwoorden en een kennismakingsles af te spreken.
-        </p>
-        <p>
-          FormSubmit bewaart inzendingen volgens zijn <a href="https://formsubmit.co/documentation">documentatie</a> gedurende
-          30 dagen. FormSubmit gebruikt reCAPTCHA tegen spam en kan op zijn eigen pagina cookies gebruiken. Lees ook het <a
-            href="https://formsubmit.co/privacy.pdf">privacybeleid van FormSubmit (pdf)</a
-          >. De ontvangen e-mail blijft in de inbox voor lesaanvragen totdat deze daar wordt verwijderd.
-        </p>
-      </section>
-      <section>
-        <h2>Wanneer je contact opneemt</h2>
-        <p>
-          Een telefoonlink opent je telefoonapp. Een link naar Google Maps of een lesplatform brengt je naar die dienst.
-          Vanaf dat moment geldt ook het privacybeleid van die dienst. Gegevens die je aan Hamlet stuurt, gebruikt hij
-          om je vraag over gitaarles te beantwoorden en eventuele lessen af te spreken.
-        </p>
-      </section>
-      <section>
-        <h2>Technische gegevens</h2>
-        <p>
-          De hostingdienst kan technische gegevens verwerken om de website te bezorgen en te beveiligen, zoals een
-          IP-adres en het tijdstip van een verzoek. Deze website voegt daar geen eigen bezoekersprofiel aan toe.
-        </p>
-      </section>
-      <section>
-        <h2>Een vraag over je gegevens?</h2>
-        <p>
-          Neem rechtstreeks contact op met Hamlet via <a href="tel:+32483502220">0483 50 22 20</a>. Je kunt vragen welke
-          gegevens hij van je heeft, ze laten verbeteren of verzoeken om ze te verwijderen.
-        </p>
-      </section>
-      <footer>Hamlet · Gitaarles in Merksem, Antwerpen</footer>
-    </main>
-  </body>
-</html>
-<style>
-  :global(html) {
-    background: #f7f5ef;
-    color: #242320;
-    font-family: 'Manrope Variable', sans-serif;
-    color-scheme: light;
-    -webkit-font-smoothing: antialiased;
-  }
-  :global(body) {
-    margin: 0;
-  }
-  :global(::selection) {
-    background: #b64b2c;
-    color: #fff;
-  }
-  main {
-    width: min(740px, calc(100% - 48px));
-    margin: 0 auto;
-    padding: 36px 0 32px;
-  }
-  .back,
-  a {
-    color: #a24025;
-    text-underline-offset: 4px;
-  }
-  .back {
-    display: inline-block;
-    padding: 12px 0;
-    font-size: 14px;
-    font-weight: 650;
-  }
-  a:focus-visible {
-    outline: 2px solid #b64b2c;
-    outline-offset: 6px;
-  }
-  h1 {
-    font-family: 'Manrope Variable', sans-serif;
-    font-weight: 780;
-    font-size: clamp(3rem, 9vw, 5rem);
-    line-height: 1.05;
-    letter-spacing: -0.05em;
-    margin: 68px 0 28px;
-  }
-  .intro {
-    font-size: 1.25rem;
-    line-height: 1.65;
-    padding-bottom: 36px;
-    border-bottom: 1px solid #d9d4c9;
-  }
-  section {
-    margin-top: 40px;
-  }
-  h2 {
-    font-size: 1.25rem;
-    font-weight: 750;
-    line-height: 1.35;
-    letter-spacing: -0.025em;
-    margin: 0 0 14px;
-  }
-  p {
-    font-size: 16px;
-    line-height: 1.8;
-    margin: 0;
-  }
-  p + p {
-    margin-top: 18px;
-  }
-  footer {
-    margin-top: 64px;
-    padding-top: 24px;
-    border-top: 1px solid #d9d4c9;
-    color: #6b675e;
-    font-size: 13px;
-    line-height: 1.6;
-  }
-  @media (max-width: 600px) {
-    h1 {
-      margin-top: 44px;
-    }
-    .intro {
-      font-size: 18px;
-    }
-  }
-</style>
+<SimpleLayout title="Privacy — Hamlet">
+  <div class="stack">
+    <a class="text-link back" href={withBase('/')}>Terug naar Hamlet</a>
+    <h1>Privacy.</h1>
+    <p class="lede intro">Je kunt deze website bekijken zonder account en zonder trackingcookies.</p>
+  </div>
+  <div class="prose">
+    <section>
+      <h2>Wat de website doet</h2>
+      <p>
+        Deze website gebruikt geen analytics of advertentiepixels. De foto’s, lettertypes en twee van de video’s worden
+        samen met de website aangeboden. De formulierdienst wordt pas benaderd wanneer je een formulier verstuurt.
+      </p>
+    </section>
+    <section>
+      <h2>Wanneer je een video van YouTube afspeelt</h2>
+      <p>
+        Eén video staat op YouTube. Die wordt pas geladen wanneer je op de afspeelknop klikt, via de privacyvriendelijke
+        modus van YouTube (youtube-nocookie.com). Vanaf dat moment verwerkt Google technische gegevens zoals je IP-adres
+        en geldt ook het <a href="https://policies.google.com/privacy">privacybeleid van Google</a>.
+      </p>
+    </section>
+    <section>
+      <h2>Wanneer je een formulier verstuurt</h2>
+      <p>
+        De website heeft twee formulieren: één om een avond live muziek aan te vragen en één voor een gratis
+        kennismakingsles. Je naam en e-mailadres, en de eventuele extra gegevens die je invult, worden naar FormSubmit
+        verstuurd. Die dienst verwerkt je aanvraag en stuurt deze per e-mail door naar de inbox voor aanvragen. De
+        gegevens worden gebruikt om je vraag te beantwoorden en een avond of een kennismakingsles af te spreken.
+      </p>
+      <p>
+        FormSubmit bewaart inzendingen volgens zijn <a href="https://formsubmit.co/documentation">documentatie</a> gedurende
+        30 dagen. FormSubmit gebruikt reCAPTCHA tegen spam en kan op zijn eigen pagina cookies gebruiken. Lees ook het <a
+          href="https://formsubmit.co/privacy.pdf">privacybeleid van FormSubmit (pdf)</a
+        >. De ontvangen e-mail blijft in de inbox voor aanvragen totdat deze daar wordt verwijderd.
+      </p>
+    </section>
+    <section>
+      <h2>Wanneer je contact opneemt</h2>
+      <p>
+        Een telefoonlink opent je telefoonapp. Een link naar Google Maps of een lesplatform brengt je naar die dienst.
+        Vanaf dat moment geldt ook het privacybeleid van die dienst. Gegevens die je aan Hamlet stuurt, gebruikt hij om
+        je vraag te beantwoorden en eventuele optredens of lessen af te spreken.
+      </p>
+    </section>
+    <section>
+      <h2>Technische gegevens</h2>
+      <p>
+        De hostingdienst kan technische gegevens verwerken om de website te bezorgen en te beveiligen, zoals een
+        IP-adres en het tijdstip van een verzoek. Deze website voegt daar geen eigen bezoekersprofiel aan toe.
+      </p>
+    </section>
+    <section>
+      <h2>Een vraag over je gegevens?</h2>
+      <p>
+        Neem rechtstreeks contact op met Hamlet via <a href="tel:+32483502220">0483 50 22 20</a>. Je kunt vragen welke
+        gegevens hij van je heeft, ze laten verbeteren of verzoeken om ze te verwijderen.
+      </p>
+    </section>
+  </div>
+</SimpleLayout>

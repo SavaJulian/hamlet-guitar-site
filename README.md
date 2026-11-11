@@ -1,8 +1,8 @@
-# Hamlet — gitaarles in Merksem
+# Hamlet — live flamencogitaar en gitaarles
 
-A Dutch-language website for Hamlet's guitar lessons in Merksem, Antwerpen. Built from Julian's local AstroWind website kit using Astro, Tailwind and Bun.
+A Dutch-language website for Hamlet, a flamenco guitarist and guitar teacher in Merksem, Antwerpen. The homepage is about live music for cafés, restaurants and events; `/gitaarles/` is the lesson page. Built from Julian's local AstroWind website kit using Astro, Tailwind and Bun.
 
-The current visual direction is a user-requested independent redesign. No installed design skill was used. Warm ivory, bold Manrope type and terracotta actions surround Hamlet's authentic performance in a contained black video frame.
+The visual direction is “Klankgat”, chosen from six moodboards: a white page, one orange from Hamlet's guitar top, his photo seen through the soundhole, and six strings that ring when the page opens. Styles are in `src/styles/klankgat.css`, shared behaviour in `src/scripts/site.ts`.
 
 ## Develop
 
@@ -54,7 +54,7 @@ Every “Plan je gratis les” action and “Maak kennis met Hamlet” leads to 
 
 Native `POST` uses an activated opaque FormSubmit endpoint. GitHub repository variable `LESSON_FORM_ENDPOINT` supplies `PUBLIC_LESSON_FORM_ENDPOINT` during builds; local development uses the latter in ignored `.env`. `src/lib/lessonForm.ts` accepts only an anonymous HTTPS FormSubmit identifier and rejects exposed-email URLs without logging the rejected value. The receiving address remains private and absent from public source, HTML, documentation and URLs.
 
-The POST includes a subject, table template and base-aware `_next` URL for `/bedankt/`. Provider reCAPTCHA remains enabled. The privacy page describes provider processing and [FormSubmit's documented 30-day submission archive](https://formsubmit.co/documentation). Neither a loading message nor the thank-you page proves inbox receipt; production delivery requires a separate controlled check.
+Both forms (booking on the homepage, lesson on `/gitaarles/`) use the same endpoint. Each POST includes its own subject, a table template and a base-aware `_next` URL: `/bedankt-boeking/` or `/bedankt/`. Provider reCAPTCHA remains enabled. The privacy page describes provider processing and [FormSubmit's documented 30-day submission archive](https://formsubmit.co/documentation). Neither a loading message nor the thank-you page proves inbox receipt; production delivery requires a separate controlled check.
 
 To change the receiving inbox:
 
@@ -65,9 +65,9 @@ To change the receiving inbox:
 
 ## Design and maintenance
 
-`PRODUCT.md` records product facts. `DESIGN.md` records current tokens, layouts and interactions. `docs/direction.md` summarizes the independent design direction. Files retained under `.impeccable/` are descriptive metadata, not an active workflow or design authority.
+`PRODUCT.md` records product facts. `DESIGN.md` records current tokens, layouts and interactions. `docs/direction.md` summarizes the chosen direction and site structure. Files retained under `.impeccable/` are descriptive metadata, not an active workflow or design authority.
 
-Portable outlined SVG logos are in `public/brand/`: a light wordmark for dark surfaces, an ink wordmark for light surfaces, and the six-string H favicon. Terracotta and bold Manrope align the assets with the interface. Preserve genuine footage, traceable claims, keyboard support and recipient privacy when editing.
+Portable outlined SVG logos are in `public/brand/`: a light wordmark for dark surfaces, an ink wordmark for light surfaces, and the six-string H favicon. Those files still use the earlier Manrope wordmark; the site header sets the wordmark in Unbounded. Preserve genuine footage, traceable claims, keyboard support and recipient privacy when editing.
 
 ## Logo selection page
 

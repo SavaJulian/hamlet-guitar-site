@@ -1,120 +1,137 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-26T11:00:12.110208+00:00",
+  "generatedAt": "2026-11-11T13:10:00+00:00",
   "title": "Design System: Hamlet Guitar",
   "extensions": {
-    "documentationUpdatedAt": "2026-10-26",
-    "documentationMethod": "Source-based record of the user-requested independent redesign. No installed design skill was used. This file is descriptive metadata, not an active workflow.",
+    "documentationUpdatedAt": "2026-11-11",
+    "documentationMethod": "Source-based record of the Klankgat direction chosen by Julian from six moodboards. This file is descriptive metadata, not an active workflow.",
     "sourceFiles": [
       "src/pages/index.astro",
-      "src/styles/hamlet.css",
-      "src/components/Brand.astro",
+      "src/pages/gitaarles.astro",
+      "src/styles/klankgat.css",
+      "src/scripts/site.ts",
+      "src/layouts/SiteLayout.astro",
+      "src/components/Rosette.astro",
+      "src/components/Strings.astro",
+      "src/components/BookingForm.astro",
       "src/components/LessonForm.astro"
     ],
     "colorMeta": {
       "paper": {
-        "value": "#f7f5ef",
+        "value": "#fbfbf9",
         "displayName": "Paper",
         "role": "neutral"
       },
       "ink": {
-        "value": "#242320",
-        "displayName": "Ink",
+        "value": "#1b1b1f",
+        "displayName": "Ebony",
         "role": "neutral"
       },
-      "accent": {
-        "value": "#b64b2c",
-        "displayName": "Accent",
+      "orange": {
+        "value": "#f28a1b",
+        "displayName": "Guitar top",
         "role": "primary"
       },
-      "accent-hover": {
-        "value": "#933b23",
-        "displayName": "Accent Hover",
+      "orange-deep": {
+        "value": "#9a4e00",
+        "displayName": "Deep orange",
         "role": "primary"
       },
-      "muted": {
-        "value": "#6b675e",
-        "displayName": "Muted",
+      "mist": {
+        "value": "#f1f1ee",
+        "displayName": "Mist",
+        "role": "neutral"
+      },
+      "grey": {
+        "value": "#5c5f66",
+        "displayName": "String grey",
+        "role": "neutral"
+      },
+      "text": {
+        "value": "#33343a",
+        "displayName": "Reading text",
         "role": "neutral"
       },
       "line": {
-        "value": "#d9d4c9",
+        "value": "#c9cacd",
         "displayName": "Line",
         "role": "neutral"
       },
-      "practice": {
-        "value": "#eae5d9",
-        "displayName": "Practice",
-        "role": "neutral"
-      },
-      "form-panel": {
-        "value": "#fffefa",
-        "displayName": "Form Panel",
-        "role": "neutral"
-      },
-      "contact-emphasis": {
-        "value": "#e6b69c",
-        "displayName": "Contact Emphasis",
-        "role": "neutral"
+      "error": {
+        "value": "#a3261a",
+        "displayName": "Error",
+        "role": "semantic"
       }
     },
     "typographyMeta": {
       "display": {
-        "displayName": "Clear lesson heading",
-        "purpose": "Bold Manrope hero and section headings."
-      },
-      "tagline": {
-        "displayName": "Personal pace",
-        "purpose": "Bodoni Moda italic for the hero tagline."
-      },
-      "quote": {
-        "displayName": "Student voice",
-        "purpose": "Bodoni Moda 500, regular style, for the attributed quote."
+        "value": "Unbounded Variable 600",
+        "purpose": "Hero and section headings, wordmark, quote."
       },
       "body": {
-        "displayName": "Practical information",
-        "purpose": "Manrope for reading, navigation, labels and controls."
+        "value": "Onest Variable 400",
+        "purpose": "Reading text, navigation, labels and controls."
+      },
+      "label": {
+        "value": "Onest Variable 600, 14px, 0.1em, uppercase",
+        "purpose": "Eyebrows above headings and lesson rows."
+      },
+      "button": {
+        "value": "Onest Variable 700, 18px",
+        "purpose": "Pill buttons."
       }
     },
     "shadows": [
       {
-        "name": "mobile-lesson-action",
-        "value": "0 5px 24px #24232026",
+        "name": "floating-action",
+        "value": "0 8px 24px rgb(27 27 31 / 0.25)",
         "purpose": "Separates the floating mobile action from the page."
       }
     ],
     "motion": [
       {
+        "name": "strings",
+        "value": "damped sine, about 1 to 2 seconds",
+        "purpose": "Six strings strummed on arrival and plucked by the pointer."
+      },
+      {
+        "name": "hero-arrival",
+        "value": "0.8 to 1.6s",
+        "purpose": "Copy rises in sequence; the soundhole turns into place."
+      },
+      {
+        "name": "reveal",
+        "value": "0.8s",
+        "purpose": "Sections rise into view once when scrolled to."
+      },
+      {
         "name": "interaction",
-        "value": "0.2s",
-        "purpose": "Button arrows, colors and media hints; disabled for reduced motion."
+        "value": "0.25 to 0.35s",
+        "purpose": "Buttons, arrows, video thumbnails and lesson rows."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "off",
+        "purpose": "All of the above is disabled for visitors who prefer reduced motion."
       }
     ],
     "breakpoints": [
       {
-        "name": "narrow-phone",
-        "value": "370px"
-      },
-      {
         "name": "phone",
-        "value": "580px"
+        "value": "600px"
       },
       {
-        "name": "tablet",
-        "value": "800px"
+        "name": "single-column-hero",
+        "value": "820px"
       },
       {
-        "name": "compact-desktop",
-        "value": "1100px"
-      },
-      {
-        "name": "wide",
-        "value": "1600px"
+        "name": "stacked-sections",
+        "value": "980px"
       }
     ],
     "inquiryFormStatus": {
       "status": "implemented-activation-confirmed",
-      "source": "src/components/LessonForm.astro",
+      "source": "src/components/BookingForm.astro, src/components/LessonForm.astro",
       "provider": "FormSubmit",
       "endpointVariable": "PUBLIC_LESSON_FORM_ENDPOINT",
       "repositoryVariable": "LESSON_FORM_ENDPOINT",
@@ -124,90 +141,78 @@
   },
   "components": [
     {
-      "name": "Primary lesson action",
+      "name": "Primary action",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "White text on terracotta, 55px minimum height, 5px corners. Targets #contact."
+      "description": "Ink text on an orange pill, 60px minimum height. Lifts on hover and its arrow slides."
+    },
+    {
+      "name": "Soundhole photo",
+      "kind": "media",
+      "refersTo": "rosette",
+      "description": "Round photo inside an orange disc with two fine rings and a slowly turning dotted ring."
+    },
+    {
+      "name": "Six strings",
+      "kind": "ornament",
+      "refersTo": "strings",
+      "description": "Full-width SVG lines, 4px to 1px, that ring when strummed or plucked."
+    },
+    {
+      "name": "Video tile",
+      "kind": "link",
+      "refersTo": "video-tile",
+      "description": "16:9 thumbnail with an orange play disc; opens a dialog sized to the video."
+    },
+    {
+      "name": "Form card",
+      "kind": "form",
+      "refersTo": "form-card",
+      "description": "White card with 28px corners holding the booking or lesson form."
     },
     {
       "name": "Lesson row",
-      "kind": "card",
-      "description": "A full-width linked row separated by fine warm-gray rules, with a circular arrow. Preselects form interest."
-    },
-    {
-      "name": "Performance frame",
-      "kind": "custom",
-      "refersTo": "media-frame",
-      "description": "Contained black frame with authentic video. Attempts sound and falls back to muted autoplay; reduced motion begins with the poster."
-    },
-    {
-      "name": "Sound control",
-      "kind": "custom",
-      "description": "44px circular speaker, white on near-black #171715, with an accessible name and tooltip. An image-sized button separately controls pause/resume."
-    },
-    {
-      "name": "Teacher panel",
-      "kind": "custom",
-      "description": "Conceptual guitar image paired with the teacher introduction and attributed student quote."
-    },
-    {
-      "name": "Practice panel",
-      "kind": "custom",
-      "description": "Compact beige inset with explanatory copy and a separate guitar-and-chair mood image."
-    },
-    {
-      "name": "FAQ row",
-      "kind": "custom",
-      "description": "Native details and summary, divided by fine rules with a rotating plus icon."
-    },
-    {
-      "name": "Lesson inquiry form",
-      "kind": "custom",
-      "refersTo": "form-panel",
-      "description": "Light panel within dark contact section. Required name/email; optional phone, interest and message. White fields and full-width terracotta submit. Mobile places route information after the form."
-    },
-    {
-      "name": "Mobile lesson action",
-      "kind": "button",
-      "description": "Floating terracotta contact link, hidden while the primary hero action or contact section is visible."
+      "kind": "link",
+      "refersTo": "lesson-row",
+      "description": "Full-width row with string-weight dividers and a circular arrow that turns orange on hover."
     }
   ],
   "narrative": {
-    "northStar": "A warm, contemporary guitar studio",
-    "overview": "Ivory surroundings, strong ink typography and terracotta invitations place authentic playing at the center. A contained black performance frame balances the clear lesson offer. Linked lesson rows, a teacher panel with its quote, compact practice imagery and a light form on dark ink complete the path to an inquiry.",
+    "northStar": "Klankgat: seen through the soundhole",
+    "overview": "A white page, one orange from the top of Hamlet's guitar, his photo always round inside a rosette, and six strings that ring when the page opens. The homepage sells an evening of live flamenco guitar; the lesson page sells the free first lesson.",
     "keyCharacteristics": [
-      "Bold Manrope headings and wordmark with a retained six-string H.",
-      "Bodoni Moda only for the italic hero tagline and student quote.",
-      "Authentic performance, distinct conceptual supporting imagery and traceable business claims.",
-      "Responsive reading order and one clear inquiry destination."
+      "Unbounded headings and wordmark with the retained six-string H.",
+      "Onest for everything else; both faces cover Cyrillic.",
+      "One accent colour, used as a background for ink text.",
+      "Photos are round or pill-shaped; buttons are pills."
     ],
     "rules": [
       {
-        "name": "Color hierarchy",
-        "body": "Use ivory for the main page, ink for text and the final contact section, and terracotta for invitations.",
+        "name": "Colour hierarchy",
+        "body": "Paper for the page, mist for alternate sections, ink for text and the closing band, orange only for invitations and the soundhole.",
         "section": "colors"
       },
       {
-        "name": "Typography hierarchy",
-        "body": "Manrope carries headings and reading; Bodoni adds limited expression in the hero tagline and quote.",
-        "section": "typography"
+        "name": "Orange is a background",
+        "body": "Orange text on white is too faint; use ink on orange, or deep orange where coloured text is needed.",
+        "section": "colors"
       },
       {
-        "name": "Responsive contact",
-        "body": "Keep the form before route information on mobile and hide the floating action while an existing primary destination is visible.",
-        "section": "layout"
+        "name": "Motion is optional",
+        "body": "Every animation sits behind prefers-reduced-motion: no-preference and nothing is hidden waiting for it.",
+        "section": "motion"
       }
     ],
     "dos": [
-      "Preserve the approved headline and free introductory lesson offer.",
-      "Preserve source provenance, quote attribution and business facts.",
-      "Keep visible focus, reduced-motion behavior and manual playback choices.",
-      "Keep the recipient private and all primary invitations directed to #contact."
+      "Preserve the approved lesson headline and the free introductory lesson.",
+      "Send each page's actions to that page's own form.",
+      "Keep the YouTube video behind a click.",
+      "Keep fonts Cyrillic-capable for the Russian version."
     ],
     "donts": [
-      "Do not describe conceptual images as Hamlet teaching or his actual studio.",
-      "Do not invent prices, availability, credentials or outcomes.",
-      "Do not treat submitted requests as confirmed lessons or guaranteed inbox delivery."
+      "Do not add prices, show dates, reviews or qualifications that are not confirmed.",
+      "Do not use the poster's lettering as site copy.",
+      "Do not add a show agenda or FAQ without Julian asking for it."
     ]
   }
 }
