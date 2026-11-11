@@ -115,14 +115,6 @@
           "bytes": 15262,
           "sha256": "690af101258a42edf8be3ef8dea40487c17691dab8e7fa35404ebabbb4ae15b1",
           "source_type": "Frame at 35 s, cropped to 16:9"
-        },
-        "still": {
-          "file": "hamlet-podium-foto.webp",
-          "source_type": "Frame at 5 s of IMG_0633.MOV, cropped to 3:2; no retouching",
-          "dimensions": [720, 480],
-          "bytes": 32296,
-          "sha256": "919a8162ba88166e5e9f62e623c154af6cdf904e8870a56487c8187d4efc2b6a",
-          "purpose": "Photo beside the booking form on the homepage."
         }
       },
       "hamlet-dichtbij.mp4": {
@@ -137,6 +129,16 @@
           "sha256": "dc9434e78aaf42170e8449be8179b5f4c09e60fc9de4a88f5749fce013209d70",
           "source_type": "Frame at 34 s, cropped to 16:9"
         }
+      }
+    },
+    "generated_images": {
+      "hamlet-podiumlicht.webp": {
+        "source_type": "AI-generated clip from Julian's Higgsfield library (seedance_2_5, 25 October 2026, id 68b7e731-b865-46fb-8d1b-d4e0cb0f8449); frame at 3.9 s, unaltered",
+        "identity_claim": "Atmosphere image (Sfeerbeeld). It is not a photograph of a real performance.",
+        "dimensions": [1280, 720],
+        "bytes": 31118,
+        "sha256": "ce71ad7da15e35f031845ba27bd07704584cabf6ec9f2e031a4b051c6f88b6a6",
+        "purpose": "Image beside the booking form on the homepage."
       }
     }
   }
