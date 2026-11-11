@@ -21,8 +21,7 @@ jobs:
       - run: bun run check
       - run: bun run build
         env:
-          SITE_URL: https://savajulian.github.io
-          BASE_PATH: /hamlet-guitar-site
+          SITE_URL: https://gitaarmethamlet.be
           PUBLIC_LESSON_FORM_ENDPOINT: ${{ vars.LESSON_FORM_ENDPOINT }}
       - uses: actions/upload-artifact@v4
         with:

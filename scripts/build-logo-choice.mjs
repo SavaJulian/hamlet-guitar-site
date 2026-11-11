@@ -4,7 +4,7 @@ import path from 'node:path';
 import { format, resolveConfig } from 'prettier';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const reviewUrl = 'https://savajulian.github.io/hamlet-guitar-site/logo-keuze/';
+const reviewUrl = 'https://gitaarmethamlet.be/logo-keuze/';
 // This previously activated anonymous endpoint sends design feedback to Julian.
 // Keep it separate from the lesson destination, which may later move to Hamlet.
 const textValues = {

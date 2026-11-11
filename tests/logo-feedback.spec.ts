@@ -57,7 +57,7 @@ for (const selected of ['tokkel', 'geen']) {
     expect(posted?.Opmerkingen).toBe(russianNotes);
     expect(posted?.Logokeuze).toMatch(selected === 'geen' ? /Ни один/ : /03 — Tokkel/);
     expect(posted?._next).toBe(
-      `https://savajulian.github.io/hamlet-guitar-site/logo-keuze/bedankt/${selected === 'tokkel' ? '?lang=nl' : ''}`
+      `https://gitaarmethamlet.be/logo-keuze/bedankt/${selected === 'tokkel' ? '?lang=nl' : ''}`
     );
     await page.goBack();
     await expect(page.locator('#send-feedback')).toBeEnabled();
