@@ -33,7 +33,6 @@ const reviews = [
     name: 'Siel',
     role: 'Leerling via Apprentus · 2022',
     text: '“Fantastische maar vooral gepassioneerde leerkracht!”',
-    source: 'https://www.apprentus.nl/priveles/antwerpen/muziek/flamenco/flamenco-guitar-beginners-to-professional-',
   },
 ];
 const videos: Video[] = [
@@ -168,18 +167,6 @@ const schema = {
                   <strong>{review.name}</strong>
                   {review.role}
                 </span>
-                {review.source && (
-                  <a
-                    class="text-link"
-                    id="review-source"
-                    href={review.source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Lees de ervaring van ${review.name} op Apprentus`}
-                  >
-                    Bron <Icon name="arrow" size={16} />
-                  </a>
-                )}
               </figcaption>
             </figure>
           ))
