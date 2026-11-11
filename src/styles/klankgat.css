@@ -1202,6 +1202,31 @@ svg {
     opacity: 1;
     transform: none;
   }
+  .mobile-nav {
+    transform-origin: top;
+    animation: menu-open 0.45s var(--ease) both;
+  }
+  .mobile-nav a {
+    animation: menu-link 0.5s var(--ease) both;
+    animation-delay: calc(var(--n, 0) * 70ms + 90ms);
+  }
+  .mobile-nav a:nth-child(2) {
+    --n: 1;
+  }
+  .mobile-nav a:nth-child(3) {
+    --n: 2;
+  }
+  .mobile-nav a svg {
+    animation: menu-arrow 0.5s var(--ease) both;
+    animation-delay: calc(var(--n, 0) * 70ms + 220ms);
+  }
+  .mobile-nav[data-closing] {
+    animation: menu-close 0.22s ease-in both;
+  }
+  .mobile-nav[data-closing] a,
+  .mobile-nav[data-closing] a svg {
+    animation: none;
+  }
   .video-dialog[open] {
     animation: dialog-in 0.35s var(--ease) both;
   }
@@ -1219,6 +1244,37 @@ svg {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+@keyframes menu-open {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+@keyframes menu-close {
+  to {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-8px);
+  }
+}
+@keyframes menu-link {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+}
+@keyframes menu-arrow {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
   }
 }
 @keyframes rise {

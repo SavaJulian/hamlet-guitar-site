@@ -6,10 +6,24 @@ function initMenu() {
   const button = document.querySelector<HTMLButtonElement>('.menu-toggle');
   const menu = document.querySelector<HTMLElement>('#mobile-nav');
   if (!button || !menu) return;
+  let closing = 0;
   const setOpen = (open: boolean) => {
-    menu.hidden = !open;
+    window.clearTimeout(closing);
     button.setAttribute('aria-expanded', String(open));
     button.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+    menu.toggleAttribute('data-closing', !open && !menu.hidden);
+    if (open) {
+      menu.hidden = false;
+      return;
+    }
+    // Let the panel fold away before it leaves the page; instant under reduced motion.
+    closing = window.setTimeout(
+      () => {
+        menu.hidden = true;
+        menu.removeAttribute('data-closing');
+      },
+      reducedMotion.matches ? 0 : 220
+    );
   };
   button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'));
   menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
