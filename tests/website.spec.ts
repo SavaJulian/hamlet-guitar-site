@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { lessonFormEndpoint } from '../src/lib/lessonForm';
 
 const pages = [
-  { path: '/', heading: 'Live flamencogitaar in cafés en restaurants.' },
+  { path: '/', heading: 'Live flamencogitaar.' },
   { path: '/gitaarles/', heading: 'Leer gitaar spelen. Op jouw tempo.' },
 ];
 const forms = {
@@ -85,7 +85,7 @@ test('live music is the homepage and guitar lessons are a second page of the sam
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Leer gitaar spelen. Op jouw tempo.');
   await expect(navigation.getByRole('link', { name: 'Gitaarles' })).toHaveAttribute('aria-current', 'page');
   await page.getByRole('link', { name: 'Hamlet, naar de startpagina' }).first().click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Live flamencogitaar in cafés en restaurants.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Live flamencogitaar.');
   await page.getByRole('link', { name: 'Naar de gitaarlessen' }).click();
   await expect(page).toHaveURL(/\/gitaarles\/$/);
 });
@@ -401,7 +401,7 @@ test('privacy and thank-you pages explain form handling without contacting the p
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
   await expect(page.getByRole('main')).toContainText('Je aanvraag is nog geen bevestigde boeking.');
   await page.getByRole('link', { name: 'Terug naar Hamlet', exact: true }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Live flamencogitaar in cafés en restaurants.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Live flamencogitaar.');
   expect(providerRequests).toHaveLength(0);
 });
 

@@ -31,7 +31,7 @@ Do not invent credentials, lesson outcomes, prices, show dates, scarcity or avai
 ## Content and identity
 
 - Approved lesson headline and action: “Leer gitaar spelen. Op jouw tempo.” and “Plan je gratis les”. “Maak kennis met Hamlet” also leads to the lesson form.
-- The homepage headline “Live flamencogitaar in cafés en restaurants.”, its supporting copy, “Boek een avond” and the video captions “Live op het podium” and “Van dichtbij” are proposals awaiting Julian's approval.
+- The homepage headline “Live flamencogitaar.”, its supporting copy, “Boek een avond” and the video captions “Live op het podium” and “Van dichtbij” are proposals awaiting Julian's approval.
 - Julian decided on 11 November 2026: no show agenda on the site, and no FAQ on either page for now (possibly later).
 - The identity keeps the six-string H with a lowercase “hamlet.” wordmark in Unbounded. A separate logo selection is still running at `/logo-keuze/`.
 
