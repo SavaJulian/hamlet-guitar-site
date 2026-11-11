@@ -130,18 +130,17 @@ const videos = [
           <li>Feest</li>
           <li>Event</li>
         </ul>
-        <div class="pill-photo">
-          <div>
-            <img
-              src={withBase('/media/hamlet-handen.webp')}
-              width="1055"
-              height="257"
-              alt="De handen van Hamlet op de gitaar"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-        </div>
+        <figure class="stage-photo">
+          <img
+            src={withBase('/media/hamlet-podium-foto.webp')}
+            width="720"
+            height="480"
+            alt="Hamlet speelt gitaar op een podium, voor een zaal met publiek"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Hamlet live op het podium</figcaption>
+        </figure>
       </div>
       <div class="form-card" data-reveal style="--i:1">
         <BookingForm action={formAction} hiddenFields={formFields} />

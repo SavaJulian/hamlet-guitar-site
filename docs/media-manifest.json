@@ -115,6 +115,14 @@
           "bytes": 15262,
           "sha256": "690af101258a42edf8be3ef8dea40487c17691dab8e7fa35404ebabbb4ae15b1",
           "source_type": "Frame at 35 s, cropped to 16:9"
+        },
+        "still": {
+          "file": "hamlet-podium-foto.webp",
+          "source_type": "Frame at 5 s of IMG_0633.MOV, cropped to 3:2; no retouching",
+          "dimensions": [720, 480],
+          "bytes": 32296,
+          "sha256": "919a8162ba88166e5e9f62e623c154af6cdf904e8870a56487c8187d4efc2b6a",
+          "purpose": "Photo beside the booking form on the homepage."
         }
       },
       "hamlet-dichtbij.mp4": {

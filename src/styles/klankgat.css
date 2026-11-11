@@ -514,6 +514,22 @@ svg {
   object-fit: cover;
   object-position: 55% center;
 }
+.stage-photo {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.stage-photo img {
+  width: 100%;
+  height: auto;
+}
+.stage-photo figcaption {
+  padding: 12px 18px 14px;
+  font-size: 15px;
+  font-weight: 600;
+}
 
 /* Videos */
 .video-grid {
