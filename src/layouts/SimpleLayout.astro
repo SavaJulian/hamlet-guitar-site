@@ -1,0 +1,39 @@
+---
+import '@fontsource-variable/unbounded';
+import '@fontsource-variable/onest';
+import '../styles/klankgat.css';
+import Brand from '../components/Brand.astro';
+import { withBase } from '../lib/site';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#fbfbf9" />
+    <title>{title}</title>
+    <link rel="icon" href={withBase('/brand/hamlet-monogram.svg')} type="image/svg+xml" />
+  </head>
+  <body>
+    <div class="simple-page">
+      <header class="site-header"><div class="shell"><Brand /></div></header>
+      <main class="simple-main"><slot /></main>
+      <footer class="site-footer">
+        <div class="shell">
+          <div class="footer-bottom">
+            <span>Hamlet · Merksem, Antwerpen</span>
+            <a href={withBase('/privacy/')}>Privacy</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,3 +1,15 @@
+# Verification — 11 November 2026
+
+## Klankgat rebuild: live music homepage and lesson page
+
+- Astro check reports zero errors, warnings or hints; ESLint and Prettier pass; the production build generates six routes (`/`, `/gitaarles/`, `/bedankt/`, `/bedankt-boeking/`, `/privacy/`, 404).
+- Thirty-one browser tests pass. For both pages at 390, 768 and 1440 pixels: no horizontal overflow, no page errors, every image loads. Also covered: navigation between the two pages, the mobile menu, the floating action, both forms (unconfigured state, required-field errors and focus, locally intercepted native POST payloads), privacy and both thank-you pages, the video dialog, YouTube being contacted only after a click, and motion with and without reduced-motion. These tests send no external lead.
+- Both pages were reviewed in screenshots at 1440 and 390 pixels, plus the load animation and the open video dialog at 1440.
+- Not verified: delivery of a real form submission to the inbox, the site on a real phone, Safari and Firefox, and the deployed GitHub Pages build.
+- The lockfile was checked with `bun install --frozen-lockfile` under Bun 1.3.14, the version CI uses.
+
+The sections below describe the earlier design and its hero video. They are retained as history.
+
 # Verification — 26 October 2026
 
 ## Inquiry form

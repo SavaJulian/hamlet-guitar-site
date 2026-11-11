@@ -1,30 +1,27 @@
-# Hamlet — independent redesign
+# Hamlet — Klankgat
 
-Implemented directly from the user's request to rethink the design without installed design skills. This document describes the current source; earlier generated design directions do not govern it.
+Julian chose this direction on 11 November 2026 from six moodboards (Patio, Cartel, Klankgat, Partituur, Buurt, Podium). It replaces the earlier ivory, Manrope and terracotta redesign.
 
 ## Direction
 
-A warm, contemporary guitar studio: ivory surroundings, strong ink typography and terracotta invitations. Hamlet's authentic playing is the focal point inside a contained black video frame. Bold Manrope supplies clarity; Bodoni adds a small expressive accent to “Op jouw tempo.” and the student quote.
+Calm and modern: a white page, one orange taken from the top of Hamlet's guitar, his photo always seen through the soundhole, and six strings running across the page. Unbounded for headings, Onest for text; both cover Cyrillic. Motion is part of the brief: the strings are strummed when the page opens and can be plucked with the pointer.
 
-The six-string H is retained with a bold lowercase wordmark. Rounded media frames, fine dividing lines and generous spacing organize the page. Color and imagery establish hierarchy; effects remain brief and functional.
+## Site structure
 
-## Page sequence
+One site, two pages.
 
-1. Local introduction, approved headline, free lesson action and genuine performance.
-2. Practical lesson facts and three linked choices for different starting levels.
-3. Teacher introduction with one conceptual guitar image and an attributed review in the same panel.
-4. A compact practice panel with a separate guitar-and-chair image.
-5. Native expanding FAQ rows.
-6. A dark invitation to the free first lesson, with a light form panel and route information.
+1. **Home, live music.** Hero with “Boek een avond”, three performance videos, a short booking form, a band that points to the lessons.
+2. **Gitaarles.** Hero with the approved headline and “Plan je gratis les”, three lesson choices, the teacher and an attributed review, a practice section, the lesson form and the location.
 
-On mobile the layout becomes one reading sequence, with the contact form before route details. The floating lesson action is hidden whenever the hero action or contact section already offers the next step.
+Decided along the way: no show agenda on the site; no FAQ on either page for now.
 
 ## Invariants
 
-- Keep “Leer gitaar spelen. Op jouw tempo.” and the user-confirmed free kennismakingsles.
-- Use real footage as performance evidence. Label conceptual section images as atmosphere and preserve provenance.
-- Keep the plain black video background. Attempt audible playback with a browser-safe muted fallback, one speaker control and an accessible pause/resume area. Respect reduced motion and manual choices.
-- Send primary actions to the inquiry form. Preserve native validation, privacy information, the telephone fallback and an opaque recipient endpoint.
-- Keep business claims sourced. A submitted form is an inquiry, not a booked lesson or proof of inbox delivery.
+- Keep “Leer gitaar spelen. Op jouw tempo.”, “Plan je gratis les” and the free kennismakingsles.
+- The photo comes from Hamlet's show poster; poster lettering is never site copy.
+- Do not invent prices, show dates, reviews or qualifications.
+- Send every primary action to the form on its own page. Preserve native validation, privacy information, the telephone fallback and an opaque recipient endpoint.
+- Load the YouTube video only after a click.
+- Respect reduced motion.
 
-Implementation tokens and responsive details are in `DESIGN.md`. Verification and deployment are separate from this design record.
+Tokens and interaction details are in `DESIGN.md`; facts and open questions in `PRODUCT.md`.

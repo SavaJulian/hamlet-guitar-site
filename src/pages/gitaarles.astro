@@ -1,0 +1,216 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/Icon.astro';
+import Rosette from '../components/Rosette.astro';
+import Strings from '../components/Strings.astro';
+import LessonForm from '../components/LessonForm.astro';
+import { absoluteUrl, withBase } from '../lib/site';
+import { lessonFormEndpoint } from '../lib/lessonForm';
+
+const phone = '+32483502220';
+const maps = 'https://www.google.com/maps?cid=4943289985205439662';
+const formAction = lessonFormEndpoint(import.meta.env.PUBLIC_LESSON_FORM_ENDPOINT);
+const next = absoluteUrl('/bedankt/', Astro.site);
+const formFields = {
+  _subject: 'Hamlet — aanvraag gratis kennismakingsles',
+  _template: 'table',
+  ...(next ? { _next: next } : {}),
+};
+const canonical = absoluteUrl('/gitaarles/', Astro.site);
+const lessons = [
+  {
+    level: 'Voor beginners',
+    title: 'Je eerste akkoorden.',
+    text: 'Een fijne houding, een helder geluid en stap voor stap de basis onder je vingers.',
+    go: 'Ik wil beginnen',
+    interest: 'Ik begin net',
+  },
+  {
+    level: 'Voor wie verder wil',
+    title: 'Meer gevoel. Meer vrijheid.',
+    text: 'Werk aan je techniek, ritme en expressie. Geef wat je al speelt een nieuwe dimensie.',
+    go: 'Ik wil verder groeien',
+    interest: 'Ik speel al gitaar',
+  },
+  {
+    level: 'Hamlet’s specialiteit',
+    title: 'De ziel van flamenco.',
+    text: 'Ontdek Spaanse gitaar: het ritme, de aanslag en de bijzondere kracht van flamenco.',
+    go: 'Ik wil dit leren',
+    interest: 'Ik wil flamenco leren',
+  },
+];
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Gitaarlessen Hamlet',
+  description:
+    'Persoonlijke gitaarlessen in Merksem, Antwerpen. Spaanse gitaar en flamenco voor beginners en gevorderden.',
+  telephone: phone,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Bredabaan 479',
+    postalCode: '2170',
+    addressLocality: 'Antwerpen',
+    addressCountry: 'BE',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: 51.2448788, longitude: 4.4467246 },
+  hasMap: maps,
+  areaServed: ['Merksem', 'Antwerpen'],
+  ...(canonical ? { url: canonical, image: absoluteUrl('/media/hamlet-portret.webp', Astro.site) } : {}),
+};
+---
+
+<SiteLayout
+  title="Gitaarles in Merksem, Antwerpen | Hamlet"
+  ogTitle="Hamlet — leer gitaar spelen. Op jouw tempo."
+  description="Leer gitaar spelen bij Hamlet in Merksem, Antwerpen. Je eerste kennismakingsles is gratis. Van je eerste akkoord tot Spaanse gitaar en flamenco."
+  path="/gitaarles/"
+  current="les"
+  action={{ href: '#contact', label: 'Plan je gratis les' }}
+  schema={schema}
+>
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="shell hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow" style="--i:0">Gitaarles · Merksem, Antwerpen</p>
+        <h1 id="hero-heading" style="--i:1">Leer gitaar spelen. Op jouw tempo.</h1>
+        <p class="lede" style="--i:2">
+          Spaanse gitaar en flamenco, voor beginners en gevorderden. Je eerste kennismakingsles is gratis.
+        </p>
+        <div class="hero-actions" style="--i:3">
+          <a class="btn" href="#contact" data-primary-action data-strum>Plan je gratis les <Icon name="arrow" /></a>
+          <a class="text-link" href="#lessen">Ontdek de lessen</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <Rosette alt="Hamlet speelt flamencogitaar" eager />
+      </div>
+      <div class="hero-strings"><Strings strum="load" /></div>
+    </div>
+    <div class="shell hero-facts">
+      <span><b>24 jaar</b> ervaring</span>
+      <span><b>60 minuten</b> per les</span>
+      <span><b>Eerste les</b> gratis</span>
+    </div>
+  </section>
+
+  <section class="section" id="lessen" aria-labelledby="lessons-heading">
+    <div class="shell">
+      <div class="section-head" data-reveal>
+        <h2 id="lessons-heading">Begin waar jij bent.</h2>
+        <p>Jouw muziek. Jouw vertrekpunt.</p>
+      </div>
+      <div class="lesson-rows">
+        {
+          lessons.map((lesson, index) => (
+            <a class="lesson-row" href="#contact" data-interest={lesson.interest} data-reveal style={`--i:${index}`}>
+              <span class="eyebrow">{lesson.level}</span>
+              <div>
+                <h3>{lesson.title}</h3>
+                <p>{lesson.text}</p>
+              </div>
+              <span class="row-go">
+                <span>{lesson.go}</span>
+                <i>
+                  <Icon name="arrow" size={22} />
+                </i>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-mist" id="hamlet" aria-labelledby="teacher-heading">
+    <div class="shell split">
+      <div class="stack" data-reveal>
+        <p class="eyebrow">Je leraar, Hamlet</p>
+        <h2 id="teacher-heading">Liefde voor gitaar. Aandacht voor jou.</h2>
+        <p>
+          Je hoort het wanneer Hamlet speelt: de gitaar is zijn taal. Hij heeft 24 jaar ervaring en is gespecialiseerd
+          in Spaanse gitaar en flamenco, van traditionele klanken tot een moderne benadering.
+        </p>
+        <p>
+          In de les draait het om jouw spel. Je krijgt persoonlijke begeleiding en oefeningen om thuis mee verder te
+          gaan. Of je nu voor het eerst een gitaar vastneemt of al jaren speelt.
+        </p>
+        <a class="text-link" href="#contact">Maak kennis met Hamlet <Icon name="arrow" size={18} /></a>
+      </div>
+      <figure class="quote-card" data-reveal style="--i:1">
+        <blockquote>“Fantastische maar vooral gepassioneerde leerkracht!”</blockquote>
+        <figcaption>
+          <span class="quote-initial" aria-hidden="true">S</span>
+          <span><strong>Siel</strong>Leerling via Apprentus · 2022</span>
+          <a
+            class="text-link"
+            id="review-source"
+            href="https://www.apprentus.nl/priveles/antwerpen/muziek/flamenco/flamenco-guitar-beginners-to-professional-"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Lees de ervaring van Siel op Apprentus">Bron <Icon name="arrow" size={16} /></a
+          >
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="practice-heading">
+    <div class="shell split">
+      <div class="stack" data-reveal>
+        <p class="eyebrow">Ruimte om te leren</p>
+        <h2 id="practice-heading">Een uur voor jezelf. En je gitaar.</h2>
+        <p>
+          Proberen, vragen stellen en opnieuw spelen. Met oefeningen voor thuis neem je de muziek mee, ook nadat de les
+          voorbij is.
+        </p>
+        <div class="facts">
+          <div><strong>60 min.</strong><span>per reguliere les</span></div>
+          <div><strong>Jouw tempo</strong><span>persoonlijke begeleiding</span></div>
+        </div>
+      </div>
+      <div class="pill-photo" data-reveal style="--i:1">
+        <div>
+          <img
+            src={withBase('/media/hamlet-handen.webp')}
+            width="1055"
+            height="257"
+            alt="De handen van Hamlet op de gitaar"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-mist" id="contact" aria-labelledby="contact-heading" data-form-section>
+    <div class="shell split split-top">
+      <div class="stack" data-reveal>
+        <p class="eyebrow">Zet de eerste stap</p>
+        <h2 id="contact-heading">Jouw eerste les. Helemaal gratis.</h2>
+        <p class="lede">
+          Maak kennis met Hamlet en ontdek hoe gitaarles bij hem voelt. Vertel iets over jezelf, dan spreken jullie
+          samen een moment af.
+        </p>
+        <div class="location">
+          <span class="location-icon"><Icon name="pin" size={22} /></span>
+          <div>
+            <h3>Tot in Merksem.</h3>
+            <address>Gitaarlessen Hamlet<br />Bredabaan 479<br />2170 Merksem, Antwerpen</address>
+            <a class="text-link" href={maps} target="_blank" rel="noopener noreferrer"
+              >Plan je route <Icon name="arrow" size={18} /></a
+            >
+            <small>Lessen op afspraak</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-card" data-reveal style="--i:1">
+        <h3 class="form-heading">Vertel, wat wil jij spelen?</h3>
+        <p class="form-intro">Vul je gegevens in voor je gratis kennismakingsles.</p>
+        <LessonForm action={formAction} hiddenFields={formFields} />
+      </div>
+    </div>
+  </section>
+</SiteLayout>

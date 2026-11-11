@@ -1,122 +1,108 @@
 ---
 name: Hamlet Guitar
-description: A warm, contemporary guitar studio with an authentic performance at its center.
+description: Klankgat. A white page, one orange from Hamlet's guitar top, photos seen through the soundhole, six strings as the only ornament.
 colors:
-  paper: '#f7f5ef'
-  ink: '#242320'
-  accent: '#b64b2c'
-  accent-hover: '#933b23'
-  muted: '#6b675e'
-  line: '#d9d4c9'
-  practice: '#eae5d9'
-  form-panel: '#fffefa'
-  contact-emphasis: '#e6b69c'
+  paper: '#fbfbf9'
+  ink: '#1b1b1f'
+  orange: '#f28a1b'
+  orange-deep: '#9a4e00'
+  mist: '#f1f1ee'
+  grey: '#5c5f66'
+  text: '#33343a'
+  line: '#c9cacd'
+  field: '#6f727a'
+  error: '#a3261a'
 typography:
   display:
-    fontFamily: 'Manrope Variable, Arial, sans-serif'
-    fontSize: 'clamp(64px, 6.3vw, 92px)'
-    fontWeight: 750
-    lineHeight: 1.02
-    letterSpacing: '-0.065em'
-  tagline:
-    fontFamily: 'Bodoni Moda Variable, Georgia, serif'
-    fontSize: 'clamp(36px, 4.1vw, 60px)'
-    fontWeight: 500
-    fontStyle: italic
+    fontFamily: 'Unbounded Variable, Arial Black, Arial, sans-serif'
+    fontSize: 'clamp(32px, 4.3vw, 56px)'
+    fontWeight: 600
     lineHeight: 1.12
-    letterSpacing: '-0.045em'
+    letterSpacing: '-0.02em'
   headline:
-    fontFamily: 'Manrope Variable, Arial, sans-serif'
-    fontSize: 'clamp(36px, 3.7vw, 54px)'
-    fontWeight: 700
-    lineHeight: 1.1
-    letterSpacing: '-0.045em'
-  quote:
-    fontFamily: 'Bodoni Moda Variable, Georgia, serif'
-    fontSize: '24px'
-    fontWeight: 500
-    lineHeight: 1.45
+    fontFamily: 'Unbounded Variable, Arial Black, Arial, sans-serif'
+    fontSize: 'clamp(27px, 3vw, 40px)'
+    fontWeight: 600
+    lineHeight: 1.14
     letterSpacing: '-0.02em'
   body:
-    fontFamily: 'Manrope Variable, Arial, sans-serif'
-    fontSize: '16px'
+    fontFamily: 'Onest Variable, Arial, sans-serif'
+    fontSize: '17px'
     fontWeight: 400
-    lineHeight: 1.7
-  button:
-    fontFamily: 'Manrope Variable, Arial, sans-serif'
+    lineHeight: 1.6
+  label:
+    fontFamily: 'Onest Variable, Arial, sans-serif'
     fontSize: '14px'
+    fontWeight: 600
+    letterSpacing: '0.1em'
+  button:
+    fontFamily: 'Onest Variable, Arial, sans-serif'
+    fontSize: '18px'
     fontWeight: 700
-    lineHeight: 1.5
 spacing:
-  container-max: '1280px'
-  desktop-side: '48px'
-  compact-side: '32px'
-  mobile-side: '20px'
+  container-max: '1296px'
+  gutter: 'clamp(20px, 5vw, 72px)'
+  section: 'clamp(56px, 7vw, 96px)'
 components:
   button-primary:
-    backgroundColor: '{colors.accent}'
-    textColor: '#ffffff'
-    minHeight: '55px'
-    padding: '15px 22px'
-    borderRadius: '5px'
-  media-frame:
-    backgroundColor: '#000000'
-    borderRadius: '12px'
-  form-panel:
-    backgroundColor: '{colors.form-panel}'
+    backgroundColor: '{colors.orange}'
     textColor: '{colors.ink}'
-    padding: '36px'
-    borderRadius: '12px'
+    minHeight: '60px'
+    padding: '0 30px'
+    borderRadius: '30px'
+  form-card:
+    backgroundColor: '#ffffff'
+    padding: 'clamp(22px, 3vw, 36px)'
+    borderRadius: '28px'
   form-field:
     backgroundColor: '#ffffff'
-    textColor: '{colors.ink}'
-    borderColor: '#969084'
-    minHeight: '50px'
-    padding: '12px 13px'
-    borderRadius: '6px'
-  form-submit:
-    backgroundColor: '{colors.accent}'
-    textColor: '#ffffff'
-    minHeight: '56px'
-    borderRadius: '6px'
+    borderColor: '{colors.field}'
+    minHeight: '52px'
+    borderRadius: '12px'
+  video-tile:
+    backgroundColor: '{colors.ink}'
+    borderRadius: '24px'
 ---
 
 # Hamlet Guitar — current design
 
-This record follows the source implementation of the independent redesign requested on 26 October 2026. No installed design skill was used. It describes design and behavior, not a completed test or deployment result.
+This record follows the source: `src/styles/klankgat.css`, `src/layouts/SiteLayout.astro` and the components beside them. It describes design and behaviour, not a test or deployment result.
 
 ## Identity and typography
 
-Warm ivory `#f7f5ef` is the main page surface; ink `#242320` carries the text. Terracotta `#b64b2c` identifies invitations, the six-string H, small labels and links. The legacy CSS variable `--gold` aliases `--accent`; it no longer describes a gold color.
+Off-white `#fbfbf9` is the page; ebony `#1b1b1f` carries text, strings and rings. One orange, `#f28a1b`, sampled from the top of Hamlet's guitar, marks every invitation. Orange is a background for ink text, never a text colour on white; `#9a4e00` is the deeper orange where coloured text is needed. Mist `#f1f1ee` alternates sections.
 
-Manrope Variable is the primary face, including bold headings and the lowercase 800-weight wordmark. Main body text is 16px; section copy uses 14–15px with generous line height. Bodoni Moda Variable is reserved for the italic hero tagline and the regular-weight student quote. Both fonts are self-hosted.
+Unbounded Variable sets headings and the wordmark: wide and round, like the body of the instrument. Onest Variable sets everything else. Both are self-hosted and include Cyrillic for the planned Russian version. Unbounded is wide, so long words set the ceiling for heading sizes.
+
+## Motifs
+
+- **The soundhole.** Hamlet's photo is always round, inside an orange disc with two fine rings and a dotted ring, like a guitar rosette (`Rosette.astro`).
+- **Six strings.** Six lines, 4px down to 1px from bass to treble, run across the full width under the hero (`Strings.astro`). Lesson rows repeat the 3, 2, 1px rhythm in their dividers.
+- **Pills.** Buttons, chips and the hands photo are fully rounded.
 
 ## Layout
 
-The desktop shell is at most 1280px wide with 48px side margins. Compact layouts use 32px margins; layouts at 800px and below use 20px. Main breakpoints are 1600, 1100, 800, 580 and 370px; the form also responds to its container width.
+The shell is at most 1296px wide with a fluid gutter. Both heroes share one layout: copy on the left, the soundhole on the right, the strings in their own grid row beneath both so they can never run through the text, and the soundhole overlapping them. Below 820px the hero becomes one column and the navigation collapses behind a round menu button.
 
-The hero pairs a strong lesson headline with a contained black performance frame. Keeping text beside the film gives the offer and Hamlet room of their own. The source video and poster use the same crop, with `object-position: 36% center`; responsive frame proportions adapt without changing the media.
+Home: hero, three video tiles, the booking section on mist (copy and hands photo beside a white form card), a dark band pointing to the lessons. Gitaarles: hero, three lesson rows, the teacher with an attributed quote on mist, a practice section with the hands photo, the lesson form with the location on mist.
 
-The lesson section uses three full-width linked rows with thin dividers and circular arrows. The teacher panel pairs a guitar-and-notebook image with the introduction and attributed student quote. A compact beige practice panel pairs explanatory text with a different guitar-and-chair scene. FAQ uses native `details` rows. The final invitation is dark ink, with warm pale emphasis and an off-white form panel.
+## Motion
 
-On mobile, split sections become one reading sequence. Contact content orders the offer, form and then route information. A floating terracotta lesson action hides when the primary hero action or contact section is visible. Privacy and thank-you pages share the ivory/ink palette, Manrope headings and terracotta links.
+All motion lives in one `prefers-reduced-motion: no-preference` block and in `src/scripts/site.ts`.
+
+- On arrival the hero copy rises in sequence, the soundhole turns into place and the six strings are strummed from bass to treble. Each string is an SVG path that rings out as a damped sine, lower and longer on the bass side.
+- Moving the pointer across the strings plucks them; hovering the main action strums them softly.
+- The dotted rosette ring turns very slowly.
+- Sections rise into view the first time they are scrolled to.
+- Buttons lift and their arrows slide; video thumbnails zoom slightly; lesson rows shift and their arrow turns orange.
+- Navigating between the two pages cross-fades, in browsers that support cross-document view transitions.
+
+With reduced motion the strings stay still, nothing is hidden awaiting a reveal, and transitions are effectively instant.
 
 ## Components and interaction
 
-Primary buttons have white text, a terracotta fill, 5px corners and a minimum 55px height. Their arrows move 4px on hover. Text links remain visibly underlined or ruled. The form uses 16px inputs, 14px labels, warm gray borders, 6px corners and a full-width terracotta submit action. The phone fallback is separated beneath the form.
-
-Media and content panels use restrained 8–12px corner radii. Fine warm-gray lines organize lesson rows, FAQ and supporting information. Transitions are generally 0.2 seconds; reduced-motion preferences disable motion and smooth scrolling. Keyboard focus remains visible, with contrasting focus treatment on dark and video surfaces.
-
-## Performance behavior
-
-The authentic 12-second hero excerpt attempts audible autoplay, then retries muted if the browser refuses. Automatic sound is browser-dependent. A 44px speaker controls sound. The transparent image-sized playback button pauses or resumes; its hint appears only when paused or keyboard-focused. Reduced-motion visitors begin with the poster and explicitly start playback. Offscreen and hidden-tab pauses preserve manual choices. Load errors disable controls and expose a retry link.
-
-The video frame and cleaned footage background are black, with no grain overlay. The complete performance is retained in the archive but not linked or loaded by the interface.
+Primary buttons are orange pills with ink text and a 60px minimum height. The header carries a small dark pill for the page's own action. Forms use 16px inputs with a 1.5px border, 12px corners and an orange focus ring; errors are named under the field. Video tiles are links with a 16:9 thumbnail and an orange play disc; with scripting they open in a dialog sized to the video's own proportions, and closing returns focus to the tile. Keyboard focus is a 3px ink outline, paper-coloured on dark surfaces.
 
 ## Truthful content and conversion
 
-Preserve “Leer gitaar spelen. Op jouw tempo.” and the user-confirmed free kennismakingsles. Lesson invitations and “Maak kennis met Hamlet” target `#contact`; lesson rows also preselect interest. The introductory lesson's duration is unspecified. The 60-minute statement applies to regular lessons.
-
-Real footage demonstrates Hamlet's playing. The two supporting still lifes are conceptual “Sfeerbeeld” images, not evidence of his studio or teaching sessions. Keep their provenance and the review attribution intact. Business references are in `docs/sources.md`.
-
-The form collects required name/email and optional phone, interest and message through native POST to an activated opaque FormSubmit endpoint. The recipient is private and must not appear in public code, documentation or URLs. Preserve validation, loading/error states, the privacy link and telephone fallback. A submission is an inquiry to arrange a time, not a confirmed booking or proof of inbox receipt.
+See `PRODUCT.md`. In short: keep the approved lesson headline and button, treat the homepage copy as a proposal until approved, and never add prices, show dates, reviews or qualifications that have not been confirmed. A submitted form is a request, not a booking or proof of inbox delivery.

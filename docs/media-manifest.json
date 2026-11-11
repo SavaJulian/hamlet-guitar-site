@@ -71,5 +71,65 @@
       "prompt_record": "Exact generation prompt preserved by impeccable embed-prompt in the adjacent sidecar.",
       "delivery": "WebP quality 88, method 6; original generated dimensions retained."
     }
+  },
+  "klankgat_2026_11_11": {
+    "note": "Assets used by the Klankgat site. Everything listed elsewhere in this file is retained in public/media but no longer used by any page.",
+    "poster_photo": {
+      "source": "Show poster of Hamlet supplied by Julian in the session of 9 November 2026 (1055x1491 WebP). Poster lettering is not site copy.",
+      "hamlet-portret.webp": {
+        "dimensions": [690, 690],
+        "bytes": 61472,
+        "sha256": "3adf4434ff3c56a1e0571f20136c891d6cc90731ca95e5c9b0bfad837df086e9",
+        "treatment": "Square crop. The poster subtitle above and the tagline beside his head were painted out of the red backdrop (OpenCV Telea inpainting on a lettering mask). Hamlet, his hair, shirt and guitar are untouched.",
+        "purpose": "Soundhole photo in both heroes; Open Graph image."
+      },
+      "hamlet-handen.webp": {
+        "dimensions": [1055, 257],
+        "bytes": 35872,
+        "sha256": "25f91eaea89d88e279bf765fca9fa7fc1dd9289f635b808ef800282db2d733f1",
+        "treatment": "Plain crop of hands and guitar neck; no retouching.",
+        "purpose": "Pill-shaped photo beside the booking form and in the practice section."
+      }
+    },
+    "videos": {
+      "youtube": {
+        "id": "MEcC6SS83Bc",
+        "title": "Rumba Philip John Lee Played By Hamlet",
+        "channel": "Hamlet",
+        "delivery": "Linked; embedded from youtube-nocookie.com only after a click.",
+        "poster": {
+          "dimensions": [480, 270],
+          "bytes": 8378,
+          "sha256": "037fcc05e2081310571b628c23f0348eed787b04c9bffaf0e273b6a23619d2d7",
+          "source_type": "Cropped copy of the YouTube thumbnail"
+        }
+      },
+      "hamlet-podium.mp4": {
+        "source": "IMG_0633.MOV from the Drive folder supplied by Julian (70.9 MB, 720x1280, 70.5 s).",
+        "encoding": "libx264 slow crf25 maxrate1800k, AAC 128k, faststart, metadata stripped",
+        "dimensions": [720, 1280],
+        "bytes": 8108547,
+        "sha256": "80654af5d70e7e4b75ae968b65e8ba8052363ca8c13ee3646c4ef5e56c0a3f6a",
+        "poster": {
+          "dimensions": [720, 405],
+          "bytes": 15262,
+          "sha256": "690af101258a42edf8be3ef8dea40487c17691dab8e7fa35404ebabbb4ae15b1",
+          "source_type": "Frame at 35 s, cropped to 16:9"
+        }
+      },
+      "hamlet-dichtbij.mp4": {
+        "source": "goede video.MOV from the Drive folder supplied by Julian (191.7 MB, 3722x2160 HEVC, 67.7 s).",
+        "encoding": "scaled to 1280 wide, libx264 slow crf25 maxrate1800k, AAC 128k, faststart, metadata stripped",
+        "dimensions": [1280, 742],
+        "bytes": 9010862,
+        "sha256": "da75dd9d36b3c8f966da4d348add0c9ec30fac0ea5c8e402f3405554176ac77c",
+        "poster": {
+          "dimensions": [960, 540],
+          "bytes": 29654,
+          "sha256": "dc9434e78aaf42170e8449be8179b5f4c09e60fc9de4a88f5749fce013209d70",
+          "source_type": "Frame at 34 s, cropped to 16:9"
+        }
+      }
+    }
   }
 }
