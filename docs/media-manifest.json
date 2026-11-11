@@ -140,6 +140,26 @@
         "sha256": "ce71ad7da15e35f031845ba27bd07704584cabf6ec9f2e031a4b051c6f88b6a6",
         "purpose": "Image beside the booking form on the homepage."
       }
+    },
+    "lesson_videos": {
+      "source": "Two WhatsApp videos of Julian's own lesson with Hamlet, uploaded by Julian on 11 November 2026 (854x480).",
+      "encoding": "libx264 slow crf25, AAC 112k, faststart, metadata stripped",
+      "les-julian-1.mp4": {
+        "bytes": 2484904,
+        "sha256": "08139bc1b85a1516344e56908e9635a788ecdd7ce048644bae9a75f6d1edd260"
+      },
+      "les-julian-2.mp4": {
+        "bytes": 4592282,
+        "sha256": "5dad7e1d263bb64abec788aa297b3d3aed1685c0173fbc2a94fc4f39e33ac1e3"
+      },
+      "video-les-julian-1.webp": {
+        "bytes": 31260,
+        "sha256": "1f388d1de701037262a5100cc6ca9d9a1898e51643f6a4be5a6512df7da131b5"
+      },
+      "video-les-julian-2.webp": {
+        "bytes": 29790,
+        "sha256": "b9d1802b8bcd15fe5cafe03a68715bc7fac430e3d85e754f8c9ac23b8a2ec600"
+      }
     }
   }
 }

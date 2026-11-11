@@ -4,6 +4,7 @@ import Icon from '../components/Icon.astro';
 import Rosette from '../components/Rosette.astro';
 import Strings from '../components/Strings.astro';
 import BookingForm from '../components/BookingForm.astro';
+import VideoGallery, { type Video } from '../components/VideoGallery.astro';
 import { absoluteUrl, withBase } from '../lib/site';
 import { lessonFormEndpoint } from '../lib/lessonForm';
 
@@ -14,7 +15,7 @@ const formFields = {
   _template: 'table',
   ...(next ? { _next: next } : {}),
 };
-const videos = [
+const videos: Video[] = [
   {
     kind: 'youtube',
     youtube: 'MEcC6SS83Bc',
@@ -83,37 +84,8 @@ const videos = [
         <h2 id="videos-heading">Bekijk Hamlet live</h2>
         <p>Drie opnames, zodat je hoort wat je boekt.</p>
       </div>
-      <div class="video-grid">
-        {
-          videos.map((video, index) => (
-            <div class="video-tile" data-reveal style={`--i:${index}`}>
-              <a
-                class="video-thumb"
-                href={video.href}
-                data-video={video.kind}
-                data-youtube={video.youtube}
-                data-ratio={video.ratio}
-                data-title={video.title}
-                aria-label={`Speel af: ${video.title}`}
-              >
-                <img src={withBase(video.poster)} width="960" height="540" alt="" loading="lazy" decoding="async" />
-                <span class="play">
-                  <Icon name="play" size={26} />
-                </span>
-              </a>
-              <div>
-                <p class="video-title">{video.title}</p>
-                <p class="video-meta">{video.meta}</p>
-              </div>
-            </div>
-          ))
-        }
-      </div>
+      <VideoGallery videos={videos} />
     </div>
-    <dialog class="video-dialog" id="video-dialog" aria-label="Video">
-      <button class="dialog-close" type="button" aria-label="Video sluiten"><Icon name="close" size={22} /></button>
-      <div class="dialog-stage"></div>
-    </dialog>
   </section>
 
   <section class="section section-mist" id="boeken" aria-labelledby="booking-heading" data-form-section>

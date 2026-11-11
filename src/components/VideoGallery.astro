@@ -1,0 +1,50 @@
+---
+/** Video tiles that open in one shared dialog. `src/scripts/site.ts` wires them up. */
+import Icon from './Icon.astro';
+import { withBase } from '../lib/site';
+
+export interface Video {
+  kind: 'file' | 'youtube';
+  href: string;
+  poster: string;
+  ratio: string;
+  title: string;
+  meta: string;
+  youtube?: string;
+}
+interface Props {
+  videos: Video[];
+}
+const { videos } = Astro.props;
+---
+
+<div class:list={['video-grid', { 'video-grid-two': videos.length === 2 }]}>
+  {
+    videos.map((video, index) => (
+      <div class="video-tile" data-reveal style={`--i:${index}`}>
+        <a
+          class="video-thumb"
+          href={video.href}
+          data-video={video.kind}
+          data-youtube={video.youtube}
+          data-ratio={video.ratio}
+          data-title={video.title}
+          aria-label={`Speel af: ${video.title}`}
+        >
+          <img src={withBase(video.poster)} width="960" height="540" alt="" loading="lazy" decoding="async" />
+          <span class="play">
+            <Icon name="play" size={26} />
+          </span>
+        </a>
+        <div>
+          <p class="video-title">{video.title}</p>
+          <p class="video-meta">{video.meta}</p>
+        </div>
+      </div>
+    ))
+  }
+</div>
+<dialog class="video-dialog" id="video-dialog" aria-label="Video">
+  <button class="dialog-close" type="button" aria-label="Video sluiten"><Icon name="close" size={22} /></button>
+  <div class="dialog-stage"></div>
+</dialog>

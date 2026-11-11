@@ -461,6 +461,20 @@ test('videos open in a dialog, and YouTube is only contacted after a click', asy
   await expect(dialog.locator('iframe')).toHaveCount(0);
 });
 
+test('the lesson page shows lesson videos that play in the dialog', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/gitaarles/');
+  const tiles = page.locator('a[data-video]');
+  await expect(tiles).toHaveCount(2);
+  await tiles.first().click();
+  const dialog = page.locator('#video-dialog');
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('video')).toHaveAttribute('src', /\/media\/les-julian-1\.mp4$/);
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await expect(tiles.first()).toBeFocused();
+});
+
 const stringShapes = (page: Page) =>
   page.locator('[data-strings] path').evaluateAll((paths) => paths.map((path) => path.getAttribute('d')));
 
