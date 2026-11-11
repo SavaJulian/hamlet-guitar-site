@@ -23,6 +23,17 @@ jobs:
         env:
           SITE_URL: https://gitaarmethamlet.be
           PUBLIC_LESSON_FORM_ENDPOINT: ${{ vars.LESSON_FORM_ENDPOINT }}
+      - name: Check out the published review page
+        uses: actions/checkout@v4
+        with:
+          repository: SavaJulian/Hamlet-Review-pagina
+          ref: 6be9408f60bec0511ed8aa86af09596cc25952e9
+          path: review-source
+          persist-credentials: false
+      - name: Serve the review page on the main domain
+        run: |
+          mkdir -p dist/review
+          cp review-source/{index.html,app.js,config.js,prive-bericht.html,prive-bericht.js} dist/review/
       - uses: actions/upload-artifact@v4
         with:
           name: hamlet-static-site
