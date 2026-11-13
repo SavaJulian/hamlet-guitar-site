@@ -1,0 +1,69 @@
+---
+import { render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { absoluteUrl, withBase } from '../../lib/site';
+import { formatDate, getPosts, postPath, readingMinutes, type Post } from '../../lib/blog';
+
+export async function getStaticPaths() {
+  return (await getPosts()).map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props as { post: Post };
+const { Content } = await render(post);
+const { title, excerpt = '', publishDate, updateDate } = post.data;
+const path = postPath(post);
+const canonical = absoluteUrl(path, Astro.site);
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description: excerpt,
+  inLanguage: 'nl-BE',
+  ...(publishDate ? { datePublished: publishDate.toISOString() } : {}),
+  ...(updateDate ? { dateModified: updateDate.toISOString() } : {}),
+  author: { '@type': 'Organization', name: 'Gitaarlessen Hamlet' },
+  ...(canonical
+    ? { url: canonical, mainEntityOfPage: canonical, image: absoluteUrl('/media/hamlet-portret.webp', Astro.site) }
+    : {}),
+};
+---
+
+<SiteLayout
+  title={`${title} | Hamlet`}
+  ogTitle={title}
+  description={excerpt}
+  path={path}
+  current="blog"
+  action={{ href: withBase('/gitaarles/#contact'), label: 'Plan je gratis les' }}
+  schema={schema}
+>
+  <article class="section" aria-labelledby="post-heading">
+    <div class="shell article-shell">
+      <div class="stack">
+        <a class="text-link back" href={withBase('/blog/')}>Alle artikels</a>
+        <p class="post-meta">
+          {publishDate && <time datetime={publishDate.toISOString().slice(0, 10)}>{formatDate(publishDate)}</time>}
+          <span>{readingMinutes(post.body)} min lezen</span>
+        </p>
+        <h1 id="post-heading">{title}</h1>
+      </div>
+      <div class="article-body">
+        <Content />
+      </div>
+      <a class="btn" href={withBase('/gitaarles/#contact')} data-primary-action
+        >Plan je gratis les <Icon name="arrow" /></a
+      >
+    </div>
+  </article>
+
+  <section class="band on-dark" aria-labelledby="post-band-heading">
+    <div class="shell">
+      <div>
+        <h2 id="post-band-heading">Gitaarles in Merksem, Antwerpen.</h2>
+        <p>Voor beginners en gevorderden. Je eerste kennismakingsles is gratis.</p>
+      </div>
+      <a class="btn btn-light" href={withBase('/gitaarles/')}>Naar de gitaarlessen <Icon name="arrow" /></a>
+    </div>
+  </section>
+</SiteLayout>

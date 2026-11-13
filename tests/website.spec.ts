@@ -530,3 +530,19 @@ test.describe('when motion is allowed', () => {
     }
   });
 });
+
+test('the blog lists its articles and each article leads to the free lesson', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/blog/');
+  const navigation = page.getByRole('navigation', { name: 'Hoofdnavigatie' });
+  await expect(navigation.getByRole('link', { name: 'Blog' })).toHaveAttribute('aria-current', 'page');
+  await page.getByRole('link', { name: /Hoe lang duurt het om gitaar te leren spelen\?/ }).click();
+  await expect(page).toHaveURL(/\/blog\/hoe-lang-duurt-gitaar-leren\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Hoe lang duurt het om gitaar te leren spelen?');
+  const schema = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent()) ?? '{}');
+  expect(schema['@type']).toBe('BlogPosting');
+  // Rates are not confirmed, so an article must not state a price.
+  await expect(page.getByRole('main')).not.toContainText(/€|euro/i);
+  await page.getByRole('main').getByRole('link', { name: 'Plan je gratis les' }).click();
+  await expect(page).toHaveURL(/\/gitaarles\/#contact$/);
+});

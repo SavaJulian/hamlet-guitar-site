@@ -1,0 +1,49 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { withBase } from '../../lib/site';
+import { formatDate, getPosts, postPath, readingMinutes } from '../../lib/blog';
+
+const posts = await getPosts();
+---
+
+<SiteLayout
+  title="Blog over gitaar leren en flamenco | Hamlet"
+  description="Eerlijke antwoorden op vragen over gitaar leren spelen, oefenen en flamencogitaar, vanuit de gitaarlessen van Hamlet in Merksem, Antwerpen."
+  path="/blog/"
+  current="blog"
+  action={{ href: withBase('/gitaarles/#contact'), label: 'Plan je gratis les' }}
+>
+  <section class="section" aria-labelledby="blog-heading">
+    <div class="shell article-shell">
+      <div class="stack">
+        <p class="eyebrow">Blog</p>
+        <h1 id="blog-heading">Over gitaar leren.</h1>
+        <p class="lede">Eerlijke antwoorden op de vragen die leerlingen het vaakst stellen.</p>
+      </div>
+      <ul class="post-list">
+        {
+          posts.map((post) => (
+            <li>
+              <a href={withBase(postPath(post))}>
+                <span class="post-meta">
+                  {post.data.publishDate && (
+                    <time datetime={post.data.publishDate.toISOString().slice(0, 10)}>
+                      {formatDate(post.data.publishDate)}
+                    </time>
+                  )}
+                  <span>{readingMinutes(post.body)} min lezen</span>
+                </span>
+                <h2>{post.data.title}</h2>
+                {post.data.excerpt && <p>{post.data.excerpt}</p>}
+                <span class="text-link">
+                  Lees verder <Icon name="arrow" size={18} />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</SiteLayout>

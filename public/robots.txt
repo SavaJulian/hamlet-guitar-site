@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://gitaarmethamlet.be/sitemap-index.xml
